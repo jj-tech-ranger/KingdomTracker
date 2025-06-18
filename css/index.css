@@ -1,0 +1,514 @@
+:root {
+    /* Light mode colors */
+    --light-bg: #F2F1F2;
+    --light-card: #FFFFFF;
+    --light-text: #622725;
+    --light-border: rgba(98, 39, 37, 0.1);
+    
+    /* Dark mode colors */
+    --dark-bg: #622725;
+    --dark-card: #B50F04;
+    --dark-text: #F2F1F2;
+    --dark-border: rgba(242, 241, 242, 0.1);
+    
+    /* Black dark mode colors (OLED friendly) */
+    --black-bg: #000000;
+    --black-card: #121212;
+    --black-accent: #1A1A1A;
+    --black-text: #E0E0E0;
+    --black-border: rgba(224, 224, 224, 0.1);
+    
+    /* Accent colors */
+    --primary: #FC0100;
+    --highlight: #FE2F30;
+    --secondary: #F2CC80;
+    
+    /* Shadows */
+    --card-shadow: 0 4px 6px rgba(98, 39, 37, 0.1);
+    --dark-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    
+    /* Transitions */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Base Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: var(--transition);
+    line-height: 1.6;
+}
+
+/* Light Mode (default) */
+body.light-mode {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+/* Black Dark Mode */
+body.black-mode {
+    background-color: var(--black-bg);
+    color: var(--black-text);
+}
+
+/* Homepage Layout */
+.homepage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+body.light-mode .homepage {
+    background-color: var(--light-bg);
+}
+
+body.dark-mode .homepage {
+    background-color: var(--dark-bg);
+}
+
+body.black-mode .homepage {
+    background-color: var(--black-bg);
+}
+
+/* Header Styles */
+.home-header {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+body.light-mode .home-header {
+    border-bottom: 1px solid var(--light-border);
+}
+
+body.dark-mode .home-header {
+    border-bottom: 1px solid var(--dark-border);
+    background-color: var(--dark-bg);
+}
+
+body.black-mode .home-header {
+    border-bottom: 1px solid var(--black-border);
+    background-color: var(--black-bg);
+}
+
+.home-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+body.light-mode .home-logo {
+    color: var(--light-text);
+}
+
+body.dark-mode .home-logo,
+body.black-mode .home-logo {
+    color: var(--dark-text);
+}
+
+.home-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    transition: var(--transition);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    transition: var(--transition);
+    padding: 8px;
+    border-radius: 50%;
+}
+
+body.light-mode .theme-toggle {
+    color: var(--light-text);
+}
+
+body.dark-mode .theme-toggle {
+    color: var(--secondary);
+    background-color: rgba(242, 204, 128, 0.1);
+}
+
+body.black-mode .theme-toggle {
+    color: var(--secondary);
+    background-color: rgba(242, 204, 128, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: rotate(30deg) scale(1.1);
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.welcome-section h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    animation: slideInFromTop 0.8s ease-out;
+}
+
+body.light-mode .welcome-section h1 {
+    color: var(--primary);
+}
+
+body.dark-mode .welcome-section h1,
+body.black-mode .welcome-section h1 {
+    color: var(--secondary);
+}
+
+.welcome-section h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+}
+
+body.light-mode .welcome-section h1::after {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+}
+
+body.dark-mode .welcome-section h1::after,
+body.black-mode .welcome-section h1::after {
+    background: linear-gradient(to right, var(--secondary), var(--highlight));
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 40px;
+    animation: fadeIn 1.2s ease-out;
+}
+
+body.light-mode .welcome-section p {
+    color: var(--light-text);
+}
+
+body.dark-mode .welcome-section p {
+    color: var(--dark-text);
+}
+
+body.black-mode .welcome-section p {
+    color: var(--black-text);
+}
+
+/* Modules Grid */
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease-out;
+}
+
+.module-card {
+    border-radius: 12px;
+    padding: 30px;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+body.light-mode .module-card {
+    background-color: var(--light-card);
+    box-shadow: var(--card-shadow);
+    border-left: 5px solid var(--primary);
+}
+
+body.dark-mode .module-card {
+    background-color: var(--dark-card);
+    box-shadow: var(--dark-shadow);
+    border-left: 5px solid var(--primary);
+}
+
+body.black-mode .module-card {
+    background-color: var(--black-card);
+    box-shadow: var(--dark-shadow);
+    border-left: 5px solid var(--primary);
+}
+
+.module-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+}
+
+body.light-mode .module-card::before,
+body.dark-mode .module-card::before,
+body.black-mode .module-card::before {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+}
+
+.module-card:hover {
+    transform: translateY(-10px);
+}
+
+body.light-mode .module-card:hover {
+    box-shadow: 0 15px 30px rgba(98, 39, 37, 0.2);
+}
+
+body.dark-mode .module-card:hover,
+body.black-mode .module-card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.module-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+
+body.light-mode .module-icon {
+    color: var(--primary);
+}
+
+body.dark-mode .module-icon,
+body.black-mode .module-icon {
+    color: var(--secondary);
+}
+
+.module-card:hover .module-icon {
+    transform: scale(1.1);
+}
+
+.module-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+body.light-mode .module-title {
+    color: var(--primary);
+}
+
+body.dark-mode .module-title,
+body.black-mode .module-title {
+    color: var(--secondary);
+}
+
+.module-description {
+    margin-bottom: 20px;
+}
+
+body.light-mode .module-description {
+    color: var(--light-text);
+}
+
+body.dark-mode .module-description {
+    color: var(--dark-text);
+}
+
+body.black-mode .module-description {
+    color: var(--black-text);
+}
+
+.module-link {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+body.light-mode .module-link,
+body.dark-mode .module-link,
+body.black-mode .module-link {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: white;
+}
+
+.module-card:hover .module-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Morph transition styles */
+.morph-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+body.light-mode .morph-overlay {
+    background: var(--primary);
+    color: white;
+}
+
+body.dark-mode .morph-overlay,
+body.black-mode .morph-overlay {
+    background: var(--secondary);
+    color: var(--black-bg);
+}
+
+.morph-overlay.active {
+    opacity: 1;
+}
+
+/* Footer styles */
+.home-footer {
+    padding: 20px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+body.light-mode .home-footer {
+    border-top: 1px solid var(--light-border);
+    background-color: rgba(242, 204, 128, 0.1);
+}
+
+body.dark-mode .home-footer {
+    border-top: 1px solid var(--dark-border);
+    background-color: rgba(98, 39, 37, 0.3);
+}
+
+body.black-mode .home-footer {
+    border-top: 1px solid var(--black-border);
+    background-color: var(--black-accent);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 2px solid var(--secondary);
+    transition: var(--transition);
+}
+
+.footer-text {
+    font-weight: 600;
+}
+
+body.light-mode .footer-text {
+    color: var(--light-text);
+}
+
+body.dark-mode .footer-text {
+    color: var(--dark-text);
+}
+
+body.black-mode .footer-text {
+    color: var(--black-text);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-header {
+        padding: 15px 20px;
+    }
+    
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+    
+    .welcome-section p {
+        font-size: 1rem;
+    }
+    
+    .modules-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .module-card {
+        padding: 20px;
+    }
+}

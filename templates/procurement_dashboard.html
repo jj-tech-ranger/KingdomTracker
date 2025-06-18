@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Procurement Dashboard</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/procurement.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Procurement</h2>
+        <ul class="menu">
+            <li class="active"><i class="fas fa-truck"></i> Vendor Management</li>
+            <li><i class="fas fa-clipboard-check"></i> Purchase Requisitions</li>
+            <li><i class="fas fa-file-invoice"></i> Invoice Processing</li>
+            <li><i class="fas fa-money-check-alt"></i> Payment Processing</li>
+            <li><i class="fas fa-boxes"></i> Inventory Integration</li>
+            <li><i class="fas fa-chart-bar"></i> Reports & Analytics</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search vendors or purchases...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Procurement Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Pending Requisitions</h4>
+                <p>12</p>
+                <i class="fas fa-clipboard-list card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Monthly Spend</h4>
+                <p>$28,750</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Active Vendors</h4>
+                <p>24</p>
+                <i class="fas fa-building card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Pending Approvals</h4>
+                <p>5</p>
+                <i class="fas fa-check-circle card-icon"></i>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Monthly Procurement Spend</h3>
+                <canvas id="procurementSpendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Vendor Distribution</h3>
+                <canvas id="vendorDistributionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="project-summary">
+            <div class="section-header">
+                <h3>Recent Purchase Orders</h3>
+                <button class="add-button" id="addPurchaseBtn">
+                    <i class="fas fa-plus"></i> New Purchase
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>PO Number</th>
+                        <th>Vendor</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PO-2023-1142</td>
+                        <td>Office Supplies Inc.</td>
+                        <td>$1,250.00</td>
+                        <td>2023-11-15</td>
+                        <td><span class="status approved">Approved</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PO-2023-1141</td>
+                        <td>Tech Solutions Ltd.</td>
+                        <td>$3,420.00</td>
+                        <td>2023-11-14</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/procurement.js"></script>
+</body>
+</html>
