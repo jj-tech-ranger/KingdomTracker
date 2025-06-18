@@ -1,21 +1,18 @@
 /* login.css */
 :root {
-    --dark-bg: #121212; /* Deep black background */
-    --dark-card: #1E1E1E; /* Slightly lighter black for cards */
-    --dark-text: #E0E0E0; /* Light gray text for dark mode */
-    --dark-accent: #2D2D2D; /* Dark accent color */
-    
-    --light-bg: #F2F1F2;
+    --dark-bg: #121212;
+    --dark-card: #1E1E1E;
+    --dark-text: #E0E0E0;
+    --dark-accent: #2D2D2D;
+    --light-bg: #F5F5F5;
     --primary: #FC0100;
     --accent: #B50F04;
     --highlight: #FE2F30;
     --secondary: #F2CC80;
     --white: #FFFFFF;
-    --font-dark: #622725;
-    --sidebar-text: rgba(255, 255, 255, 0.9);
-    --sidebar-hover: rgba(252, 1, 0, 0.2);
-    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --font-dark: #333333;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
 }
 
 body {
@@ -32,29 +29,28 @@ body.dark-mode {
     color: var(--dark-text);
 }
 
-/* Theme Toggle Styles */
 .theme-toggle-container {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10;
+    z-index: 100;
 }
 
 .theme-toggle {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
     border: none;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 1.2rem;
     color: var(--font-dark);
     transition: var(--transition);
-    padding: 8px;
+    padding: 10px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode .theme-toggle {
@@ -71,6 +67,7 @@ body.dark-mode .theme-toggle {
 .theme-toggle .fa-moon,
 .theme-toggle .fa-sun {
     transition: var(--transition);
+    position: absolute;
 }
 
 .theme-toggle .fa-sun {
@@ -85,16 +82,13 @@ body.dark-mode .theme-toggle .fa-sun {
     display: block;
 }
 
-/* Auth Container Styles */
 .auth-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 20px;
-    background-color: var(--light-bg);
-    position: relative;
+    padding: 2rem;
 }
 
 body.dark-mode .auth-container {
@@ -106,14 +100,14 @@ body.dark-mode .auth-container {
     border-radius: 12px;
     box-shadow: var(--card-shadow);
     width: 100%;
-    max-width: 450px;
+    max-width: 420px;
     overflow: hidden;
-    position: relative;
+    transition: var(--transition);
 }
 
 body.dark-mode .auth-card {
     background-color: var(--dark-card);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .auth-card::before {
@@ -126,25 +120,26 @@ body.dark-mode .auth-card {
     background: linear-gradient(to right, var(--primary), var(--highlight));
 }
 
-/* Auth Header Styles */
 .auth-header {
     text-align: center;
-    padding: 30px 20px 20px;
+    padding: 2.5rem 2rem 1.5rem;
 }
 
 .auth-logo {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--primary);
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
+    transition: var(--transition);
 }
 
 .auth-header h1 {
     margin: 0;
     color: var(--primary);
-    font-size: 28px;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
 body.dark-mode .auth-header h1 {
@@ -152,28 +147,27 @@ body.dark-mode .auth-header h1 {
 }
 
 .auth-header p {
-    margin: 5px 0 0;
+    margin: 0.5rem 0 0;
     color: var(--font-dark);
     opacity: 0.8;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 body.dark-mode .auth-header p {
     color: var(--dark-text);
 }
 
-/* Auth Form Styles */
 .auth-form {
-    padding: 20px 30px 30px;
+    padding: 1.5rem 2rem 2rem;
 }
 
 .auth-form h2 {
     text-align: center;
-    margin: 0 0 25px;
+    margin: 0 0 1.5rem;
     color: var(--font-dark);
-    font-size: 22px;
+    font-size: 1.4rem;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 0.8rem;
 }
 
 .auth-form h2::after {
@@ -193,14 +187,15 @@ body.dark-mode .auth-form h2 {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     font-weight: 500;
     color: var(--font-dark);
+    font-size: 0.95rem;
 }
 
 body.dark-mode .form-group label {
@@ -217,15 +212,15 @@ body.dark-mode .form-group label {
     top: 50%;
     transform: translateY(-50%);
     color: var(--primary);
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .input-with-icon input {
     width: 100%;
-    padding: 12px 15px 12px 45px;
-    border: 1px solid var(--secondary);
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 0.95rem;
     transition: var(--transition);
     background-color: var(--white);
 }
@@ -245,28 +240,31 @@ body.dark-mode .input-with-icon input {
 .toggle-password {
     position: absolute;
     right: 15px;
-    left: auto;
     cursor: pointer;
     color: var(--font-dark);
+    transition: var(--transition);
 }
 
 body.dark-mode .toggle-password {
     color: var(--dark-text);
 }
 
-/* Form Options */
+.toggle-password:hover {
+    color: var(--primary);
+}
+
 .form-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
 }
 
 .remember-me {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
     color: var(--font-dark);
 }
 
@@ -278,6 +276,7 @@ body.dark-mode .remember-me {
     color: var(--primary);
     text-decoration: none;
     transition: var(--transition);
+    font-weight: 500;
 }
 
 body.dark-mode .forgot-password {
@@ -286,33 +285,32 @@ body.dark-mode .forgot-password {
 
 .forgot-password:hover {
     text-decoration: underline;
+    color: var(--accent);
 }
 
-/* Auth Button */
 .auth-btn {
     width: 100%;
-    padding: 14px;
+    padding: 0.9rem;
     background: linear-gradient(to right, var(--primary), var(--highlight));
     color: var(--white);
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .auth-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(252, 1, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(252, 1, 0, 0.3);
 }
 
-/* Auth Footer */
 .auth-footer {
     text-align: center;
     color: var(--font-dark);
-    font-size: 14px;
+    font-size: 0.9rem;
 }
 
 body.dark-mode .auth-footer {
@@ -323,6 +321,7 @@ body.dark-mode .auth-footer {
     color: var(--primary);
     text-decoration: none;
     transition: var(--transition);
+    font-weight: 500;
 }
 
 body.dark-mode .auth-footer a {
@@ -331,13 +330,13 @@ body.dark-mode .auth-footer a {
 
 .auth-footer a:hover {
     text-decoration: underline;
+    color: var(--accent);
 }
 
-/* Page Footer */
 .auth-page-footer {
-    margin-top: 30px;
+    margin-top: 2rem;
     width: 100%;
-    max-width: 450px;
+    max-width: 420px;
     text-align: center;
 }
 
@@ -345,12 +344,12 @@ body.dark-mode .auth-footer a {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 0.8rem;
 }
 
 .footer-logo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: contain;
     border: 2px solid var(--secondary);
@@ -362,7 +361,7 @@ body.dark-mode .auth-footer a {
 }
 
 .footer-text {
-    font-size: 18px;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--font-dark);
     letter-spacing: 0.5px;
@@ -373,20 +372,23 @@ body.dark-mode .footer-text {
     opacity: 0.9;
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
+    .auth-container {
+        padding: 1rem;
+    }
+
     .auth-card {
         max-width: 100%;
     }
-    
+
     .auth-form {
-        padding: 20px;
+        padding: 1.5rem 1.5rem 2rem;
     }
-    
+
     .form-options {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 0.8rem;
     }
     
     .forgot-password {

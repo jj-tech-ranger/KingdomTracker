@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Event Scheduling</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/hr.css">
+    <link rel="stylesheet" href="../css/events.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Human Resource</h2>
+        <ul class="menu">
+            <li><a href="hr_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="members.html"><i class="fas fa-users"></i> Staff & Members</a></li>
+            <li><a href="recruitment.html"><i class="fas fa-user-plus"></i> Recruitment & Onboarding</a></li>
+            <li class="active"><a href="events.html"><i class="fas fa-calendar-alt"></i> Event Scheduling</a></li>
+            <li><a href="compliance.html"><i class="fas fa-file-alt"></i> Compliance & Documentation</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search events...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="events-header">
+            <h3>Event Scheduling</h3>
+            <div class="events-actions">
+                <button class="btn btn-primary" id="new-event-btn">
+                    <i class="fas fa-plus"></i> New Event
+                </button>
+                <button class="btn btn-filter">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-nav">
+                    <button class="btn btn-secondary" id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <h4 id="current-month">June 2023</h4>
+                    <button class="btn btn-secondary" id="next-month"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-view">
+                    <button class="btn btn-filter active" data-view="month"><i class="fas fa-calendar-alt"></i> Month</button>
+                    <button class="btn btn-filter" data-view="week"><i class="fas fa-calendar-week"></i> Week</button>
+                    <button class="btn btn-filter" data-view="day"><i class="fas fa-calendar-day"></i> Day</button>
+                    <button class="btn btn-filter" data-view="list"><i class="fas fa-list"></i> List</button>
+                </div>
+            </div>
+
+            <div class="calendar-view-container" id="month-view">
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days" id="calendar-days">
+                        <!-- Calendar days will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="calendar-view-container hidden" id="list-view">
+                <div class="events-list">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">15</div>
+                            <div class="event-month">Jun</div>
+                        </div>
+                        <div class="event-details">
+                            <h5>Sunday Worship Service</h5>
+                            <div class="event-meta">
+                                <span><i class="fas fa-clock"></i> 9:00 AM - 12:00 PM</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Main Sanctuary</span>
+                                <span class="status-badge present">Scheduled</span>
+                            </div>
+                            <div class="event-description">Weekly Sunday worship service with communion</div>
+                        </div>
+                        <div class="event-actions">
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">18</div>
+                            <div class="event-month">Jun</div>
+                        </div>
+                        <div class="event-details">
+                            <h5>Staff Training Session</h5>
+                            <div class="event-meta">
+                                <span><i class="fas fa-clock"></i> 2:00 PM - 4:00 PM</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Conference Room</span>
+                                <span class="status-badge active">In Progress</span>
+                            </div>
+                            <div class="event-description">Quarterly staff training on new safety protocols</div>
+                        </div>
+                        <div class="event-actions">
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="resource-allocation">
+            <h3>Upcoming Event Resources</h3>
+            <div class="resource-tabs">
+                <button class="btn btn-filter active" data-tab="personnel">Personnel</button>
+                <button class="btn btn-filter" data-tab="facilities">Facilities</button>
+                <button class="btn btn-filter" data-tab="equipment">Equipment</button>
+            </div>
+
+            <div class="resource-content active" id="personnel-tab">
+                <div class="resource-card">
+                    <h5>Sunday Worship Service - June 15</h5>
+                    <div class="assignment-list">
+                        <div class="assignment">
+                            <img src="../img/user.png" alt="User" class="member-photo">
+                            <div class="assignment-details">
+                                <span class="assignment-name">John Doe</span>
+                                <span class="assignment-role">Worship Leader</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm">Message</button>
+                        </div>
+                        <div class="assignment">
+                            <img src="../img/user.png" alt="User" class="member-photo">
+                            <div class="assignment-details">
+                                <span class="assignment-name">Jane Smith</span>
+                                <span class="assignment-role">Sound Technician</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm">Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-content hidden" id="facilities-tab">
+                <div class="resource-card">
+                    <h5>Booked Facilities</h5>
+                    <div class="facility-list">
+                        <div class="facility-item">
+                            <i class="fas fa-church facility-icon"></i>
+                            <div class="facility-details">
+                                <span class="facility-name">Main Sanctuary</span>
+                                <span class="facility-schedule">June 15, 9:00 AM - 12:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="facility-item">
+                            <i class="fas fa-utensils facility-icon"></i>
+                            <div class="facility-details">
+                                <span class="facility-name">Fellowship Hall</span>
+                                <span class="facility-schedule">June 15, 12:30 PM - 2:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-content hidden" id="equipment-tab">
+                <div class="resource-card">
+                    <h5>Equipment Checkout</h5>
+                    <div class="equipment-list">
+                        <div class="equipment-item">
+                            <i class="fas fa-tv equipment-icon"></i>
+                            <div class="equipment-details">
+                                <span class="equipment-name">Projector</span>
+                                <span class="equipment-status">Checked out to Youth Ministry</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm">Details</button>
+                        </div>
+                        <div class="equipment-item">
+                            <i class="fas fa-microphone equipment-icon"></i>
+                            <div class="equipment-details">
+                                <span class="equipment-name">Wireless Mic Set</span>
+                                <span class="equipment-status">Available</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="modal hidden" id="event-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Create New Event</h4>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="event-form">
+                    <div class="form-group">
+                        <label for="event-name">Event Name</label>
+                        <input type="text" id="event-name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-date">Date</label>
+                            <input type="text" id="event-date" class="datepicker" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-start">Start Time</label>
+                            <input type="text" id="event-start" class="timepicker" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-end">End Time</label>
+                            <input type="text" id="event-end" class="timepicker" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-category">Category</label>
+                        <select id="event-category" required>
+                            <option value="">Select Category</option>
+                            <option value="worship">Worship Service</option>
+                            <option value="outreach">Outreach Program</option>
+                            <option value="meeting">Staff Meeting</option>
+                            <option value="training">Training Session</option>
+                            <option value="special">Special Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-location">Location</label>
+                        <select id="event-location" required>
+                            <option value="">Select Location</option>
+                            <option value="sanctuary">Main Sanctuary</option>
+                            <option value="youth-hall">Youth Hall</option>
+                            <option value="fellowship">Fellowship Hall</option>
+                            <option value="conference">Conference Room</option>
+                            <option value="offsite">Off-site Location</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-description">Description</label>
+                        <textarea id="event-description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="event-recurring"> Recurring Event
+                        </label>
+                    </div>
+
+                    <div class="form-group hidden" id="recurrence-options">
+                        <label>Recurrence Pattern</label>
+                        <div class="recurrence-options">
+                            <label><input type="radio" name="recurrence" value="daily"> Daily</label>
+                            <label><input type="radio" name="recurrence" value="weekly" checked> Weekly</label>
+                            <label><input type="radio" name="recurrence" value="monthly"> Monthly</label>
+                            <label><input type="radio" name="recurrence" value="yearly"> Yearly</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="recurrence-end">End Date</label>
+                            <input type="text" id="recurrence-end" class="datepicker">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-event">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/hr.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</body>
+</html>

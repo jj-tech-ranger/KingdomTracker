@@ -1,0 +1,481 @@
+/* Events Page Styles */
+.events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(98, 39, 37, 0.1);
+}
+
+body.dark-mode .events-header {
+    border-bottom: 1px solid rgba(242, 241, 242, 0.1);
+}
+
+.events-header h3 {
+    color: var(--primary);
+    font-size: 22px;
+    margin: 0;
+}
+
+body.dark-mode .events-header h3 {
+    color: var(--secondary);
+}
+
+.events-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.calendar-container {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+
+body.dark-mode .calendar-container {
+    background-color: var(--accent);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.calendar-nav h4 {
+    margin: 0;
+    min-width: 120px;
+    text-align: center;
+}
+
+.calendar-view {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-weekdays {
+    display: contents;
+    font-weight: 600;
+    text-align: center;
+}
+
+.calendar-weekdays div {
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-days {
+    display: contents;
+}
+
+.calendar-day {
+    min-height: 80px;
+    padding: 5px;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    position: relative;
+}
+
+body.dark-mode .calendar-day {
+    border-color: rgba(242, 204, 128, 0.3);
+}
+
+.calendar-day.other-month {
+    opacity: 0.3;
+}
+
+.calendar-day:hover {
+    background-color: rgba(252, 1, 0, 0.05);
+}
+
+.calendar-event {
+    font-size: 12px;
+    background-color: rgba(252, 1, 0, 0.1);
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-top: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.dark-mode .calendar-event {
+    background-color: rgba(252, 1, 0, 0.3);
+}
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.event-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    align-items: center;
+}
+
+body.dark-mode .event-card {
+    background-color: rgba(242, 241, 242, 0.1);
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+.event-day {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+body.dark-mode .event-day {
+    color: var(--secondary);
+}
+
+.event-month {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--font-dark);
+}
+
+body.dark-mode .event-month {
+    color: var(--white);
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.event-details h5 {
+    margin: 0 0 5px 0;
+    color: var(--font-dark);
+}
+
+body.dark-mode .event-details h5 {
+    color: var(--white);
+}
+
+.event-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: var(--font-dark);
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+body.dark-mode .event-meta {
+    color: var(--white);
+}
+
+.event-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.event-description {
+    font-size: 14px;
+    color: var(--font-dark);
+    opacity: 0.8;
+}
+
+body.dark-mode .event-description {
+    color: var(--white);
+}
+
+.event-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.resource-allocation {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+
+body.dark-mode .resource-allocation {
+    background-color: var(--accent);
+}
+
+.resource-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.resource-content {
+    display: none;
+}
+
+.resource-content.active {
+    display: block;
+}
+
+.resource-card {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+body.dark-mode .resource-card {
+    background-color: rgba(242, 241, 242, 0.1);
+}
+
+.resource-card h5 {
+    margin-top: 0;
+    color: var(--primary);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .resource-card h5 {
+    color: var(--secondary);
+    border-bottom-color: rgba(242, 204, 128, 0.3);
+}
+
+.assignment-list, .facility-list, .equipment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.assignment, .facility-item, .equipment-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.assignment:hover, .facility-item:hover, .equipment-item:hover {
+    background-color: rgba(252, 1, 0, 0.05);
+}
+
+.assignment-details, .facility-details, .equipment-details {
+    flex-grow: 1;
+}
+
+.assignment-name, .facility-name, .equipment-name {
+    font-weight: 600;
+    color: var(--font-dark);
+}
+
+body.dark-mode .assignment-name,
+body.dark-mode .facility-name,
+body.dark-mode .equipment-name {
+    color: var(--white);
+}
+
+.assignment-role, .facility-schedule, .equipment-status {
+    font-size: 14px;
+    color: var(--font-dark);
+    opacity: 0.8;
+}
+
+body.dark-mode .assignment-role,
+body.dark-mode .facility-schedule,
+body.dark-mode .equipment-status {
+    color: var(--white);
+}
+
+.facility-icon, .equipment-icon {
+    font-size: 24px;
+    color: var(--primary);
+    min-width: 40px;
+    text-align: center;
+}
+
+body.dark-mode .facility-icon,
+body.dark-mode .equipment-icon {
+    color: var(--secondary);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(98, 39, 37, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+body.dark-mode .modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--accent);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.3);
+}
+
+.modal-header h4 {
+    margin: 0;
+    color: var(--primary);
+}
+
+body.dark-mode .modal-header h4 {
+    color: var(--secondary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--font-dark);
+    transition: var(--transition);
+}
+
+body.dark-mode .modal-close {
+    color: var(--white);
+}
+
+.modal-close:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--font-dark);
+}
+
+body.dark-mode .form-group label {
+    color: var(--white);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 16px;
+    transition: var(--transition);
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(252, 1, 0, 0.2);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.recurrence-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.recurrence-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: normal;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.hidden {
+    display: none;
+}

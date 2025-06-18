@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Compliance & Documentation</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/hr.css">
+    <link rel="stylesheet" href="../css/compliance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> </head> <body class="light-mode">
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+    </div>
+    <h2>Human Resource</h2>
+    <ul class="menu">
+        <li><a href="hr_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="members.html"><i class="fas fa-users"></i> Staff & Members</a></li>
+        <li><a href="recruitment.html"><i class="fas fa-user-plus"></i> Recruitment & Onboarding</a></li>
+        <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Event Scheduling</a></li>
+        <li class="active"><a href="compliance.html"><i class="fas fa-file-alt"></i> Compliance & Documentation</a></li>
+        <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+    </ul>
+</div>
+
+<div class="main">
+    <header>
+        <div class="search-bar">
+            <input type="text" placeholder="Search documents or policies...">
+            <span class="notification-bell"><i class="fas fa-bell"></i></span>
+        </div>
+
+        <div class="profile-section">
+            <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+            <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <div class="compliance-header">
+        <h3>Compliance & Documentation Center</h3>
+        <div class="compliance-actions">
+            <button class="btn btn-primary" id="upload-document">
+                <i class="fas fa-upload"></i> Upload Document
+            </button>
+            <button class="btn btn-secondary" id="new-policy">
+                <i class="fas fa-file-contract"></i> Create Policy
+            </button>
+            <button class="btn btn-filter" id="filter-docs">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+        </div>
+    </div>
+
+    <div class="compliance-tabs">
+        <button class="tab-btn active" data-tab="policies">Policies</button>
+        <button class="tab-btn" data-tab="personnel">Personnel Files</button>
+        <button class="tab-btn" data-tab="training">Training Records</button>
+        <button class="tab-btn" data-tab="incidents">Incident Reports</button>
+    </div>
+
+    <div class="tab-content active" id="policies-tab">
+        <div class="document-actions">
+            <div class="document-search">
+                <input type="text" placeholder="Search policies...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="document-filter">
+                <select>
+                    <option>All Categories</option>
+                    <option>HR Policies</option>
+                    <option>Financial</option>
+                    <option>Operational</option>
+                    <option>Safety</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="document-list">
+            <div class="document-card">
+                <div class="document-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="document-info">
+                    <h4>Church Code of Conduct</h4>
+                    <div class="document-meta">
+                        <span><i class="fas fa-tag"></i> HR Policies</span>
+                        <span><i class="fas fa-calendar-alt"></i> Effective: 01/01/2023</span>
+                        <span><i class="fas fa-user-edit"></i> Last updated by: Pastor John</span>
+                    </div>
+                    <div class="document-stats">
+                        <span class="status-badge acknowledged">85% Acknowledged</span>
+                        <span class="status-badge version">Version 3.2</span>
+                    </div>
+                </div>
+                <div class="document-actions">
+                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn download"><i class="fas fa-download"></i></button>
+                    <button class="action-btn history"><i class="fas fa-history"></i></button>
+                </div>
+            </div>
+
+            <div class="document-card">
+                <div class="document-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="document-info">
+                    <h4>Child Protection Policy</h4>
+                    <div class="document-meta">
+                        <span><i class="fas fa-tag"></i> Safety</span>
+                        <span><i class="fas fa-calendar-alt"></i> Effective: 03/15/2023</span>
+                        <span><i class="fas fa-user-edit"></i> Last updated by: Sarah Williams</span>
+                    </div>
+                    <div class="document-stats">
+                        <span class="status-badge acknowledged">92% Acknowledged</span>
+                        <span class="status-badge version">Version 2.1</span>
+                        <span class="status-badge required">Required</span>
+                    </div>
+                </div>
+                <div class="document-actions">
+                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn download"><i class="fas fa-download"></i></button>
+                    <button class="action-btn history"><i class="fas fa-history"></i></button>
+                </div>
+            </div>
+
+            <div class="document-card">
+                <div class="document-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="document-info">
+                    <h4>Data Privacy Policy</h4>
+                    <div class="document-meta">
+                        <span><i class="fas fa-tag"></i> Operational</span>
+                        <span><i class="fas fa-calendar-alt"></i> Effective: 05/20/2023</span>
+                        <span><i class="fas fa-user-edit"></i> Last updated by: Michael Johnson</span>
+                    </div>
+                    <div class="document-stats">
+                        <span class="status-badge acknowledged">78% Acknowledged</span>
+                        <span class="status-badge version">Version 1.5</span>
+                    </div>
+                </div>
+                <div class="document-actions">
+                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn download"><i class="fas fa-download"></i></button>
+                    <button class="action-btn history"><i class="fas fa-history"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="personnel-tab">
+        <div class="document-actions">
+            <div class="document-search">
+                <input type="text" placeholder="Search personnel files...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="document-filter">
+                <select>
+                    <option>All Staff</option>
+                    <option>Ministry Leaders</option>
+                    <option>Administrative</option>
+                    <option>Volunteers</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="expiry-alerts">
+            <h4><i class="fas fa-exclamation-triangle"></i> Upcoming Document Expirations</h4>
+            <div class="alert-list">
+                <div class="alert-item">
+                    <span>John Doe - Background Check</span>
+                    <span>Expires in 15 days</span>
+                    <button class="btn btn-small">Renew</button>
+                </div>
+                <div class="alert-item">
+                    <span>Jane Smith - First Aid Certification</span>
+                    <span>Expires in 30 days</span>
+                    <button class="btn btn-small">Renew</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="document-list">
+            <div class="document-card">
+                <div class="document-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="document-info">
+                    <h4>John Doe - Personnel File</h4>
+                    <div class="document-meta">
+                        <span><i class="fas fa-briefcase"></i> Worship Leader</span>
+                        <span><i class="fas fa-calendar-alt"></i> Hired: 01/15/2020</span>
+                        <span><i class="fas fa-file-alt"></i> 12 Documents</span>
+                    </div>
+                    <div class="document-stats">
+                        <span class="status-badge complete">Complete</span>
+                        <span class="status-badge alert">1 Expiring Soon</span>
+                    </div>
+                </div>
+                <div class="document-actions">
+                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn download"><i class="fas fa-download"></i></button>
+                    <button class="action-btn upload"><i class="fas fa-upload"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="training-tab">
+        <div class="training-stats">
+            <div class="stat-card">
+                <h5>Completed Training</h5>
+                <p>85%</p>
+                <div class="progress-bar small">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <h5>Overdue Training</h5>
+                <p>12</p>
+                <div class="progress-bar small">
+                    <div class="progress-fill error" style="width: 15%;"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <h5>Upcoming Renewals</h5>
+                <p>8</p>
+                <div class="progress-bar small">
+                    <div class="progress-fill warning" style="width: 10%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="training-list">
+            <div class="training-item required">
+                <div class="training-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <div class="training-info">
+                    <h4>Child Protection Training</h4>
+                    <p>Mandatory for all staff and volunteers working with children</p>
+                    <div class="training-meta">
+                        <span><i class="fas fa-user-check"></i> 42/50 Completed</span>
+                        <span><i class="fas fa-calendar-times"></i> 8 Overdue</span>
+                    </div>
+                </div>
+                <div class="training-actions">
+                    <button class="btn btn-small">View Records</button>
+                    <button class="btn btn-small btn-primary">Schedule Session</button>
+                </div>
+            </div>
+
+            <div class="training-item">
+                <div class="training-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="training-info">
+                    <h4>First Aid & CPR</h4>
+                    <p>Required for safety team members</p>
+                    <div class="training-meta">
+                        <span><i class="fas fa-user-check"></i> 15/20 Completed</span>
+                        <span><i class="fas fa-calendar-alt"></i> Renewal due in 3 months</span>
+                    </div>
+                </div>
+                <div class="training-actions">
+                    <button class="btn btn-small">View Records</button>
+                    <button class="btn btn-small btn-primary">Schedule Session</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="incidents-tab">
+        <div class="incident-actions">
+            <button class="btn btn-primary" id="new-incident">
+                <i class="fas fa-plus"></i> New Incident Report
+            </button>
+            <div class="incident-filter">
+                <select>
+                    <option>All Incidents</option>
+                    <option>Open</option>
+                    <option>Resolved</option>
+                    <option>Requires Follow-up</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="incident-list">
+            <div class="incident-card">
+                <div class="incident-severity high"></div>
+                <div class="incident-info">
+                    <h4>Child Safety Concern</h4>
+                    <div class="incident-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Reported: 05/15/2023</span>
+                        <span><i class="fas fa-user"></i> Reported by: Sarah Williams</span>
+                        <span><i class="fas fa-tag"></i> Category: Safety</span>
+                    </div>
+                    <p>Parent reported inappropriate interaction between volunteer and child during Sunday school.</p>
+                </div>
+                <div class="incident-status">
+                    <span class="status-badge open">Under Investigation</span>
+                    <button class="btn btn-small">View Details</button>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-severity medium"></div>
+                <div class="incident-info">
+                    <h4>Workplace Conflict</h4>
+                    <div class="incident-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Reported: 06/01/2023</span>
+                        <span><i class="fas fa-user"></i> Reported by: Michael Johnson</span>
+                        <span><i class="fas fa-tag"></i> Category: HR</span>
+                    </div>
+                    <p>Two staff members involved in verbal altercation during team meeting.</p>
+                </div>
+                <div class="incident-status">
+                    <span class="status-badge in-progress">Mediation Scheduled</span>
+                    <button class="btn btn-small">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+</div>
+
+<!-- Document Upload Modal -->
+<div class="modal" id="upload-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>Upload New Document</h3>
+        <form id="document-upload-form">
+            <div class="form-group">
+                <label for="document-name">Document Name</label>
+                <input type="text" id="document-name" required>
+            </div>
+            <div class="form-group">
+                <label for="document-type">Document Type</label>
+                <select id="document-type" required>
+                    <option value="">Select type...</option>
+                    <option value="policy">Policy</option>
+                    <option value="contract">Contract</option>
+                    <option value="certification">Certification</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document-category">Category</label>
+                <select id="document-category" required>
+                    <option value="">Select category...</option>
+                    <option value="hr">HR</option>
+                    <option value="safety">Safety</option>
+                    <option value="financial">Financial</option>
+                    <option value="operational">Operational</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document-file">Select File</label>
+                <input type="file" id="document-file" required>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="requires-acknowledgment">
+                <label for="requires-acknowledgment">Requires Staff Acknowledgment</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Document</button>
+        </form>
+    </div>
+</div>
+
+<script src="../js/hr.js"></script>
+<script src="../js/compliance.js"></script>
+
+</body>
+</html>

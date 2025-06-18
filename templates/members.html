@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Staff & Members</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/hr.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+    <div class="logo">
+        <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+    </div>
+    <h2>Human Resource</h2>
+    <ul class="menu">
+        <li><a href="hr_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li class="active"><a href="members.html"><i class="fas fa-users"></i> Staff & Members</a></li>
+        <li><a href="recruitment.html"><i class="fas fa-user-plus"></i> Recruitment & Onboarding</a></li>
+        <li><a href="#"><i class="fas fa-calendar-alt"></i> Event Scheduling</a></li>
+        <li><a href="#"><i class="fas fa-file-alt"></i> Compliance & Documentation</a></li>
+        <li><a href="#"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+    </ul>
+</div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search staff or members...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="members-header">
+            <h3>Staff & Members Directory</h3>
+            <div class="members-actions">
+                <button class="btn btn-primary"><i class="fas fa-plus"></i> Add New</button>
+                <button class="btn btn-secondary"><i class="fas fa-file-export"></i> Export</button>
+                <button class="btn btn-filter"><i class="fas fa-filter"></i> Filter</button>
+            </div>
+        </div>
+
+        <div class="members-table-container">
+            <table class="members-table">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Ministry</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="../img/user.png" alt="User" class="member-photo"></td>
+                        <td>John Doe</td>
+                        <td>Worship Leader</td>
+                        <td>Worship Team</td>
+                        <td>john@church.org</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="../img/user.png" alt="User" class="member-photo"></td>
+                        <td>Jane Smith</td>
+                        <td>Sunday School Teacher</td>
+                        <td>Children's Ministry</td>
+                        <td>jane@church.org</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="../img/user.png" alt="User" class="member-photo"></td>
+                        <td>Michael Johnson</td>
+                        <td>Outreach Coordinator</td>
+                        <td>Outreach</td>
+                        <td>michael@church.org</td>
+                        <td><span class="status-badge inactive">Inactive</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="../img/user.png" alt="User" class="member-photo"></td>
+                        <td>Sarah Williams</td>
+                        <td>Youth Pastor</td>
+                        <td>Youth Ministry</td>
+                        <td>sarah@church.org</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <script src="../js/hr.js"></script>
+</body>
+</html>
