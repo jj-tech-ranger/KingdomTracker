@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Reports & Analytics</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/inventory.css">
+    <link rel="stylesheet" href="../css/inventory_reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+    </div>
+    <h2>Inventory</h2>
+    <ul class="menu">
+        <li><a href="inventory_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="inventory_management.html"><i class="fas fa-boxes"></i> Inventory Management</a></li>
+        <li><a href="equipment_tracking.html"><i class="fas fa-laptop"></i> Equipment Tracking</a></li>
+        <li><a href="stock_movements.html"><i class="fas fa-clipboard-list"></i> Stock Movements</a></li>
+        <li class="active"><a href="inventory_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+    </ul>
+    <div class="home-button">
+        <a href="../index.html"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+</div>
+
+<div class="main">
+    <header>
+        <div class="search-bar">
+            <input type="text" id="reportSearch" placeholder="Search reports...">
+            <span class="notification-bell"><i class="fas fa-bell"></i></span>
+        </div>
+
+        <div class="profile-section">
+            <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+            <span class="dropdown">Inventory Team <i class="fas fa-chevron-down"></i></span>
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <div class="report-tabs">
+        <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-button" data-tab="stock-levels">Stock Levels</button>
+        <button class="tab-button" data-tab="movements">Movements</button>
+        <button class="tab-button" data-tab="valuation">Valuation</button>
+        <button class="tab-button" data-tab="performance">Performance</button>
+        <button class="tab-button" data-tab="equipment">Equipment</button>
+    </div>
+
+    <div class="global-filters">
+        <div class="filter-group">
+            <label for="reportDateRange">Date Range:</label>
+            <input type="text" id="reportDateRange" placeholder="Select date range">
+        </div>
+        <div class="filter-group">
+            <label for="reportCategory">Category:</label>
+            <select id="reportCategory">
+                <option value="all">All Categories</option>
+                <option value="IT Equipment">IT Equipment</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Facility Items">Facility Items</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="reportLocation">Location:</label>
+            <select id="reportLocation">
+                <option value="all">All Locations</option>
+                <option value="Main Warehouse">Main Warehouse</option>
+                <option value="Office Storage">Office Storage</option>
+                <option value="IT Department">IT Department</option>
+                <option value="Meeting Room">Meeting Room</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="reportAggregation">Aggregation:</label>
+            <select id="reportAggregation">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+            </select>
+        </div>
+        <button class="filter-button" id="applyReportFilters">Apply</button>
+        <button class="filter-button" id="resetReportFilters">Reset</button>
+    </div>
+
+    <!-- Dashboard Tab Content -->
+    <div id="dashboard-tab" class="tab-content active">
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <h4>Inventory Value</h4>
+                <p>$84,750</p>
+                <i class="fas fa-dollar-sign kpi-icon"></i>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i> 5.2%
+                </div>
+            </div>
+            <div class="kpi-card">
+                <h4>Turnover Ratio</h4>
+                <p>3.8</p>
+                <i class="fas fa-retweet kpi-icon"></i>
+                <div class="kpi-trend down">
+                    <i class="fas fa-arrow-down"></i> 0.4%
+                </div>
+            </div>
+            <div class="kpi-card">
+                <h4>Days to Sell</h4>
+                <p>32</p>
+                <i class="fas fa-calendar-alt kpi-icon"></i>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i> 2
+                </div>
+            </div>
+            <div class="kpi-card">
+                <h4>Low Stock Items</h4>
+                <p>36</p>
+                <i class="fas fa-exclamation-triangle kpi-icon"></i>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i> 8
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Inventory Movement Trend</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="movementTrendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Category Distribution</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="categoryDistributionChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Stock Status</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="stockStatusChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Top Moved Items</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="topMovedChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Levels Tab Content -->
+    <div id="stock-levels-tab" class="tab-content">
+        <div class="section-header">
+            <h3>Stock Level Reports</h3>
+            <div class="report-actions">
+                <button class="export-button"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-button"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+
+        <div class="report-container">
+            <div class="report-card">
+                <h4>Current Inventory Levels</h4>
+                <div class="table-container">
+                    <table id="inventoryLevelsTable">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Reorder Level</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <h4>Low Stock Items</h4>
+                <div class="table-container">
+                    <table id="lowStockTable">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Current Stock</th>
+                                <th>Reorder Level</th>
+                                <th>Variance</th>
+                                <th>Suggested Order</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-card full-width">
+                <h4>Stock Aging Report</h4>
+                <div class="table-container">
+                    <table id="stockAgingTable">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Current Stock</th>
+                                <th>Last Received</th>
+                                <th>Last Issued</th>
+                                <th>Days Since Last Movement</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Movements Tab Content -->
+    <div id="movements-tab" class="tab-content">
+        <div class="section-header">
+            <h3>Movement Reports</h3>
+            <div class="report-actions">
+                <button class="export-button"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-button"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Monthly Movement Summary</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="monthlyMovementChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Movement by Category</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="categoryMovementChart"></canvas>
+            </div>
+        </div>
+
+        <div class="report-container">
+            <div class="report-card full-width">
+                <h4>Detailed Movement History</h4>
+                <div class="table-container">
+                    <table id="movementHistoryTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>From Location</th>
+                                <th>To Location</th>
+                                <th>Initiated By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="movementPrevPage" disabled><i class="fas fa-chevron-left"></i></button>
+                    <span id="movementPageInfo">Page 1 of 1</span>
+                    <button id="movementNextPage" disabled><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Valuation Tab Content -->
+    <div id="valuation-tab" class="tab-content">
+        <div class="section-header">
+            <h3>Inventory Valuation Reports</h3>
+            <div class="report-actions">
+                <button class="export-button"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-button"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Inventory Value Trend</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="valueTrendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Value by Category</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="valueByCategoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="report-container">
+            <div class="report-card full-width">
+                <h4>Detailed Inventory Valuation</h4>
+                <div class="table-container">
+                    <table id="valuationTable">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Unit Cost</th>
+                                <th>Total Value</th>
+                                <th>% of Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Tab Content -->
+    <div id="performance-tab" class="tab-content">
+        <div class="section-header">
+            <h3>Inventory Performance Reports</h3>
+            <div class="report-actions">
+                <button class="export-button"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-button"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Turnover by Category</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Stockout Frequency</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="stockoutChart"></canvas>
+            </div>
+        </div>
+
+        <div class="report-container">
+            <div class="report-card full-width">
+                <h4>Inventory Performance Metrics</h4>
+                <div class="table-container">
+                    <table id="performanceTable">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Turnover Ratio</th>
+                                <th>Days to Sell</th>
+                                <th>Stockout Frequency</th>
+                                <th>Carrying Cost</th>
+                                <th>Efficiency Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Tab Content -->
+    <div id="equipment-tab" class="tab-content">
+        <div class="section-header">
+            <h3>Equipment Reports</h3>
+            <div class="report-actions">
+                <button class="export-button"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-button"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Equipment Status</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="equipmentStatusChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Maintenance History</h3>
+                    <button class="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <canvas id="maintenanceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="report-container">
+            <div class="report-card full-width">
+                <h4>Equipment Utilization</h4>
+                <div class="table-container">
+                    <table id="equipmentTable">
+                        <thead>
+                            <tr>
+                                <th>Equipment ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Assigned To</th>
+                                <th>Last Used</th>
+                                <th>Utilization %</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="dashboard-footer">
+    <div class="footer-content">
+        <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+        <span class="footer-text">Powered by Elyashib</span>
+    </div>
+</footer>
+
+<script src="../js/inventory.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="../js/inventory_reports.js"></script>
+</body>
+</html>

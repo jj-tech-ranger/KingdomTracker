@@ -1,0 +1,382 @@
+/* Inventory Management Specific Styles */
+.inventory-management {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-top: 20px;
+}
+
+body.dark-mode .inventory-management {
+    background-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-management h2 {
+    color: var(--primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.inventory-management h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+}
+
+body.dark-mode .inventory-management h2 {
+    color: var(--secondary);
+}
+
+.action-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 30px;
+    background-color: var(--white);
+    color: var(--font-dark);
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+body.dark-mode .filter-select {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.filter-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(252, 1, 0, 0.2);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.inventory-management table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-management th {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.inventory-management td {
+    padding: 14px 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .inventory-management td {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.2);
+}
+
+.inventory-management tr:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.page-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--font-dark);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.page-btn.active {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+}
+
+.page-btn:hover:not(.active):not(:disabled) {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+body.dark-mode .page-btn {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+}
+
+body.dark-mode .page-btn:hover:not(.active):not(:disabled) {
+    background-color: rgba(252, 1, 0, 0.2);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(98, 39, 37, 0.5);
+    overflow: auto;
+    transition: var(--transition);
+}
+
+body.dark-mode .modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 60%;
+    max-width: 700px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-content.small {
+    width: 40%;
+    max-width: 500px;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--accent);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--font-dark);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+body.dark-mode .close-btn {
+    color: var(--white);
+}
+
+.close-btn:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+.modal h3 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+body.dark-mode .modal h3 {
+    color: var(--secondary);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--font-dark);
+}
+
+body.dark-mode label {
+    color: var(--white);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    font-size: 16px;
+    transition: var(--transition);
+    background-color: var(--white);
+    color: var(--font-dark);
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(252, 1, 0, 0.2);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.cancel-btn, .save-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cancel-btn {
+    background-color: var(--white);
+    color: var(--font-dark);
+    border: 1px solid var(--secondary);
+}
+
+.save-btn {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+}
+
+body.dark-mode .cancel-btn {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.cancel-btn:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.save-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(252, 1, 0, 0.3);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .modal-content {
+        width: 70%;
+    }
+    .modal-content.small {
+        width: 50%;
+    }
+}
+
+@media (max-width: 992px) {
+    .modal-content {
+        width: 80%;
+    }
+    .modal-content.small {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    .modal-content.small {
+        width: 80%;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .action-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .filters {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .filter-select {
+        flex: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        margin: 15% auto;
+    }
+    .form-actions {
+        flex-direction: column;
+    }
+    .cancel-btn, .save-btn {
+        width: 100%;
+    }
+}

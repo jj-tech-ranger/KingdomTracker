@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Stock Movements</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/inventory.css">
+    <link rel="stylesheet" href="../css/stock_movements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+    </div>
+    <h2>Inventory</h2>
+    <ul class="menu">
+        <li><a href="inventory_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="inventory_management.html"><i class="fas fa-boxes"></i> Inventory Management</a></li>
+        <li><a href="equipment_tracking.html"><i class="fas fa-laptop"></i> Equipment Tracking</a></li>
+        <li class="active"><a href="stock_movements.html"><i class="fas fa-clipboard-list"></i> Stock Movements</a></li>
+        <li><a href="inventory_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+    </ul>
+    <div class="home-button">
+        <a href="../index.html"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+</div>
+
+<div class="main">
+    <header>
+        <div class="search-bar">
+            <input type="text" id="movementSearch" placeholder="Search movements...">
+            <span class="notification-bell"><i class="fas fa-bell"></i></span>
+        </div>
+
+        <div class="profile-section">
+            <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+            <span class="dropdown">Inventory Team <i class="fas fa-chevron-down"></i></span>
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <div class="section-header">
+        <h3>Stock Movements</h3>
+        <div class="action-buttons">
+            <button class="add-button" id="newMovementBtn">
+                <i class="fas fa-plus"></i> Record New Movement
+            </button>
+            <button class="export-button" id="exportBtn">
+                <i class="fas fa-file-export"></i> Export
+            </button>
+        </div>
+    </div>
+
+    <div class="filters">
+        <div class="filter-group">
+            <label for="movementTypeFilter">Movement Type:</label>
+            <select id="movementTypeFilter">
+                <option value="all">All Types</option>
+                <option value="receipt">Receipt</option>
+                <option value="issue">Issue</option>
+                <option value="transfer">Transfer</option>
+                <option value="adjustment">Adjustment</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="dateRangeFilter">Date Range:</label>
+            <input type="text" id="dateRangeFilter" placeholder="Select date range">
+        </div>
+        <div class="filter-group">
+            <label for="categoryFilter">Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="IT Equipment">IT Equipment</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Facility Items">Facility Items</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="locationFilter">Location:</label>
+            <select id="locationFilter">
+                <option value="all">All Locations</option>
+                <option value="Main Warehouse">Main Warehouse</option>
+                <option value="Office Storage">Office Storage</option>
+                <option value="IT Department">IT Department</option>
+                <option value="Meeting Room">Meeting Room</option>
+            </select>
+        </div>
+        <button class="filter-button" id="applyFiltersBtn">Apply Filters</button>
+        <button class="filter-button" id="resetFiltersBtn">Reset</button>
+    </div>
+
+    <div class="project-summary">
+        <table id="movementsTable">
+            <thead>
+                <tr>
+                    <th>Movement ID</th>
+                    <th>Date & Time</th>
+                    <th>Type</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>From Location</th>
+                    <th>To Location</th>
+                    <th>Initiated By</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample data rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPageBtn" disabled><i class="fas fa-chevron-left"></i></button>
+            <span id="pageInfo">Page 1 of 1</span>
+            <button id="nextPageBtn" disabled><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- New Movement Modal -->
+<div id="movementModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Record New Stock Movement</h4>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="movementForm">
+                <div class="form-group">
+                    <label for="movementType">Movement Type *</label>
+                    <select id="movementType" required>
+                        <option value="">Select movement type</option>
+                        <option value="receipt">Receipt (Stock In)</option>
+                        <option value="issue">Issue (Stock Out)</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="adjustment">Adjustment</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="itemGroup">
+                    <label for="itemSelect">Item *</label>
+                    <select id="itemSelect" required>
+                        <option value="">Select item</option>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="movementQuantity">Quantity *</label>
+                    <input type="number" id="movementQuantity" min="1" required>
+                </div>
+
+                <div class="form-group" id="fromLocationGroup">
+                    <label for="fromLocation">From Location *</label>
+                    <select id="fromLocation" required>
+                        <option value="">Select source location</option>
+                        <option value="Main Warehouse">Main Warehouse</option>
+                        <option value="Office Storage">Office Storage</option>
+                        <option value="IT Department">IT Department</option>
+                        <option value="Meeting Room">Meeting Room</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="toLocationGroup">
+                    <label for="toLocation">To Location *</label>
+                    <select id="toLocation" required>
+                        <option value="">Select destination location</option>
+                        <option value="Main Warehouse">Main Warehouse</option>
+                        <option value="Office Storage">Office Storage</option>
+                        <option value="IT Department">IT Department</option>
+                        <option value="Meeting Room">Meeting Room</option>
+                        <option value="External">External</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="movementReason">Reason/Notes</label>
+                    <textarea id="movementReason" rows="3"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="cancelMovementBtn">Cancel</button>
+                    <button type="submit" class="submit-button">Record Movement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Movement Details Modal -->
+<div id="detailsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Movement Details</h4>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body" id="movementDetailsContent">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="cancel-button" id="closeDetailsBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<footer class="dashboard-footer">
+    <div class="footer-content">
+        <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+        <span class="footer-text">Powered by Elyashib</span>
+    </div>
+</footer>
+
+<script src="../js/inventory.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="../js/stock_movements.js"></script>
+</body>
+</html>

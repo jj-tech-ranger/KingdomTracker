@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Inventory Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/inventory.css">
+    <link rel="stylesheet" href="../css/inventory_management.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+    </div>
+    <h2>Inventory</h2>
+    <ul class="menu">
+        <li><a href="inventory_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li class="active"><a href="inventory_management.html"><i class="fas fa-boxes"></i> Inventory Management</a></li>
+        <li><a href="equipment_tracking.html"><i class="fas fa-laptop"></i> Equipment Tracking</a></li>
+        <li><a href="stock_movements.html"><i class="fas fa-clipboard-list"></i> Stock Movements</a></li>
+        <li><a href="inventory_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+    </ul>
+    <div class="home-button">
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+    </div>
+</div>
+
+<div class="main">
+    <header>
+        <div class="search-bar">
+            <input type="text" id="inventorySearch" placeholder="Search inventory items...">
+            <span class="notification-bell"><i class="fas fa-bell"></i></span>
+        </div>
+
+        <div class="profile-section">
+            <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+            <span class="dropdown">Inventory Team <i class="fas fa-chevron-down"></i></span>
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <div class="inventory-management">
+        <div class="section-header">
+            <h2>Inventory Management</h2>
+            <div class="action-controls">
+                <button class="add-button" id="addItemBtn">
+                    <i class="fas fa-plus"></i> Add New Item
+                </button>
+                <div class="filters">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="IT Equipment">IT Equipment</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Facility Items">Facility Items</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Statuses</option>
+                        <option value="In Stock">In Stock</option>
+                        <option value="Low Stock">Low Stock</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Out of Stock">Out of Stock</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Current Stock</th>
+                        <th>Reorder Level</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ITM-0042</td>
+                        <td>Wireless Mouse</td>
+                        <td>IT Equipment</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>pcs</td>
+                        <td><span class="status critical">Critical</span></td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            <button class="action-btn restock" title="Restock"><i class="fas fa-cart-plus"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ITM-0087</td>
+                        <td>A4 Printer Paper</td>
+                        <td>Office Supplies</td>
+                        <td>5</td>
+                        <td>20</td>
+                        <td>ream</td>
+                        <td><span class="status warning">Low Stock</span></td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            <button class="action-btn restock" title="Restock"><i class="fas fa-cart-plus"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ITM-0125</td>
+                        <td>Office Chair</td>
+                        <td>Furniture</td>
+                        <td>15</td>
+                        <td>5</td>
+                        <td>pcs</td>
+                        <td><span class="status good">In Stock</span></td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            <button class="action-btn restock" title="Restock"><i class="fas fa-cart-plus"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ITM-0093</td>
+                        <td>HDMI Cable</td>
+                        <td>IT Equipment</td>
+                        <td>0</td>
+                        <td>10</td>
+                        <td>pcs</td>
+                        <td><span class="status neutral">Out of Stock</span></td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            <button class="action-btn restock" title="Restock"><i class="fas fa-cart-plus"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Item Modal -->
+<div id="itemModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3 id="modalTitle">Add New Inventory Item</h3>
+        <form id="itemForm">
+            <div class="form-group">
+                <label for="itemName">Item Name</label>
+                <input type="text" id="itemName" required>
+            </div>
+            <div class="form-group">
+                <label for="itemCode">Item Code</label>
+                <input type="text" id="itemCode" required>
+            </div>
+            <div class="form-group">
+                <label for="itemCategory">Category</label>
+                <select id="itemCategory" required>
+                    <option value="">Select Category</option>
+                    <option value="IT Equipment">IT Equipment</option>
+                    <option value="Office Supplies">Office Supplies</option>
+                    <option value="Facility Items">Facility Items</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="itemDescription">Description</label>
+                <textarea id="itemDescription" rows="3"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="currentStock">Current Stock</label>
+                    <input type="number" id="currentStock" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="reorderLevel">Reorder Level</label>
+                    <input type="number" id="reorderLevel" min="0" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="unitMeasure">Unit of Measure</label>
+                    <select id="unitMeasure" required>
+                        <option value="">Select Unit</option>
+                        <option value="pcs">pcs</option>
+                        <option value="ream">ream</option>
+                        <option value="box">box</option>
+                        <option value="kg">kg</option>
+                        <option value="liter">liter</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="unitPrice">Unit Price ($)</label>
+                    <input type="number" id="unitPrice" min="0" step="0.01" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="itemLocation">Location</label>
+                <input type="text" id="itemLocation">
+            </div>
+            <div class="form-group">
+                <label for="itemSupplier">Supplier</label>
+                <input type="text" id="itemSupplier">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="save-btn">Save Item</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Restock Modal -->
+<div id="restockModal" class="modal">
+    <div class="modal-content small">
+        <span class="close-btn">&times;</span>
+        <h3>Restock Item</h3>
+        <form id="restockForm">
+            <div class="form-group">
+                <label for="restockQuantity">Quantity to Add</label>
+                <input type="number" id="restockQuantity" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="restockSupplier">Supplier</label>
+                <input type="text" id="restockSupplier">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="save-btn">Confirm Restock</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="dashboard-footer">
+    <div class="footer-content">
+        <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+        <span class="footer-text">Powered by Elyashib</span>
+    </div>
+</footer>
+
+<script src="../js/inventory.js"></script>
+<script src="../js/inventory_management.js"></script>
+</body>
+</html>

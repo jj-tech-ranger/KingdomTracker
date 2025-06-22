@@ -1,34 +1,64 @@
- // Toggle password visibility
-        document.querySelectorAll('.toggle-password').forEach(icon => {
-            icon.addEventListener('click', function() {
-                const passwordInput = this.previousElementSibling;
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye-slash');
-            });
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', toggleTheme);
 
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    // Password Toggle
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', togglePasswordVisibility);
+    });
 
-        // Check for saved theme preference or use system preference
-        const currentTheme = localStorage.getItem('theme') ||
-                            (prefersDarkScheme.matches ? 'dark' : 'light');
+    // Form Submission
+    const loginForm = document.getElementById('login-form');
+    loginForm?.addEventListener('submit', handleLogin);
 
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
+    // Functions
+    function toggleTheme() {
+        const body = document.body;
+        if (body.classList.contains('light-mode')) {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            body.classList.add('black-mode');
+            themeToggle.innerHTML = '<i class="fas fa-adjust"></i>';
+        } else {
+            body.classList.remove('black-mode');
+            body.classList.add('light-mode');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    }
+
+    function togglePasswordVisibility(e) {
+        const icon = e.target;
+        const targetId = icon.dataset.target;
+        const passwordInput = document.getElementById(targetId);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+
+        // Basic validation
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) {
+            alert('Please fill in all fields');
+            return;
         }
 
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
-        });
-
-        // Listen for system theme changes
-        prefersDarkScheme.addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                document.body.classList.toggle('dark-mode', e.matches);
-            }
-        });
+        // For demo purposes, redirect to index.html
+        window.location.href = 'index.html';
+    }
+});

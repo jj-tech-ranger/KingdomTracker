@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Budget Planning</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/finance.css">
+    <link rel="stylesheet" href="../css/budget.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Finance</h2>
+        <ul class="menu">
+            <li><a href="finance_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="donations.html"><i class="fas fa-coins"></i> Donations & Tithe</a></li>
+            <li><a href="expense_management.html"><i class="fas fa-receipt"></i> Expense Management</a></li>
+            <li class="active"><a href="budget_planning.html"><i class="fas fa-chart-pie"></i> Budget Planning</a></li>
+            <li><a href="payroll.html"><i class="fas fa-money-bill-wave"></i> Payroll</a></li>
+            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Financial Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search budgets...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Finance Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="budget-overview">
+            <div class="card">
+                <h4>Annual Budget</h4>
+                <p>$350,000</p>
+                <i class="fas fa-calendar-alt card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Budget Used</h4>
+                <p>$187,450</p>
+                <i class="fas fa-wallet card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Budget Remaining</h4>
+                <p>$162,550</p>
+                <i class="fas fa-piggy-bank card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Utilization</h4>
+                <p>54%</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 54%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Budget vs Actual</h3>
+                <canvas id="budgetVsActualChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Budget Allocation</h3>
+                <canvas id="budgetAllocationChart"></canvas>
+            </div>
+        </div>
+
+        <div class="budget-alerts">
+            <div class="section-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Budget Alerts</h3>
+            </div>
+            <div class="alert-list">
+                <div class="alert-item warning">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="alert-content">
+                        <strong>Ministry Outreach</strong> has reached 85% of allocated budget
+                    </div>
+                    <div class="alert-date">Today</div>
+                </div>
+                <div class="alert-item danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="alert-content">
+                        <strong>Facilities Maintenance</strong> has exceeded budget by 12%
+                    </div>
+                    <div class="alert-date">2 days ago</div>
+                </div>
+                <div class="alert-item info">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="alert-content">
+                        <strong>Youth Program</strong> is underutilized (35% spent)
+                    </div>
+                    <div class="alert-date">1 week ago</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="budget-controls">
+            <div class="budget-period-selector">
+                <button class="period-btn active">Annual</button>
+                <button class="period-btn">Quarterly</button>
+                <button class="period-btn">Monthly</button>
+                <button class="period-btn">Custom</button>
+                <input type="text" id="custom-period" class="date-range" placeholder="Select period" style="display: none;">
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-button" id="create-budget-btn">
+                    <i class="fas fa-plus"></i> Create New Budget
+                </button>
+                <button class="export-button">
+                    <i class="fas fa-file-export"></i> Export Report
+                </button>
+            </div>
+        </div>
+
+        <div class="budget-table-container">
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th data-sort="category">Category <i class="fas fa-sort"></i></th>
+                        <th data-sort="allocated">Allocated <i class="fas fa-sort"></i></th>
+                        <th data-sort="spent">Spent <i class="fas fa-sort"></i></th>
+                        <th data-sort="remaining">Remaining <i class="fas fa-sort"></i></th>
+                        <th data-sort="utilization">Utilization <i class="fas fa-sort"></i></th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ministry Outreach</td>
+                        <td>$50,000</td>
+                        <td>$42,500</td>
+                        <td>$7,500</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill warning" style="width: 85%"></div>
+                                </div>
+                                <span>85%</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge warning">Approaching Limit</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn adjust"><i class="fas fa-sliders-h"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Facilities Maintenance</td>
+                        <td>$30,000</td>
+                        <td>$33,600</td>
+                        <td>-$3,600</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill danger" style="width: 112%"></div>
+                                </div>
+                                <span>112%</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge danger">Over Budget</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn adjust"><i class="fas fa-sliders-h"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Youth Program</td>
+                        <td>$25,000</td>
+                        <td>$8,750</td>
+                        <td>$16,250</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill info" style="width: 35%"></div>
+                                </div>
+                                <span>35%</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge info">Underutilized</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn adjust"><i class="fas fa-sliders-h"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Staff Salaries</td>
+                        <td>$120,000</td>
+                        <td>$60,000</td>
+                        <td>$60,000</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill success" style="width: 50%"></div>
+                                </div>
+                                <span>50%</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge success">On Track</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn adjust"><i class="fas fa-sliders-h"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Administrative Costs</td>
+                        <td>$20,000</td>
+                        <td>$12,000</td>
+                        <td>$8,000</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill success" style="width: 60%"></div>
+                                </div>
+                                <span>60%</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge success">On Track</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn adjust"><i class="fas fa-sliders-h"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Budget Creation Modal -->
+        <div class="modal" id="budget-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create New Budget</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="budget-form">
+                        <div class="form-group">
+                            <label for="budget-name">Budget Name</label>
+                            <input type="text" id="budget-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="budget-period">Budget Period</label>
+                                <select id="budget-period" required>
+                                    <option value="">Select Period</option>
+                                    <option value="annual">Annual</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="custom-period-group" style="display: none;">
+                                <label for="budget-custom-period">Custom Period</label>
+                                <input type="text" id="budget-custom-period" class="date-range">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget-total">Total Budget Amount</label>
+                            <input type="number" id="budget-total" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Budget Categories</h4>
+                            <button type="button" class="add-category-btn" id="add-category-btn">
+                                <i class="fas fa-plus"></i> Add Category
+                            </button>
+                        </div>
+
+                        <div class="budget-categories" id="budget-categories">
+                            <div class="category-item">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <input type="text" class="category-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Allocated Amount</label>
+                                        <input type="number" class="category-amount" step="0.01" min="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>% of Total</label>
+                                        <input type="text" class="category-percent" readonly>
+                                    </div>
+                                    <button type="button" class="remove-category-btn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget-notes">Notes</label>
+                            <textarea id="budget-notes" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="submit-btn">Create Budget</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/finance.js"></script>
+    <script src="../js/budget.js"></script>
+</body>
+</html>

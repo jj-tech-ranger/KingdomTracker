@@ -124,6 +124,46 @@ body.dark-mode .sidebar h2 {
     transform: translateX(5px);
 }
 
+.sidebar ul li.active {
+    background-color: var(--sidebar-hover);
+    border-left: 3px solid var(--highlight);
+}
+
+.sidebar ul li a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar ul li:hover a {
+    color: inherit;
+}
+
+.sidebar ul li.active a {
+    color: var(--white);
+}
+
+body.dark-mode .sidebar ul li.active a {
+    color: var(--white);
+    opacity: 0.9;
+}
+
+.sidebar ul li a i {
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar ul li a:visited,
+.sidebar ul li a:active,
+.sidebar ul li a:focus {
+    color: inherit;
+    text-decoration: none;
+}
+
 .main {
     margin-left: 330px;
     padding: 30px;

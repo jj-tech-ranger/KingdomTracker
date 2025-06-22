@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Payroll</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/finance.css">
+    <link rel="stylesheet" href="../css/payroll.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Finance</h2>
+        <ul class="menu">
+            <li><a href="finance_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="donations.html"><i class="fas fa-coins"></i> Donations & Tithe</a></li>
+            <li><a href="expense_management.html"><i class="fas fa-receipt"></i> Expense Management</a></li>
+            <li><a href="budget_planning.html"><i class="fas fa-chart-pie"></i> Budget Planning</a></li>
+            <li class="active"><a href="payroll.html"><i class="fas fa-money-bill-wave"></i> Payroll</a></li>
+            <li><a href="financial_reports.html"><i class="fas fa-file-invoice-dollar"></i> Financial Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search employees...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Payroll Admin <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Total Payroll</h4>
+                <p>$12,580</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Employees</h4>
+                <p>8</p>
+                <i class="fas fa-users card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Upcoming Payroll</h4>
+                <p>$15,245</p>
+                <i class="fas fa-calendar-alt card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Tax Liability</h4>
+                <p>$3,420</p>
+                <i class="fas fa-file-invoice-dollar card-icon"></i>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Payroll Distribution</h3>
+                <canvas id="payrollDistributionChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Payroll History</h3>
+                <canvas id="payrollHistoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="project-summary">
+            <div class="section-header">
+                <h3>Employee Payroll</h3>
+                <div class="action-buttons">
+                    <button class="add-button" id="addEmployeeBtn">
+                        <i class="fas fa-user-plus"></i> Add Employee
+                    </button>
+                    <button class="add-button secondary" id="runPayrollBtn">
+                        <i class="fas fa-calculator"></i> Run Payroll
+                    </button>
+                </div>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Position</th>
+                        <th>Pay Rate</th>
+                        <th>Schedule</th>
+                        <th>Last Payment</th>
+                        <th>YTD Earnings</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="employee-info">
+                                <img src="../img/user.png" alt="Employee" class="employee-avatar">
+                                <span>John Smith</span>
+                            </div>
+                        </td>
+                        <td>Pastor</td>
+                        <td>$75,000/yr</td>
+                        <td>Bi-weekly</td>
+                        <td>Nov 15, 2023</td>
+                        <td>$62,500</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn view" title="View Pay Stubs"><i class="fas fa-file-invoice"></i></button>
+                            <button class="action-btn delete" title="Terminate"><i class="fas fa-user-slash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="employee-info">
+                                <img src="../img/user.png" alt="Employee" class="employee-avatar">
+                                <span>Sarah Johnson</span>
+                            </div>
+                        </td>
+                        <td>Worship Leader</td>
+                        <td>$45,000/yr</td>
+                        <td>Bi-weekly</td>
+                        <td>Nov 15, 2023</td>
+                        <td>$37,500</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn view" title="View Pay Stubs"><i class="fas fa-file-invoice"></i></button>
+                            <button class="action-btn delete" title="Terminate"><i class="fas fa-user-slash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Payroll Modal -->
+        <div id="payrollModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Run Payroll</h3>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="payPeriod">Pay Period</label>
+                        <select id="payPeriod" class="form-control">
+                            <option value="biweekly">Bi-weekly (Current: Nov 1-15)</option>
+                            <option value="monthly">Monthly (November 2023)</option>
+                            <option value="custom">Custom Period</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payDate">Pay Date</label>
+                        <input type="date" id="payDate" class="form-control" value="2023-11-30">
+                    </div>
+                    <div class="form-group">
+                        <label>Employees to Pay</label>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" checked> John Smith ($2,884.62)</label>
+                            <label><input type="checkbox" checked> Sarah Johnson ($1,730.77)</label>
+                            <label><input type="checkbox" checked> Michael Brown ($1,153.85)</label>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Payroll Summary</h4>
+                        <div class="summary-row">
+                            <span>Gross Pay:</span>
+                            <span>$5,769.24</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax Withholdings:</span>
+                            <span>$1,442.31</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Benefits Deductions:</span>
+                            <span>$576.92</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Net Pay:</span>
+                            <span>$3,750.01</span>
+                        </div>
+                    </div>
+                    <button class="add-button full-width" id="confirmPayrollBtn">
+                        <i class="fas fa-check-circle"></i> Process Payroll
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Modal -->
+        <div id="employeeModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Add New Employee</h3>
+                <div class="modal-body">
+                    <form id="employeeForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" id="position" class="form-control" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payRate">Pay Rate</label>
+                                <input type="number" id="payRate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="paySchedule">Pay Schedule</label>
+                                <select id="paySchedule" class="form-control" required>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="biweekly" selected>Bi-weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taxInfo">Tax Information</label>
+                            <select id="taxInfo" class="form-control" required>
+                                <option value="w2">W-2 Employee</option>
+                                <option value="1099">1099 Contractor</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="add-button full-width">
+                            <i class="fas fa-save"></i> Save Employee
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/finance.js"></script>
+    <script src="../js/payroll.js"></script>
+</body>
+</html>

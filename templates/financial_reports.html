@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Financial Reports</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/finance.css">
+    <link rel="stylesheet" href="../css/financial_reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Finance</h2>
+        <ul class="menu">
+            <li><a href="finance_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="donations.html"><i class="fas fa-coins"></i> Donations & Tithe</a></li>
+            <li><a href="expense_management.html"><i class="fas fa-receipt"></i> Expense Management</a></li>
+            <li><a href="budget_planning.html"><i class="fas fa-chart-pie"></i> Budget Planning</a></li>
+            <li><a href="payroll.html"><i class="fas fa-money-bill-wave"></i> Payroll</a></li>
+            <li class="active"><a href="financial_reports.html"><i class="fas fa-file-invoice-dollar"></i> Financial Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search reports...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Finance Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Reports Generated</h4>
+                <p>24</p>
+                <i class="fas fa-file-alt card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>This Month</h4>
+                <p>5</p>
+                <i class="fas fa-calendar-alt card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Most Viewed</h4>
+                <p>Income Statement</p>
+                <i class="fas fa-chart-line card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Last Generated</h4>
+                <p>Today</p>
+                <i class="fas fa-clock card-icon"></i>
+            </div>
+        </div>
+
+        <div class="report-controls">
+            <div class="section-header">
+                <h3>Generate New Report</h3>
+                <div class="report-actions">
+                    <button class="add-button" id="quickReportBtn">
+                        <i class="fas fa-bolt"></i> Quick Report
+                    </button>
+                </div>
+            </div>
+            <div class="report-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reportType">Report Type</label>
+                        <select id="reportType" class="form-control">
+                            <option value="">Select report type</option>
+                            <option value="income">Income Statement</option>
+                            <option value="balance">Balance Sheet</option>
+                            <option value="cashflow">Cash Flow Statement</option>
+                            <option value="donations">Donations Summary</option>
+                            <option value="expenses">Expense Breakdown</option>
+                            <option value="custom">Custom Report</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timePeriod">Time Period</label>
+                        <select id="timePeriod" class="form-control">
+                            <option value="this_month">This Month</option>
+                            <option value="last_month">Last Month</option>
+                            <option value="this_quarter">This Quarter</option>
+                            <option value="last_quarter">Last Quarter</option>
+                            <option value="this_year">This Year</option>
+                            <option value="last_year">Last Year</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row" id="customDateRange" style="display: none;">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="text" id="startDate" class="form-control datepicker" placeholder="Select start date">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="text" id="endDate" class="form-control datepicker" placeholder="Select end date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Additional Options</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="comparePeriod"> Compare with previous period</label>
+                        <label><input type="checkbox" id="includeDetails"> Include transaction details</label>
+                        <label><input type="checkbox" id="showCharts"> Include visual charts</label>
+                    </div>
+                </div>
+                <button class="add-button full-width" id="generateReportBtn">
+                    <i class="fas fa-file-export"></i> Generate Report
+                </button>
+            </div>
+        </div>
+
+        <div class="project-summary">
+            <div class="section-header">
+                <h3>Recent Reports</h3>
+                <div class="table-actions">
+                    <div class="export-options">
+                        <button class="action-btn export" title="Export All">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                        <div class="export-dropdown">
+                            <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                            <a href="#"><i class="fas fa-file-excel"></i> Excel</a>
+                            <a href="#"><i class="fas fa-file-csv"></i> CSV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Type</th>
+                        <th>Date Range</th>
+                        <th>Generated On</th>
+                        <th>Generated By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>November 2023 Income Statement</td>
+                        <td>Income Statement</td>
+                        <td>Nov 1 - Nov 30, 2023</td>
+                        <td>Nov 30, 2023</td>
+                        <td>Admin User</td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn export" title="Export"><i class="fas fa-file-export"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Q4 2023 Balance Sheet</td>
+                        <td>Balance Sheet</td>
+                        <td>Oct 1 - Dec 31, 2023</td>
+                        <td>Dec 1, 2023</td>
+                        <td>Finance Team</td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn export" title="Export"><i class="fas fa-file-export"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Annual Donations Report</td>
+                        <td>Custom Report</td>
+                        <td>Jan 1 - Dec 31, 2023</td>
+                        <td>Dec 15, 2023</td>
+                        <td>Pastor</td>
+                        <td>
+                            <button class="action-btn view" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn export" title="Export"><i class="fas fa-file-export"></i></button>
+                            <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Report Preview Modal -->
+        <div id="reportModal" class="modal">
+            <div class="modal-content large">
+                <span class="close-modal">&times;</span>
+                <div class="modal-header">
+                    <h3>Income Statement - November 2023</h3>
+                    <div class="report-meta">
+                        <span>Generated: Nov 30, 2023 by Admin User</span>
+                        <div class="report-actions">
+                            <button class="action-btn print" title="Print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                            <button class="action-btn export" title="Export">
+                                <i class="fas fa-file-export"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body report-preview">
+                    <div class="report-summary">
+                        <div class="summary-card">
+                            <h4>Total Income</h4>
+                            <p class="amount positive">$24,580.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Total Expenses</h4>
+                            <p class="amount negative">$18,245.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Net Income</h4>
+                            <p class="amount positive">$6,335.00</p>
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h4>Income Breakdown</h4>
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>% of Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tithes</td>
+                                    <td>$8,420.00</td>
+                                    <td>34.25%</td>
+                                </tr>
+                                <tr>
+                                    <td>Donations</td>
+                                    <td>$12,450.00</td>
+                                    <td>50.65%</td>
+                                </tr>
+                                <tr>
+                                    <td>Other Income</td>
+                                    <td>$3,710.00</td>
+                                    <td>15.10%</td>
+                                </tr>
+                                <tr class="total">
+                                    <td>Total Income</td>
+                                    <td>$24,580.00</td>
+                                    <td>100.00%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="report-section">
+                        <h4>Expense Breakdown</h4>
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>% of Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Staff Salaries</td>
+                                    <td>$10,200.00</td>
+                                    <td>55.92%</td>
+                                </tr>
+                                <tr>
+                                    <td>Facility Costs</td>
+                                    <td>$3,450.00</td>
+                                    <td>18.91%</td>
+                                </tr>
+                                <tr>
+                                    <td>Ministry Expenses</td>
+                                    <td>$2,150.00</td>
+                                    <td>11.79%</td>
+                                </tr>
+                                <tr>
+                                    <td>Administrative</td>
+                                    <td>$1,245.00</td>
+                                    <td>6.83%</td>
+                                </tr>
+                                <tr>
+                                    <td>Other Expenses</td>
+                                    <td>$1,200.00</td>
+                                    <td>6.58%</td>
+                                </tr>
+                                <tr class="total">
+                                    <td>Total Expenses</td>
+                                    <td>$18,245.00</td>
+                                    <td>100.00%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="report-section">
+                        <h4>Visual Summary</h4>
+                        <div class="chart-container">
+                            <div class="chart-card">
+                                <canvas id="reportIncomeChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <canvas id="reportExpenseChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-footer">
+                        <p>Report generated on Nov 30, 2023 at 3:45 PM</p>
+                        <div class="signature-line">
+                            <span>Prepared by: _________________________</span>
+                            <span>Approved by: _________________________</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/finance.js"></script>
+    <script src="../js/financial_reports.js"></script>
+</body>
+</html>
