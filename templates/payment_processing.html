@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Payment Processing</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/procurement.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Procurement</h2>
+        <ul class="menu">
+            <li><a href="procurement_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="vendors.html"><i class="fas fa-truck"></i>Vendor Management</a></li>
+            <li><a href="purchase_requisitions.html"><i class="fas fa-clipboard-check"></i> Purchase Requisitions</a></li>
+            <li><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li class="active"><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
+            <li><a href="procurement_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search payments or vendors...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Finance Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Pending Payments</h4>
+                <p>8</p>
+                <i class="fas fa-clock card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Monthly Payments</h4>
+                <p>$24,320</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Overdue Payments</h4>
+                <p>3</p>
+                <i class="fas fa-exclamation-triangle card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Payment Batches</h4>
+                <p>2</p>
+                <i class="fas fa-layer-group card-icon"></i>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Payment Methods Distribution</h3>
+                <canvas id="paymentMethodChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Payment Status</h3>
+                <canvas id="paymentStatusChart"></canvas>
+            </div>
+        </div>
+
+        <div class="project-summary">
+            <div class="section-header">
+                <h3>Approved Invoices Ready for Payment</h3>
+                <div class="filter-group">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Due This Week</button>
+                    <button class="filter-btn">Overdue</button>
+                    <button class="filter-btn">High Priority</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Vendor</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INV-2023-1142</td>
+                        <td>Office Supplies Inc.</td>
+                        <td>$1,250.00</td>
+                        <td>2023-11-22</td>
+                        <td>ACH Transfer</td>
+                        <td><span class="status approved">Approved</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn pay"><i class="fas fa-money-check-alt"></i></button>
+                            <button class="action-btn batch"><i class="fas fa-layer-group"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>INV-2023-1141</td>
+                        <td>Tech Solutions Ltd.</td>
+                        <td>$3,420.00</td>
+                        <td>2023-11-20</td>
+                        <td>Check</td>
+                        <td><span class="status overdue">Overdue</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn pay"><i class="fas fa-money-check-alt"></i></button>
+                            <button class="action-btn batch"><i class="fas fa-layer-group"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>INV-2023-1139</td>
+                        <td>Facility Services Co.</td>
+                        <td>$850.00</td>
+                        <td>2023-11-25</td>
+                        <td>Credit Card</td>
+                        <td><span class="status approved">Approved</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn pay"><i class="fas fa-money-check-alt"></i></button>
+                            <button class="action-btn batch"><i class="fas fa-layer-group"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="project-summary">
+            <div class="section-header">
+                <h3>Recent Payment Batches</h3>
+                <button class="add-button" id="createBatchBtn">
+                    <i class="fas fa-plus"></i> New Batch
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Batch #</th>
+                        <th>Date Created</th>
+                        <th>Payment Method</th>
+                        <th>Total Amount</th>
+                        <th># of Payments</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BATCH-2023-11</td>
+                        <td>2023-11-15</td>
+                        <td>ACH Transfer</td>
+                        <td>$8,750.00</td>
+                        <td>5</td>
+                        <td><span class="status processed">Processed</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn export"><i class="fas fa-file-export"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>BATCH-2023-12</td>
+                        <td>2023-11-18</td>
+                        <td>Check</td>
+                        <td>$4,320.00</td>
+                        <td>3</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn process"><i class="fas fa-check-circle"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Process Payment</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="paymentForm">
+                <div class="form-section">
+                    <h4>Payment Details</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Invoice Number</label>
+                            <input type="text" id="invoiceNumber" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Vendor</label>
+                            <input type="text" id="vendorName" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" id="paymentAmount" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Due Date</label>
+                            <input type="text" id="dueDate" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Payment Method</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Payment Method*</label>
+                            <select id="paymentMethod" required>
+                                <option value="">Select Method</option>
+                                <option value="ach">ACH Transfer</option>
+                                <option value="check">Check</option>
+                                <option value="credit_card">Credit Card</option>
+                                <option value="wire">Wire Transfer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Date*</label>
+                            <input type="date" id="paymentDate" required>
+                        </div>
+                    </div>
+
+                    <div id="bankDetailsSection" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Bank Name</label>
+                                <input type="text" id="bankName" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Account Number</label>
+                                <input type="text" id="accountNumber" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Routing Number</label>
+                                <input type="text" id="routingNumber" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Account Type</label>
+                                <input type="text" id="accountType" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="checkDetailsSection" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Check Number</label>
+                                <input type="text" id="checkNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>Mailing Address</label>
+                                <input type="text" id="mailingAddress" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="creditCardSection" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Card Last 4 Digits</label>
+                                <input type="text" id="cardLastFour" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Expiration Date</label>
+                                <input type="text" id="cardExpiration" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Payment Authorization</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Approved By</label>
+                            <input type="text" id="approvedBy" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Approval Date</label>
+                            <input type="text" id="approvalDate" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea id="paymentNotes" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancelPaymentBtn">Cancel</button>
+                    <button type="submit" class="primary-btn">Process Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Batch Payment Modal -->
+    <div id="batchModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Create Payment Batch</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="batchForm">
+                <div class="form-section">
+                    <h4>Batch Details</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Batch Name*</label>
+                            <input type="text" id="batchName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method*</label>
+                            <select id="batchPaymentMethod" required>
+                                <option value="">Select Method</option>
+                                <option value="ach">ACH Transfer</option>
+                                <option value="check">Check</option>
+                                <option value="wire">Wire Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Scheduled Date*</label>
+                            <input type="date" id="batchDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Batch Total</label>
+                            <input type="text" id="batchTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Select Invoices for Batch</h4>
+                    <table class="finance-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllInvoices"></th>
+                                <th>Invoice #</th>
+                                <th>Vendor</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="batchInvoiceList">
+                            <tr>
+                                <td><input type="checkbox" class="invoice-checkbox" data-amount="1250.00"></td>
+                                <td>INV-2023-1142</td>
+                                <td>Office Supplies Inc.</td>
+                                <td>$1,250.00</td>
+                                <td>2023-11-22</td>
+                                <td><span class="status approved">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="invoice-checkbox" data-amount="3420.00"></td>
+                                <td>INV-2023-1141</td>
+                                <td>Tech Solutions Ltd.</td>
+                                <td>$3,420.00</td>
+                                <td>2023-11-20</td>
+                                <td><span class="status overdue">Overdue</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="invoice-checkbox" data-amount="850.00"></td>
+                                <td>INV-2023-1139</td>
+                                <td>Facility Services Co.</td>
+                                <td>$850.00</td>
+                                <td>2023-11-25</td>
+                                <td><span class="status approved">Approved</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-section">
+                    <h4>Batch Summary</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Number of Payments</label>
+                            <input type="text" id="batchCount" value="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Amount</label>
+                            <input type="text" id="batchAmount" value="$0.00" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Batch Notes</label>
+                        <textarea id="batchNotes" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancelBatchBtn">Cancel</button>
+                    <button type="submit" class="primary-btn">Create Batch</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Payment Modal -->
+    <div id="viewPaymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Payment Details</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="requisition-detail-header">
+                <div class="requisition-meta">
+                    <div>
+                        <span class="detail-label">Payment ID:</span>
+                        <span class="detail-value">PAY-2023-1142</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Date:</span>
+                        <span class="detail-value">2023-11-15</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value">$1,250.00</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value"><span class="status processed">Processed</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Payment Information</h4>
+                <div class="detail-row">
+                    <span class="detail-label">Vendor:</span>
+                    <span class="detail-value">Office Supplies Inc.</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Invoice:</span>
+                    <span class="detail-value">INV-2023-1142</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method:</span>
+                    <span class="detail-value">ACH Transfer</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Transaction ID:</span>
+                    <span class="detail-value">TX-987654321</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Processed By:</span>
+                    <span class="detail-value">Finance Team</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Notes:</span>
+                    <span class="detail-value">Monthly office supplies payment</span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Bank Details</h4>
+                <div class="detail-row">
+                    <span class="detail-label">Bank Name:</span>
+                    <span class="detail-value">First National Bank</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Account Type:</span>
+                    <span class="detail-value">Checking</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Account Number:</span>
+                    <span class="detail-value">••••••7890</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Routing Number:</span>
+                    <span class="detail-value">123456789</span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="secondary-btn" id="closeViewPaymentBtn">Close</button>
+                <button type="button" class="primary-btn"><i class="fas fa-print"></i> Print Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/procurement.js"></script>
+</body>
+</html>

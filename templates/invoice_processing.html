@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker | Invoice Processing</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/procurement.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Procurement</h2>
+        <ul class="menu">
+            <li><a href="procurement_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="vendors.html"><i class="fas fa-truck"></i> Vendor Management</a></li>
+            <li><a href="purchase_requisitions.html"><i class="fas fa-clipboard-check"></i> Purchase Requisitions</a></li>
+            <li class="active"><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
+            <li><a href="procurement_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search invoices by number, vendor or PO...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Procurement Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Pending Invoices</h4>
+                <p>18</p>
+                <i class="fas fa-file-invoice card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Overdue Invoices</h4>
+                <p>5</p>
+                <i class="fas fa-exclamation-triangle card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Approved for Payment</h4>
+                <p>$42,380</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Matching Issues</h4>
+                <p>7</p>
+                <i class="fas fa-random card-icon"></i>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h3>Invoice Processing</h3>
+            <div>
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Pending</button>
+                <button class="filter-btn">Approved</button>
+                <button class="filter-btn">Paid</button>
+                <button class="filter-btn">Overdue</button>
+                <button class="add-button" id="addInvoiceBtn">
+                    <i class="fas fa-plus"></i> New Invoice
+                </button>
+            </div>
+        </div>
+
+        <div class="project-summary">
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Vendor</th>
+                        <th>PO Number</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Due Date</th>
+                        <th>Match Status</th>
+                        <th>Payment Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INV-2023-1142</td>
+                        <td>Office Supplies Inc.</td>
+                        <td>PO-2023-1142</td>
+                        <td>$1,250.00</td>
+                        <td>2023-11-15</td>
+                        <td>2023-12-15</td>
+                        <td><span class="status approved">Matched</span></td>
+                        <td><span class="status approved">Paid</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn print"><i class="fas fa-print"></i></button>
+                            <button class="action-btn export"><i class="fas fa-file-export"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>INV-2023-1141</td>
+                        <td>Tech Solutions Ltd.</td>
+                        <td>PO-2023-1141</td>
+                        <td>$3,420.00</td>
+                        <td>2023-11-14</td>
+                        <td>2023-12-14</td>
+                        <td><span class="status pending">Partial Match</span></td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn submit"><i class="fas fa-check"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>INV-2023-1140</td>
+                        <td>Facility Services Co.</td>
+                        <td>PO-2023-1138</td>
+                        <td>$2,150.00</td>
+                        <td>2023-11-10</td>
+                        <td>2023-11-30</td>
+                        <td><span class="status rejected">Mismatch</span></td>
+                        <td><span class="status rejected">Rejected</span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Invoice Aging Analysis</h3>
+                <canvas id="invoiceAgingChart" height="300"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Payment Status Distribution</h3>
+                <canvas id="paymentStatusChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>New Invoice Processing</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+
+            <form id="invoiceForm">
+                <div class="form-section">
+                    <h4>Basic Information</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceNumber">Invoice Number*</label>
+                            <input type="text" id="invoiceNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="invoiceDate">Invoice Date*</label>
+                            <input type="date" id="invoiceDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dueDate">Due Date*</label>
+                            <input type="date" id="dueDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vendorSelect">Vendor*</label>
+                            <select id="vendorSelect" required>
+                                <option value="">Select Vendor</option>
+                                <option value="1">Office Supplies Inc.</option>
+                                <option value="2">Tech Solutions Ltd.</option>
+                                <option value="3">Facility Services Co.</option>
+                                <option value="4">Catering Plus</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="poNumber">PO Number (if applicable)</label>
+                            <input type="text" id="poNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentTerms">Payment Terms</label>
+                            <select id="paymentTerms">
+                                <option value="NET30">Net 30 Days</option>
+                                <option value="NET15">Net 15 Days</option>
+                                <option value="NET60">Net 60 Days</option>
+                                <option value="DUE_ON_RECEIPT">Due on Receipt</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Invoice Items</h4>
+                    <div id="invoiceItems">
+                        <div class="item-row">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Description*</label>
+                                    <input type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantity*</label>
+                                    <input type="number" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Unit Price*</label>
+                                    <input type="number" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total</label>
+                                    <input type="text" readonly>
+                                </div>
+                            </div>
+                            <button type="button" class="remove-item-btn">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="secondary-btn" id="addItemBtn">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h4>Invoice Attachments</h4>
+                    <div class="form-group">
+                        <div id="invoiceDropzone" class="dropzone">
+                            <div class="dz-message">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--primary);"></i><br>
+                                Drop files here or click to upload<br>
+                                <span class="note">(PDF, JPG, PNG files up to 5MB)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Summary</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtotal</label>
+                            <input type="text" id="subtotal" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tax</label>
+                            <input type="number" id="tax" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Discount</label>
+                            <input type="number" id="discount" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Amount</label>
+                            <input type="text" id="totalAmount" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancelInvoiceBtn">
+                        Cancel
+                    </button>
+                    <button type="submit" class="primary-btn">
+                        <i class="fas fa-save"></i> Save Invoice
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Invoice Modal -->
+    <div id="viewInvoiceModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Invoice Details</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+
+            <div class="requisition-detail-header">
+                <div class="requisition-meta">
+                    <div>
+                        <span class="detail-label">Invoice Number:</span>
+                        <span class="detail-value">INV-2023-1141</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value"><span class="status pending">Pending</span></span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Vendor:</span>
+                        <span class="detail-value">Tech Solutions Ltd.</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">PO Number:</span>
+                        <span class="detail-value">PO-2023-1141</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Invoice Date:</span>
+                        <span class="detail-value">2023-11-14</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Due Date:</span>
+                        <span class="detail-value">2023-12-14</span>
+                    </div>
+                </div>
+
+                <div class="requisition-actions">
+                    <button class="action-btn print"><i class="fas fa-print"></i></button>
+                    <button class="action-btn export"><i class="fas fa-file-export"></i></button>
+                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn submit"><i class="fas fa-check"></i></button>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Items</h4>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Laptop - Dell XPS 15</td>
+                            <td>2</td>
+                            <td>$1,250.00</td>
+                            <td>$2,500.00</td>
+                        </tr>
+                        <tr>
+                            <td>Monitor - 27" 4K</td>
+                            <td>2</td>
+                            <td>$450.00</td>
+                            <td>$900.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="detail-section">
+                <h4>Summary</h4>
+                <div class="detail-row">
+                    <span class="detail-label">Subtotal:</span>
+                    <span class="detail-value">$3,400.00</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tax (8%):</span>
+                    <span class="detail-value">$272.00</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Discount:</span>
+                    <span class="detail-value">$252.00</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">$3,420.00</span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Attachments</h4>
+                <div class="detail-row">
+                    <span class="detail-label">Files:</span>
+                    <span class="detail-value">
+                        <a href="#" class="attachment-link">
+                            <i class="fas fa-file-pdf"></i> INV-2023-1141.pdf
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Matching Status</h4>
+                <div class="detail-row">
+                    <span class="detail-label">PO Match:</span>
+                    <span class="detail-value"><span class="status pending">Partial Match</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Variance:</span>
+                    <span class="detail-value">$180.00 (5%)</span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Approval History</h4>
+                <div class="timeline">
+                    <div class="timeline-item submitted">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <strong>Invoice Submitted</strong>
+                                <span class="timeline-date">2023-11-14 09:23 AM</span>
+                            </div>
+                            <p>Submitted by John Doe (Procurement)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="secondary-btn" id="closeViewModalBtn">
+                    Close
+                </button>
+                <button class="primary-btn">
+                    <i class="fas fa-check"></i> Approve Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+    <script src="../js/procurement.js"></script>
+</body>
+</html>

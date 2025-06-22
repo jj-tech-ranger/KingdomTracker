@@ -1,0 +1,540 @@
+/* Vendor Management Specific Styles */
+
+/* Vendor Filters */
+.vendor-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+}
+
+body.dark-mode .vendor-filters {
+    background-color: var(--accent);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--font-dark);
+}
+
+body.dark-mode .filter-group label {
+    color: var(--white);
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    background-color: var(--white);
+    color: var(--font-dark);
+}
+
+body.dark-mode .filter-group select {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--primary);
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.filter-btn.secondary {
+    background-color: var(--secondary);
+    color: var(--font-dark);
+}
+
+body.dark-mode .filter-btn.secondary {
+    color: var(--dark-bg);
+}
+
+.filter-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Vendor Stats */
+.vendor-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--secondary);
+}
+
+body.dark-mode .stat-card {
+    background-color: var(--accent);
+}
+
+.stat-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: var(--font-dark);
+    font-weight: 600;
+}
+
+body.dark-mode .stat-card h4 {
+    color: var(--white);
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--primary);
+}
+
+body.dark-mode .stat-card p {
+    color: var(--secondary);
+}
+
+.stat-card .card-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    opacity: 0.2;
+    color: var(--primary);
+}
+
+body.dark-mode .stat-card .card-icon {
+    color: var(--secondary);
+    opacity: 0.3;
+}
+
+/* Vendor Table */
+.vendor-table-container {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+body.dark-mode .vendor-table-container {
+    background-color: var(--accent);
+}
+
+.vendor-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vendor-table th {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.vendor-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .vendor-table td {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.2);
+}
+
+.vendor-table tr:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.vendor-table .rating {
+    color: var(--secondary);
+}
+
+.vendor-table .rating i {
+    margin-right: 2px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--accent);
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--highlight);
+}
+
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--secondary);
+    margin-bottom: 20px;
+    gap: 5px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--font-dark);
+    transition: var(--transition);
+}
+
+body.dark-mode .tab-btn {
+    color: var(--white);
+}
+
+.tab-btn.active {
+    border-bottom-color: var(--primary);
+    color: var(--primary);
+}
+
+body.dark-mode .tab-btn.active {
+    border-bottom-color: var(--secondary);
+    color: var(--secondary);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Form Styles */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--font-dark);
+}
+
+body.dark-mode .form-group label {
+    color: var(--white);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    background-color: var(--white);
+    color: var(--font-dark);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    background-color: var(--light-bg);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--font-dark);
+}
+
+body.dark-mode .cancel-btn {
+    background-color: rgba(98, 39, 37, 0.3);
+    color: var(--white);
+}
+
+.save-btn {
+    padding: 10px 20px;
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Performance Metrics */
+.performance-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric {
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+body.dark-mode .metric {
+    background-color: rgba(98, 39, 37, 0.3);
+}
+
+.metric h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--font-dark);
+}
+
+body.dark-mode .metric h4 {
+    color: var(--white);
+}
+
+.rating-large {
+    font-size: 24px;
+    color: var(--secondary);
+    margin-bottom: 10px;
+}
+
+.rating-large span {
+    font-size: 16px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--light-bg);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+body.dark-mode .progress-bar {
+    background-color: rgba(98, 39, 37, 0.5);
+}
+
+.progress-bar .progress {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+}
+
+.progress-bar span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--white);
+}
+
+/* Feedback Items */
+.feedback-item {
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+body.dark-mode .feedback-item {
+    background-color: rgba(98, 39, 37, 0.3);
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--font-dark);
+}
+
+body.dark-mode .feedback-header {
+    color: var(--white);
+}
+
+.feedback-rating {
+    color: var(--secondary);
+}
+
+.feedback-comment {
+    margin: 0;
+    color: var(--font-dark);
+}
+
+body.dark-mode .feedback-comment {
+    color: var(--white);
+}
+
+/* Contract Items */
+.contract-item {
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+body.dark-mode .contract-item {
+    background-color: rgba(98, 39, 37, 0.3);
+}
+
+.contract-item h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+body.dark-mode .contract-item h4 {
+    color: var(--secondary);
+}
+
+.contract-item p {
+    margin: 5px 0;
+    color: var(--font-dark);
+}
+
+body.dark-mode .contract-item p {
+    color: var(--white);
+}
+
+.contract-actions {
+    margin-top: 10px;
+}
+
+/* History Table */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: 600;
+}
+
+body.dark-mode .history-table th {
+    background-color: rgba(98, 39, 37, 0.5);
+    color: var(--white);
+}
+
+.history-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--secondary);
+    color: var(--font-dark);
+}
+
+body.dark-mode .history-table td {
+    color: var(--white);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .vendor-filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

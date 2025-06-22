@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Vendor Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/procurement.css">
+    <link rel="stylesheet" href="../css/vendors.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Procurement</h2>
+        <ul class="menu">
+            <li><a href="procurement_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li class="active"><a href="vendors.html"><i class="fas fa-truck"></i> Vendor Management</a></li>
+            <li><a href="purchase_requisitions.html"><i class="fas fa-clipboard-check"></i> Purchase Requisitions</a></li>
+            <li><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
+            <li><a href="procurement_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search vendors...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Procurement Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="section-header">
+            <h3>Vendor Management</h3>
+            <button class="add-button" id="addVendorBtn">
+                <i class="fas fa-plus"></i> Add New Vendor
+            </button>
+        </div>
+
+        <div class="vendor-filters">
+            <div class="filter-group">
+                <label for="vendor-status">Status:</label>
+                <select id="vendor-status">
+                    <option value="all">All Vendors</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="preferred">Preferred</option>
+                    <option value="blacklisted">Blacklisted</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="vendor-category">Category:</label>
+                <select id="vendor-category">
+                    <option value="all">All Categories</option>
+                    <option value="office">Office Supplies</option>
+                    <option value="it">IT Equipment</option>
+                    <option value="facility">Facility Maintenance</option>
+                    <option value="food">Food Services</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <button class="filter-btn" id="applyFilters">Apply Filters</button>
+            <button class="filter-btn secondary" id="resetFilters">Reset</button>
+        </div>
+
+        <div class="vendor-stats">
+            <div class="stat-card">
+                <h4>Total Vendors</h4>
+                <p id="total-vendors">24</p>
+                <i class="fas fa-building card-icon"></i>
+            </div>
+            <div class="stat-card">
+                <h4>Active Vendors</h4>
+                <p id="active-vendors">18</p>
+                <i class="fas fa-check-circle card-icon"></i>
+            </div>
+            <div class="stat-card">
+                <h4>Preferred Vendors</h4>
+                <p id="preferred-vendors">5</p>
+                <i class="fas fa-star card-icon"></i>
+            </div>
+            <div class="stat-card">
+                <h4>Spend This Year</h4>
+                <p id="yearly-spend">$287,500</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Vendor Spend by Category</h3>
+                <canvas id="vendorSpendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Vendor Performance Ratings</h3>
+                <canvas id="vendorPerformanceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="vendor-table-container">
+            <table class="vendor-table">
+                <thead>
+                    <tr>
+                        <th>Vendor Name</th>
+                        <th>Category</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Last Order</th>
+                        <th>Total Spend</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Office Supplies Inc.</td>
+                        <td>Office Supplies</td>
+                        <td>John Smith<br>john@officesupplies.com</td>
+                        <td><span class="status preferred">Preferred</span></td>
+                        <td>2023-11-15</td>
+                        <td>$45,200</td>
+                        <td><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn history"><i class="fas fa-history"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tech Solutions Ltd.</td>
+                        <td>IT Equipment</td>
+                        <td>Sarah Johnson<br>sarah@techsolutions.com</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2023-11-14</td>
+                        <td>$32,400</td>
+                        <td><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn history"><i class="fas fa-history"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MaintainPro Services</td>
+                        <td>Facility Maintenance</td>
+                        <td>Mike Brown<br>mike@maintainpro.com</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2023-11-10</td>
+                        <td>$18,750</td>
+                        <td><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span></td>
+                        <td>
+                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn history"><i class="fas fa-history"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Vendor Detail Modal (hidden by default) -->
+        <div id="vendorModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3 id="modal-title">Vendor Details</h3>
+                <div class="modal-tabs">
+                    <button class="tab-btn active" data-tab="basic-info">Basic Information</button>
+                    <button class="tab-btn" data-tab="financial">Financial Details</button>
+                    <button class="tab-btn" data-tab="contracts">Contracts</button>
+                    <button class="tab-btn" data-tab="performance">Performance</button>
+                    <button class="tab-btn" data-tab="history">Order History</button>
+                </div>
+
+                <div class="tab-content active" id="basic-info">
+                    <form id="vendorForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendor-name">Company Name</label>
+                                <input type="text" id="vendor-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="vendor-category-modal">Category</label>
+                                <select id="vendor-category-modal">
+                                    <option value="office">Office Supplies</option>
+                                    <option value="it">IT Equipment</option>
+                                    <option value="facility">Facility Maintenance</option>
+                                    <option value="food">Food Services</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendor-address">Address</label>
+                                <input type="text" id="vendor-address">
+                            </div>
+                            <div class="form-group">
+                                <label for="vendor-phone">Phone</label>
+                                <input type="tel" id="vendor-phone">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendor-contact">Primary Contact</label>
+                                <input type="text" id="vendor-contact">
+                            </div>
+                            <div class="form-group">
+                                <label for="vendor-email">Email</label>
+                                <input type="email" id="vendor-email">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendor-website">Website</label>
+                                <input type="url" id="vendor-website">
+                            </div>
+                            <div class="form-group">
+                                <label for="vendor-status-modal">Status</label>
+                                <select id="vendor-status-modal">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="preferred">Preferred</option>
+                                    <option value="blacklisted">Blacklisted</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vendor-notes">Notes</label>
+                            <textarea id="vendor-notes" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="save-btn">Save Vendor</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="financial">
+                    <div class="financial-details">
+                        <h4>Payment Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-terms">Payment Terms</label>
+                                <input type="text" id="payment-terms" value="Net 30">
+                            </div>
+                            <div class="form-group">
+                                <label for="tax-id">Tax ID</label>
+                                <input type="text" id="tax-id">
+                            </div>
+                        </div>
+
+                        <h4>Banking Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bank-name">Bank Name</label>
+                                <input type="text" id="bank-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="account-number">Account Number</label>
+                                <input type="text" id="account-number">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="routing-number">Routing Number</label>
+                                <input type="text" id="routing-number">
+                            </div>
+                            <div class="form-group">
+                                <label for="account-type">Account Type</label>
+                                <select id="account-type">
+                                    <option value="checking">Checking</option>
+                                    <option value="savings">Savings</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="button" class="save-btn">Save Financial Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="contracts">
+                    <div class="contracts-list">
+                        <div class="contract-item">
+                            <h4>Master Service Agreement</h4>
+                            <p><strong>Start Date:</strong> 2023-01-15 | <strong>End Date:</strong> 2024-01-14</p>
+                            <p><strong>Terms:</strong> Auto-renew for 1 year unless terminated with 30 days notice</p>
+                            <div class="contract-actions">
+                                <button class="action-btn view"><i class="fas fa-file-pdf"></i> View</button>
+                                <button class="action-btn download"><i class="fas fa-download"></i> Download</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-button small" id="addContractBtn">
+                        <i class="fas fa-plus"></i> Add Contract
+                    </button>
+                </div>
+
+                <div class="tab-content" id="performance">
+                    <div class="performance-metrics">
+                        <div class="metric">
+                            <h4>Overall Rating</h4>
+                            <div class="rating-large">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5/5</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <h4>On-Time Delivery</h4>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 92%"></div>
+                                <span>92%</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <h4>Quality Satisfaction</h4>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 88%"></div>
+                                <span>88%</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <h4>Communication</h4>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 95%"></div>
+                                <span>95%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="performance-feedback">
+                        <h4>Recent Feedback</h4>
+                        <div class="feedback-item">
+                            <div class="feedback-header">
+                                <span class="feedback-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                                <span class="feedback-date">2023-11-10</span>
+                                <span class="feedback-user">John Doe (Facilities)</span>
+                            </div>
+                            <p class="feedback-comment">Good service overall, but delivery was delayed by 2 days on our last order.</p>
+                        </div>
+
+                        <div class="feedback-item">
+                            <div class="feedback-header">
+                                <span class="feedback-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                                <span class="feedback-date">2023-10-28</span>
+                                <span class="feedback-user">Sarah Smith (Office)</span>
+                            </div>
+                            <p class="feedback-comment">Excellent quality products and responsive customer service.</p>
+                        </div>
+                    </div>
+
+                    <button class="add-button small" id="addFeedbackBtn">
+                        <i class="fas fa-plus"></i> Add Feedback
+                    </button>
+                </div>
+
+                <div class="tab-content" id="history">
+                    <div class="order-history">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>PO Number</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PO-2023-1142</td>
+                                    <td>2023-11-15</td>
+                                    <td>$1,250.00</td>
+                                    <td><span class="status approved">Completed</span></td>
+                                    <td><button class="action-btn view"><i class="fas fa-eye"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>PO-2023-1087</td>
+                                    <td>2023-10-28</td>
+                                    <td>$2,450.00</td>
+                                    <td><span class="status approved">Completed</span></td>
+                                    <td><button class="action-btn view"><i class="fas fa-eye"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/procurement.js"></script>
+    <script src="../js/vendors.js"></script>
+</body>
+</html>

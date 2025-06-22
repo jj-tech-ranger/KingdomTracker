@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Purchase Requisitions</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/procurement.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <h2>Procurement</h2>
+        <ul class="menu">
+            <li><a href="procurement_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="vendors.html"><i class="fas fa-truck"></i>Vendor Management</a></li>
+            <li class="active"><a href="purchase_requisitions.html"><i class="fas fa-clipboard-check"></i> Purchase Requisitions</a></li>
+            <li><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
+            <li><a href="procurement_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search requisitions...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Procurement Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="requisition-container">
+            <!-- Requisition Summary Cards -->
+            <div class="overview">
+                <div class="card">
+                    <h4>My Requisitions</h4>
+                    <p>8</p>
+                    <i class="fas fa-user card-icon"></i>
+                </div>
+                <div class="card">
+                    <h4>Pending Approval</h4>
+                    <p>12</p>
+                    <i class="fas fa-clock card-icon"></i>
+                </div>
+                <div class="card">
+                    <h4>Approved</h4>
+                    <p>15</p>
+                    <i class="fas fa-check-circle card-icon"></i>
+                </div>
+                <div class="card">
+                    <h4>Rejected</h4>
+                    <p>3</p>
+                    <i class="fas fa-times-circle card-icon"></i>
+                </div>
+            </div>
+
+            <!-- Requisition Charts -->
+            <div class="chart-container">
+                <div class="chart-card">
+                    <h3>Requisitions by Status</h3>
+                    <canvas id="requisitionStatusChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Requisitions by Ministry</h3>
+                    <canvas id="requisitionMinistryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Requisition List and Create Button -->
+            <div class="section-header">
+                <h3>Purchase Requisitions</h3>
+                <div>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="draft">Draft</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="approved">Approved</button>
+                    <button class="filter-btn" data-filter="rejected">Rejected</button>
+                    <button class="add-button" id="createRequisitionBtn">
+                        <i class="fas fa-plus"></i> New Requisition
+                    </button>
+                </div>
+            </div>
+
+            <!-- Requisition Table -->
+            <div class="project-summary">
+                <table id="requisitionsTable">
+                    <thead>
+                        <tr>
+                            <th>Req ID</th>
+                            <th>Title</th>
+                            <th>Requester</th>
+                            <th>Ministry</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-status="approved">
+                            <td>REQ-2023-1142</td>
+                            <td>Office Supplies for Admin</td>
+                            <td>John Doe</td>
+                            <td>Administration</td>
+                            <td>2023-11-15</td>
+                            <td>$1,250.00</td>
+                            <td><span class="status approved">Approved</span></td>
+                            <td>
+                                <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn convert"><i class="fas fa-exchange-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="pending">
+                            <td>REQ-2023-1141</td>
+                            <td>New Laptops for IT</td>
+                            <td>Jane Smith</td>
+                            <td>Technology</td>
+                            <td>2023-11-14</td>
+                            <td>$3,420.00</td>
+                            <td><span class="status pending">Pending Approval</span></td>
+                            <td>
+                                <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="draft">
+                            <td>REQ-2023-1140</td>
+                            <td>Sound Equipment</td>
+                            <td>Michael Johnson</td>
+                            <td>Worship</td>
+                            <td>2023-11-12</td>
+                            <td>$2,150.00</td>
+                            <td><span class="status draft">Draft</span></td>
+                            <td>
+                                <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn submit"><i class="fas fa-paper-plane"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="rejected">
+                            <td>REQ-2023-1139</td>
+                            <td>Conference Chairs</td>
+                            <td>Sarah Williams</td>
+                            <td>Events</td>
+                            <td>2023-11-10</td>
+                            <td>$1,800.00</td>
+                            <td><span class="status rejected">Rejected</span></td>
+                            <td>
+                                <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Requisition Modal -->
+        <div id="requisitionModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New Purchase Requisition</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="requisitionForm">
+                        <div class="form-section">
+                            <h4>Requester Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="requesterName">Name</label>
+                                    <input type="text" id="requesterName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="requesterDepartment">Ministry/Department</label>
+                                    <select id="requesterDepartment" required>
+                                        <option value="">Select Ministry</option>
+                                        <option value="Administration">Administration</option>
+                                        <option value="Worship">Worship</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Children">Children's Ministry</option>
+                                        <option value="Outreach">Outreach</option>
+                                        <option value="Facilities">Facilities</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="requesterEmail">Email</label>
+                                    <input type="email" id="requesterEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="requesterPhone">Phone</label>
+                                    <input type="tel" id="requesterPhone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h4>Item Details</h4>
+                            <div id="itemsContainer">
+                                <div class="item-row">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <input type="text" class="item-description" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" class="item-quantity" min="1" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Unit Price</label>
+                                            <input type="number" class="item-price" min="0" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total</label>
+                                            <input type="text" class="item-total" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Preferred Vendor</label>
+                                            <input type="text" class="item-vendor">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Budget Code</label>
+                                            <select class="item-budget">
+                                                <option value="">Select Budget</option>
+                                                <option value="OPER-100">OPER-100 (Operations)</option>
+                                                <option value="MISC-200">MISC-200 (Miscellaneous)</option>
+                                                <option value="TECH-300">TECH-300 (Technology)</option>
+                                                <option value="FACI-400">FACI-400 (Facilities)</option>
+                                                <option value="EVNT-500">EVNT-500 (Events)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="remove-item-btn"><i class="fas fa-trash"></i> Remove Item</button>
+                                </div>
+                            </div>
+                            <button type="button" id="addItemBtn" class="secondary-btn"><i class="fas fa-plus"></i> Add Another Item</button>
+                        </div>
+
+                        <div class="form-section">
+                            <h4>Additional Information</h4>
+                            <div class="form-group">
+                                <label for="requisitionJustification">Justification</label>
+                                <textarea id="requisitionJustification" rows="4" required></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="requiredByDate">Required By Date</label>
+                                    <input type="text" id="requiredByDate" class="datepicker">
+                                </div>
+                                <div class="form-group">
+                                    <label for="requisitionPriority">Priority</label>
+                                    <select id="requisitionPriority">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="requisitionAttachments">Attachments</label>
+                                <input type="file" id="requisitionAttachments" multiple>
+                                <small>Upload quotes, specifications, or other supporting documents</small>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="saveDraftBtn" class="secondary-btn">Save as Draft</button>
+                            <button type="submit" id="submitRequisitionBtn" class="primary-btn">Submit Requisition</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requisition Detail Modal -->
+        <div id="requisitionDetailModal" class="modal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <h3>Requisition Details: <span id="detailReqId">REQ-2023-1142</span></h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="requisition-detail-header">
+                        <div class="requisition-meta">
+                            <div><strong>Status:</strong> <span id="detailStatus" class="status approved">Approved</span></div>
+                            <div><strong>Submitted:</strong> <span id="detailSubmittedDate">2023-11-15</span></div>
+                            <div><strong>Requester:</strong> <span id="detailRequester">John Doe (Administration)</span></div>
+                            <div><strong>Total Amount:</strong> <span id="detailTotalAmount">$1,250.00</span></div>
+                        </div>
+                        <div class="requisition-actions">
+                            <button class="action-btn print"><i class="fas fa-print"></i> Print</button>
+                            <button class="action-btn export"><i class="fas fa-file-export"></i> Export</button>
+                        </div>
+                    </div>
+
+                    <div class="requisition-detail-sections">
+                        <div class="detail-section">
+                            <h4>Items Requested</h4>
+                            <table class="detail-table">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Total</th>
+                                        <th>Budget Code</th>
+                                        <th>Vendor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detailItemsBody">
+                                    <!-- Items will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Additional Information</h4>
+                            <div class="detail-row">
+                                <div class="detail-label">Justification:</div>
+                                <div class="detail-value" id="detailJustification">Regular restocking of office supplies for the administration department.</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Required By Date:</div>
+                                <div class="detail-value" id="detailRequiredBy">2023-11-30</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Priority:</div>
+                                <div class="detail-value" id="detailPriority">Medium</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Attachments:</div>
+                                <div class="detail-value" id="detailAttachments">
+                                    <a href="#" class="attachment-link"><i class="fas fa-file-pdf"></i> Quote_OfficeSupplies.pdf</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Approval History</h4>
+                            <div class="timeline">
+                                <div class="timeline-item approved">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <strong>Approved by Finance Committee</strong>
+                                            <span class="timeline-date">2023-11-17</span>
+                                        </div>
+                                        <div class="timeline-body">Approved without changes</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item reviewed">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <strong>Reviewed by Ministry Head</strong>
+                                            <span class="timeline-date">2023-11-16</span>
+                                        </div>
+                                        <div class="timeline-body">Forwarded to Finance Committee</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item submitted">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <strong>Submitted by Requester</strong>
+                                            <span class="timeline-date">2023-11-15</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn close-detail-modal">Close</button>
+                    <button class="primary-btn convert-to-po-btn"><i class="fas fa-exchange-alt"></i> Convert to Purchase Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/procurement.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/requisitions.js"></script>
+</body>
+</html>
