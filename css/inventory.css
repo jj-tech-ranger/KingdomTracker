@@ -830,39 +830,41 @@ max-width: 100%;
 margin-left: 0;
 }
 }
-/* Home button styling */
-.sidebar .home-button {
-    margin-top: 30px;
-    padding: 14px 18px;
-    border-radius: 8px;
-    transition: var(--transition);
-    font-weight: 500;
-    position: absolute;
-    bottom: 20px;
-    left: 25px;
-    right: 25px;
-}
 
-.sidebar .home-button:hover {
-    background-color: var(--sidebar-hover);
-    transform: translateX(5px);
-}
-
-.sidebar .home-button a {
-    color: var(--sidebar-text);
-    text-decoration: none;
+/* Back to Home button styles */
+.home-button {
     display: flex;
     align-items: center;
-    gap: 12px;
-    width: 100%;
-    height: 100%;
+    gap: 10px;
+    padding: 12px 18px;
+    margin-bottom: 25px;
+    background-color: var(--highlight);
+    color: var(--white);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar .home-button a i {
-    width: 20px;
-    text-align: center;
+.home-button:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    border-color: var(--secondary);
 }
 
-body.dark-mode .sidebar .home-button a {
-    color: var(--sidebar-text);
+.home-button i {
+    font-size: 16px;
+}
+
+body.dark-mode .home-button {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+body.dark-mode .home-button:hover {
+    background-color: var(--highlight);
+    border-color: var(--secondary);
 }
