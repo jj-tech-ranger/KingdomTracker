@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Profile</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/crosspoint_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li class="active"><a href="../templates/profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="../img/user.png" alt="Profile Picture" id="profile-picture">
+                    <button class="btn-change-avatar" id="change-avatar">
+                        <i class="fas fa-camera"></i> Change
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h1>Alex Meian</h1>
+                    <p class="profile-role">Member</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Member since: <strong>Jan 2023</strong></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-university"></i>
+                            <span>Bank supported: <strong>3 items</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-nav">
+                <button class="profile-nav-btn active" data-section="account">Account Settings</button>
+                <button class="profile-nav-btn" data-section="children">Children Settings</button>
+                <button class="profile-nav-btn" data-section="password">Password Settings</button>
+                <button class="profile-nav-btn" data-section="danger">Danger Zone</button>
+            </div>
+
+            <!-- Account Settings Section -->
+            <div class="profile-section active" id="account-section">
+                <h2><i class="fas fa-user-cog"></i> Account Settings</h2>
+                <form id="account-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first_name" value="Alex" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last_name" value="Meian" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="alex@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" value="+254712345678" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="county">County</label>
+                            <select id="county" name="county" required>
+                                <option value="Nairobi" selected>Nairobi</option>
+                                <!-- Other Kenyan counties would be here -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="detailed-location">Detailed Location</label>
+                            <input type="text" id="detailed-location" name="detailed_location" value="Westlands" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="marital-status">Marital Status</label>
+                            <select id="marital-status" name="marital_status" required>
+                                <option value="married" selected>Married</option>
+                                <option value="single">Single</option>
+                                <option value="divorced">Divorced</option>
+                                <option value="widowed">Widowed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" value="1985-05-15" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Account
+                    </button>
+                </form>
+            </div>
+
+            <!-- Children Settings Section -->
+            <div class="profile-section" id="children-section">
+                <h2><i class="fas fa-child"></i> Children Settings</h2>
+                <div class="children-list" id="children-list">
+                    <!-- Children will be added here dynamically -->
+                    <div class="child-item">
+                        <div class="child-info">
+                            <span class="child-name">Sarah Meian</span>
+                            <span class="child-age">8 years old</span>
+                        </div>
+                        <div class="child-actions">
+                            <button class="btn-edit-child" data-id="1">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-delete-child" data-id="1">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div class="child-item">
+                        <div class="child-info">
+                            <span class="child-name">David Meian</span>
+                            <span class="child-age">5 years old</span>
+                        </div>
+                        <div class="child-actions">
+                            <button class="btn-edit-child" data-id="2">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-delete-child" data-id="2">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" id="add-child-btn">
+                    <i class="fas fa-plus"></i> Add Child
+                </button>
+            </div>
+
+            <!-- Password Settings Section -->
+            <div class="profile-section" id="password-section">
+                <h2><i class="fas fa-lock"></i> Password Settings</h2>
+                <form id="password-form">
+                    <div class="form-group">
+                        <label for="current-email">Email</label>
+                        <input type="email" id="current-email" name="email" value="alex@example.com" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="new-password" name="new_password" required>
+                            <i class="fas fa-eye-slash toggle-password" data-target="new-password"></i>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-meter">
+                                <div class="strength-bar" id="strength-bar"></div>
+                            </div>
+                            <span class="strength-text" id="strength-text">Weak</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-new-password">Confirm New Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="confirm-new-password" name="confirm_new_password" required>
+                            <i class="fas fa-eye-slash toggle-password" data-target="confirm-new-password"></i>
+                        </div>
+                        <div class="password-match" id="password-match"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-key"></i> Reset Password
+                    </button>
+                </form>
+            </div>
+
+            <!-- Danger Zone Section -->
+            <div class="profile-section" id="danger-section">
+                <h2><i class="fas fa-exclamation-triangle"></i> Danger Zone</h2>
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h3>Leave Group</h3>
+                        <p>This will remove you from all groups and teams you're part of. You can rejoin later if you change your mind.</p>
+                    </div>
+                    <button class="btn btn-danger" id="leave-group-btn">
+                        <i class="fas fa-sign-out-alt"></i> Leave Group
+                    </button>
+                </div>
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h3>Delete Account</h3>
+                        <p>This will permanently delete your account and all associated data. This action cannot be undone.</p>
+                    </div>
+                    <button class="btn btn-danger" id="delete-account-btn">
+                        <i class="fas fa-trash"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add/Edit Child Modal -->
+    <div class="modal" id="child-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="child-modal-title">Add Child</h2>
+                <button class="modal-close" id="close-child-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="child-name">Child's Name</label>
+                    <input type="text" id="child-name">
+                </div>
+                <div class="form-group">
+                    <label for="child-age">Age</label>
+                    <input type="number" id="child-age" min="0" max="25">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="save-child-btn">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <button type="button" class="btn btn-cancel" id="cancel-child-btn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="confirm-modal-title">Confirm Action</h2>
+                <button class="modal-close" id="close-confirm-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-modal-message">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirm-action-btn">
+                    <i class="fas fa-check"></i> Confirm
+                </button>
+                <button type="button" class="btn btn-cancel" id="cancel-action-btn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+</html>

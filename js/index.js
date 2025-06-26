@@ -72,7 +72,8 @@ moduleCards.forEach((card, index) => {
             'hr': 'Human Resource',
             'finance': 'Finance',
             'procurement': 'Procurement',
-            'inventory': 'Inventory'
+            'inventory': 'Inventory',
+            'crosspoint': 'CrossPoint'
         };
         
         morphOverlay.textContent = `Loading ${moduleNames[targetModule]}...`;

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Notifications</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/crosspoint_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li class="active"><a href="../templates/notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="notifications-header">
+                <h1><i class="fas fa-bell"></i> Notifications</h1>
+                <div class="notifications-actions">
+                    <button class="btn btn-mark-all" id="mark-all-read">
+                        <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                    <div class="notifications-filter">
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="system">System Alerts</option>
+                            <option value="team">Team Updates</option>
+                            <option value="finance">Financial</option>
+                            <option value="events">Events</option>
+                            <option value="messages">Messages</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="notification-search" placeholder="Search notifications...">
+            </div>
+
+            <div class="notification-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="unread">Unread</button>
+                <button class="tab-btn" data-filter="mentions">Mentions</button>
+                <button class="tab-btn" data-filter="critical">Critical</button>
+            </div>
+
+            <div class="notifications-container">
+                <div class="notification-list" id="notification-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/notifications_empty.png" alt="No notifications">
+                    <h3>No notifications to display</h3>
+                    <p>When you have new notifications, they'll appear here.</p>
+                </div>
+            </div>
+
+            <div class="notification-preferences">
+                <h3><i class="fas fa-cog"></i> Notification Preferences</h3>
+                <p>Customize how you receive notifications</p>
+                <button class="btn btn-preferences" id="open-preferences">
+                    <i class="fas fa-sliders-h"></i> Manage Preferences
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Preferences Modal -->
+    <div class="modal" id="preferences-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Notification Preferences</h2>
+                <button class="modal-close" id="close-preferences">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preference-category">
+                    <h3><i class="fas fa-envelope"></i> Email Notifications</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Receive email notifications</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Critical alerts</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox">
+                            <span>Daily digest</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="preference-category">
+                    <h3><i class="fas fa-bell"></i> In-App Notifications</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Enable in-app notifications</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Play sound for new notifications</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="preference-category">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Alert Types</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Team updates</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Financial transactions</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Event reminders</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox">
+                            <span>System maintenance</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="save-preferences">Save Preferences</button>
+                <button class="btn btn-cancel" id="cancel-preferences">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/notifications.js"></script>
+</body>
+</html>

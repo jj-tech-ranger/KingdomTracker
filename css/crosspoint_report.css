@@ -1,0 +1,426 @@
+/* Reports Page Styles */
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.reports-header h1 {
+    margin: 0 0 5px 0;
+    font-size: 1.8rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode .reports-header h1,
+body.black-mode .reports-header h1 {
+    color: var(--secondary);
+}
+
+.reports-header p {
+    margin: 0;
+    color: var(--light-text);
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+body.dark-mode .reports-header p,
+body.black-mode .reports-header p {
+    color: var(--dark-text);
+}
+
+.reports-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reports-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--light-border);
+    background-color: var(--light-card);
+    color: var(--light-text);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+body.dark-mode .filter-select {
+    border-color: var(--dark-border);
+    background-color: var(--dark-card);
+    color: var(--dark-text);
+}
+
+body.black-mode .filter-select {
+    border-color: var(--black-border);
+    background-color: var(--black-card);
+    color: var(--black-text);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(252, 1, 0, 0.1);
+}
+
+body.dark-mode .filter-select:focus,
+body.black-mode .filter-select:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(242, 204, 128, 0.2);
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 500px;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light-text);
+    opacity: 0.7;
+}
+
+body.dark-mode .search-bar i,
+body.black-mode .search-bar i {
+    color: var(--dark-text);
+}
+
+#report-search {
+    width: 100%;
+    padding: 12px 20px 12px 40px;
+    border-radius: 6px;
+    border: 1px solid var(--light-border);
+    background-color: var(--light-card);
+    color: var(--light-text);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+body.dark-mode #report-search {
+    border-color: var(--dark-border);
+    background-color: var(--dark-card);
+    color: var(--dark-text);
+}
+
+body.black-mode #report-search {
+    border-color: var(--black-border);
+    background-color: var(--black-card);
+    color: var(--black-text);
+}
+
+#report-search:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(252, 1, 0, 0.1);
+}
+
+body.dark-mode #report-search:focus,
+body.black-mode #report-search:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(242, 204, 128, 0.2);
+}
+
+.reports-container {
+    background-color: var(--light-card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+}
+
+body.dark-mode .reports-container {
+    background-color: var(--dark-card);
+    box-shadow: var(--dark-shadow);
+}
+
+body.black-mode .reports-container {
+    background-color: var(--black-card);
+    box-shadow: var(--dark-shadow);
+}
+
+.reports-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.report-item {
+    background-color: var(--light-card);
+    border-radius: 8px;
+    padding: 20px;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--card-shadow);
+    position: relative;
+}
+
+body.dark-mode .report-item,
+body.black-mode .report-item {
+    background-color: var(--dark-card);
+}
+
+.report-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .report-item:hover,
+body.black-mode .report-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.report-category {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.report-category.financial {
+    background-color: rgba(74, 107, 223, 0.1);
+    color: #4a6bdf;
+    border-left-color: #4a6bdf;
+}
+
+.report-category.attendance {
+    background-color: rgba(59, 181, 74, 0.1);
+    color: #3bb54a;
+    border-left-color: #3bb54a;
+}
+
+.report-category.events {
+    background-color: rgba(229, 64, 123, 0.1);
+    color: #e5407b;
+    border-left-color: #e5407b;
+}
+
+.report-category.discipleship {
+    background-color: rgba(142, 68, 173, 0.1);
+    color: #8e44ad;
+    border-left-color: #8e44ad;
+}
+
+.report-category.donations {
+    background-color: rgba(248, 156, 28, 0.1);
+    color: #f89c1c;
+    border-left-color: #f89c1c;
+}
+
+.report-title {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--light-text);
+}
+
+body.dark-mode .report-title,
+body.black-mode .report-title {
+    color: var(--dark-text);
+}
+
+.report-description {
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+    color: var(--light-text);
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+body.dark-mode .report-description,
+body.black-mode .report-description {
+    color: var(--dark-text);
+}
+
+.report-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--light-text);
+    opacity: 0.7;
+    margin-bottom: 15px;
+}
+
+body.dark-mode .report-meta,
+body.black-mode .report-meta {
+    color: var(--dark-text);
+}
+
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-view {
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    background-color: rgba(252, 1, 0, 0.1);
+    color: var(--primary);
+    font-size: 0.85rem;
+}
+
+body.dark-mode .btn-view,
+body.black-mode .btn-view {
+    background-color: rgba(242, 204, 128, 0.2);
+    color: var(--secondary);
+}
+
+.btn-view:hover {
+    background-color: rgba(252, 1, 0, 0.2);
+}
+
+body.dark-mode .btn-view:hover,
+body.black-mode .btn-view:hover {
+    background-color: rgba(242, 204, 128, 0.3);
+}
+
+.btn-download {
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    background-color: var(--primary);
+    color: white;
+    font-size: 0.85rem;
+}
+
+body.dark-mode .btn-download,
+body.black-mode .btn-download {
+    background-color: var(--secondary);
+}
+
+.btn-download:hover {
+    background-color: var(--highlight);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
+    display: none;
+}
+
+.empty-state img {
+    max-width: 200px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.empty-state h3 {
+    margin: 0 0 10px;
+    color: var(--light-text);
+}
+
+body.dark-mode .empty-state h3,
+body.black-mode .empty-state h3 {
+    color: var(--dark-text);
+}
+
+.empty-state p {
+    margin: 0;
+    color: var(--light-text);
+    opacity: 0.7;
+}
+
+body.dark-mode .empty-state p,
+body.black-mode .empty-state p {
+    color: var(--dark-text);
+}
+
+/* Report Modal Styles */
+.report-modal-content {
+    max-width: 900px;
+}
+
+.report-viewer {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--light-bg);
+    min-height: 500px;
+}
+
+body.dark-mode .report-viewer,
+body.black-mode .report-viewer {
+    background-color: var(--dark-bg);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.report-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.report-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: var(--light-text);
+    opacity: 0.8;
+}
+
+body.dark-mode .report-meta span,
+body.black-mode .report-meta span {
+    color: var(--dark-text);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reports-header {
+        flex-direction: column;
+    }
+
+    .reports-filter {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .reports-list {
+        grid-template-columns: 1fr;
+    }
+
+    .report-modal-content {
+        width: 95%;
+    }
+}
