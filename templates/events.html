@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/hr.css">
     <link rel="stylesheet" href="../css/events.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body class="light-mode">
 
@@ -49,6 +49,9 @@
             <div class="events-actions">
                 <button class="btn btn-primary" id="new-event-btn">
                     <i class="fas fa-plus"></i> New Event
+                </button>
+                <button class="btn btn-primary" id="add-assignment-btn">
+                    <i class="fas fa-user-plus"></i> Assign Personnel
                 </button>
                 <button class="btn btn-filter">
                     <i class="fas fa-filter"></i> Filter
@@ -103,6 +106,29 @@
                                 <span class="status-badge present">Scheduled</span>
                             </div>
                             <div class="event-description">Weekly Sunday worship service with communion</div>
+                            <div class="assignment-card">
+                                <div class="assignment-header">
+                                    <h6 class="assignment-title">Assigned Personnel</h6>
+                                </div>
+                                <div class="assignment-list">
+                                    <div class="assignment">
+                                        <img src="../img/user.png" alt="User" class="member-photo">
+                                        <div class="assignment-details">
+                                            <span class="assignment-name">John Doe</span>
+                                            <span class="assignment-role">Pastor</span>
+                                        </div>
+                                        <button class="btn btn-secondary btn-sm">Message</button>
+                                    </div>
+                                    <div class="assignment">
+                                        <img src="../img/user.png" alt="User" class="member-photo">
+                                        <div class="assignment-details">
+                                            <span class="assignment-name">Jane Smith</span>
+                                            <span class="assignment-role">Worship Leader</span>
+                                        </div>
+                                        <button class="btn btn-secondary btn-sm">Message</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="event-actions">
                             <button class="action-btn view"><i class="fas fa-eye"></i></button>
@@ -123,6 +149,21 @@
                                 <span class="status-badge active">In Progress</span>
                             </div>
                             <div class="event-description">Quarterly staff training on new safety protocols</div>
+                            <div class="assignment-card">
+                                <div class="assignment-header">
+                                    <h6 class="assignment-title">Assigned Personnel</h6>
+                                </div>
+                                <div class="assignment-list">
+                                    <div class="assignment">
+                                        <img src="../img/user.png" alt="User" class="member-photo">
+                                        <div class="assignment-details">
+                                            <span class="assignment-name">Mike Johnson</span>
+                                            <span class="assignment-role">Trainer</span>
+                                        </div>
+                                        <button class="btn btn-secondary btn-sm">Message</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="event-actions">
                             <button class="action-btn view"><i class="fas fa-eye"></i></button>
@@ -150,19 +191,44 @@
                             <img src="../img/user.png" alt="User" class="member-photo">
                             <div class="assignment-details">
                                 <span class="assignment-name">John Doe</span>
-                                <span class="assignment-role">Worship Leader</span>
+                                <span class="assignment-role">Pastor</span>
+                                <span class="assignment-notes">Main speaker for the service</span>
                             </div>
                             <button class="btn btn-secondary btn-sm">Message</button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </div>
                         <div class="assignment">
                             <img src="../img/user.png" alt="User" class="member-photo">
                             <div class="assignment-details">
                                 <span class="assignment-name">Jane Smith</span>
-                                <span class="assignment-role">Sound Technician</span>
+                                <span class="assignment-role">Worship Leader</span>
+                                <span class="assignment-notes">Leading praise and worship</span>
                             </div>
                             <button class="btn btn-secondary btn-sm">Message</button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
+                    <button class="add-assignment-btn" data-event="worship">
+                        <i class="fas fa-plus"></i> Add Assignment
+                    </button>
+                </div>
+                <div class="resource-card">
+                    <h5>Thursday Counseling - June 20</h5>
+                    <div class="assignment-list">
+                        <div class="assignment">
+                            <img src="../img/user.png" alt="User" class="member-photo">
+                            <div class="assignment-details">
+                                <span class="assignment-name">Mike Johnson</span>
+                                <span class="assignment-role">Counselor</span>
+                                <span class="assignment-notes">Evening counseling session</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm">Message</button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <button class="add-assignment-btn" data-event="counseling">
+                        <i class="fas fa-plus"></i> Add Assignment
+                    </button>
                 </div>
             </div>
 
@@ -301,9 +367,66 @@
         </div>
     </div>
 
+    <!-- Assignment Modal -->
+    <div class="modal hidden" id="assignment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Assign Personnel</h4>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="assignment-form">
+                    <div class="form-group">
+                        <label for="assignment-event">Event</label>
+                        <select id="assignment-event" required>
+                            <option value="">Select Event</option>
+                            <option value="worship">Sunday Worship Service</option>
+                            <option value="counseling">Thursday Counseling</option>
+                            <option value="training">Staff Training</option>
+                            <option value="meeting">Leadership Meeting</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignment-person">Person</label>
+                        <select id="assignment-person" required>
+                            <option value="">Select Person</option>
+                            <option value="john">John Doe (Pastor)</option>
+                            <option value="jane">Jane Smith (Worship Leader)</option>
+                            <option value="mike">Mike Johnson (Deacon)</option>
+                            <option value="sarah">Sarah Williams (Youth Leader)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignment-role">Role</label>
+                        <select id="assignment-role" required>
+                            <option value="">Select Role</option>
+                            <option value="pastor">Pastor</option>
+                            <option value="worship">Worship Leader</option>
+                            <option value="sound">Sound Technician</option>
+                            <option value="usher">Usher</option>
+                            <option value="counselor">Counselor</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignment-notes">Notes</label>
+                        <textarea id="assignment-notes" rows="3" placeholder="Any special instructions..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-assignment">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Assignment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/hr.js"></script>
     <script src="../js/events.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+    <script src="../js/cdn.jsdelivr.net/npm/flatpickr.js"></script>
 </body>
 </html>

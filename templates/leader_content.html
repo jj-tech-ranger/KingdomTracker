@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Team Leader Content</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/leader_content.css">
+    <link rel="stylesheet" href="../css/content.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="active"><a href="../templates/leader_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/leader_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="leader_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/food_banks.html"><i class="fas fa-bank"></i>Bank</a></li>
+                <li><a href="../templates/crosspoint_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/leader_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/leader_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="content-header">
+                <h1><i class="fas fa-box-open"></i> Team Content Library</h1>
+                <div class="content-actions">
+                    <button class="btn btn-upload" id="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Content
+                    </button>
+                    <button class="btn btn-assign" id="assign-content">
+                        <i class="fas fa-user-plus"></i> Assign Content
+                    </button>
+                    <div class="content-filter">
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="sermons">Sermons</option>
+                            <option value="worship">Worship</option>
+                            <option value="documents">Documents</option>
+                            <option value="events">Event Flyers</option>
+                            <option value="testimonies">Testimonies</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="popular">Most Viewed</option>
+                            <option value="alphabetical">A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="content-search" placeholder="Search content...">
+            </div>
+
+            <div class="content-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="recent">Recently Added</button>
+                <button class="tab-btn" data-filter="featured">Featured</button>
+                <button class="tab-btn" data-filter="mine">My Content</button>
+                <button class="tab-btn" data-filter="assigned">Assigned</button>
+                <button class="tab-btn" data-filter="leader">Leader View</button>
+            </div>
+
+            <div class="content-container">
+                <div class="content-grid" id="content-grid">
+                    <!-- Content items will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/content_empty.png" alt="No content">
+                    <h3>No content to display</h3>
+                    <p>When content is added, it will appear here.</p>
+                    <button class="btn btn-upload" id="upload-empty">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Your First Content
+                    </button>
+                </div>
+            </div>
+
+            <div class="leader-dashboard">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-bar"></i> Team Engagement Dashboard</h3>
+                    <button class="btn btn-export" id="export-report">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Active Members</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">Engaged This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">Pending Assignments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Completion Rate</div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="pending-actions">
+                        <h4>Pending Actions</h4>
+                        <ul class="action-list">
+                            <li>
+                                <i class="fas fa-comment"></i>
+                                <span>3 new comments to moderate</span>
+                                <button class="btn btn-small">Review</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>5 assignments completed</span>
+                                <button class="btn btn-small">View</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>2 content requests pending</span>
+                                <button class="btn btn-small">Respond</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="upload-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload New Content</h2>
+                <button class="modal-close" id="close-upload">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="upload-form">
+                    <div class="form-group">
+                        <label for="content-title">Title</label>
+                        <input type="text" id="content-title" placeholder="Enter content title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content-description">Description</label>
+                        <textarea id="content-description" placeholder="Enter a brief description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content-category">Category</label>
+                        <select id="content-category" required>
+                            <option value="">Select a category</option>
+                            <option value="sermons">Sermons</option>
+                            <option value="worship">Worship</option>
+                            <option value="documents">Documents</option>
+                            <option value="events">Event Flyers</option>
+                            <option value="testimonies">Testimonies</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content-file">File</label>
+                        <div class="file-upload">
+                            <input type="file" id="content-file" required>
+                            <label for="content-file" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choose a file or drag it here</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="featured-content">
+                            <span>Feature this content</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="leader-only">
+                            <span>Visible to leaders only</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-upload">Upload Content</button>
+                <button class="btn btn-cancel" id="cancel-upload">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assign Content Modal -->
+    <div class="modal" id="assign-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Assign Content to Team</h2>
+                <button class="modal-close" id="close-assign">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="assign-form">
+                    <div class="form-group">
+                        <label for="assign-content-select">Select Content</label>
+                        <select id="assign-content-select" class="assign-select" required>
+                            <option value="">Choose content to assign</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assign-team">Assign To</label>
+                        <select id="assign-team" class="assign-select" required>
+                            <option value="">Select team or individual</option>
+                            <option value="all">Entire Team</option>
+                            <option value="youth">Youth Group</option>
+                            <option value="worship">Worship Team</option>
+                            <option value="outreach">Outreach Team</option>
+                            <option value="individuals">Specific Individuals</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="individuals-select" style="display: none;">
+                        <label for="assign-individuals">Select Individuals</label>
+                        <select id="assign-individuals" class="assign-select" multiple>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assign-due-date">Due Date</label>
+                        <input type="date" id="assign-due-date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assign-message">Message (Optional)</label>
+                        <textarea id="assign-message" placeholder="Add a personal message or instructions" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-assign">Assign Content</button>
+                <button class="btn btn-cancel" id="cancel-assign">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Request Modal -->
+    <div class="modal" id="request-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Request New Content</h2>
+                <button class="modal-close" id="close-request">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="request-form">
+                    <div class="form-group">
+                        <label for="request-title">Title/Subject</label>
+                        <input type="text" id="request-title" placeholder="What content do you need?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request-category">Category</label>
+                        <select id="request-category" required>
+                            <option value="">Select a category</option>
+                            <option value="teaching">Teaching Material</option>
+                            <option value="training">Training Resource</option>
+                            <option value="worship">Worship Resource</option>
+                            <option value="event">Event Material</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request-description">Description</label>
+                        <textarea id="request-description" placeholder="Describe the content you need and how it will be used" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request-urgency">Urgency</label>
+                        <select id="request-urgency">
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request-deadline">Needed By (Optional)</label>
+                        <input type="date" id="request-deadline">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-request">Submit Request</button>
+                <button class="btn btn-cancel" id="cancel-request">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/content.js"></script>
+    <script src="../js/leader_content.js"></script>
+</body>
+</html>

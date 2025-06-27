@@ -143,3 +143,114 @@
                 this.reset();
             });
         });
+document.addEventListener('DOMContentLoaded', function() {
+    // [Previous initialization code remains the same until the end]
+
+    // Assignment modal handling
+    const assignmentModal = document.getElementById('assignment-modal');
+    const addAssignmentBtn = document.createElement('button');
+    addAssignmentBtn.className = 'btn btn-primary';
+    addAssignmentBtn.innerHTML = '<i class="fas fa-user-plus"></i> Assign Personnel';
+    addAssignmentBtn.id = 'add-assignment-btn';
+    document.querySelector('.events-actions').appendChild(addAssignmentBtn);
+
+    const closeAssignmentModal = assignmentModal.querySelector('.modal-close');
+    const cancelAssignmentBtn = document.getElementById('cancel-assignment');
+
+    addAssignmentBtn.addEventListener('click', () => {
+        assignmentModal.classList.remove('hidden');
+    });
+
+    closeAssignmentModal.addEventListener('click', () => {
+        assignmentModal.classList.add('hidden');
+    });
+
+    cancelAssignmentBtn.addEventListener('click', () => {
+        assignmentModal.classList.add('hidden');
+    });
+
+    // Handle assignment form submission
+    document.getElementById('assignment-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const event = document.getElementById('assignment-event').value;
+        const person = document.getElementById('assignment-person').value;
+        const role = document.getElementById('assignment-role').value;
+        const notes = document.getElementById('assignment-notes').value;
+
+        // In a real app, this would save the assignment to your database
+        console.log('Assignment saved:', { event, person, role, notes });
+
+        // Add the new assignment to the personnel tab
+        addAssignmentToView(event, person, role, notes);
+
+        // Reset and close the form
+        this.reset();
+        assignmentModal.classList.add('hidden');
+    });
+
+    // Function to add assignment to the view
+    function addAssignmentToView(event, person, role, notes) {
+        const personnelTab = document.getElementById('personnel-tab');
+        const assignmentList = personnelTab.querySelector('.assignment-list') || personnelTab.querySelector('.resource-card .assignment-list');
+
+        if (!assignmentList) return;
+
+        const assignment = document.createElement('div');
+        assignment.className = 'assignment';
+
+        // Extract person details from the selected option
+        const personOption = document.querySelector(`#assignment-person option[value="${person}"]`);
+        const personText = personOption ? personOption.textContent : person;
+
+        // Create assignment HTML
+        assignment.innerHTML = `
+            <img src="../img/user.png" alt="User" class="member-photo">
+            <div class="assignment-details">
+                <span class="assignment-name">${personText.split(' (')[0]}</span>
+                <span class="assignment-role">${document.querySelector(`#assignment-role option[value="${role}"]`).textContent}</span>
+            </div>
+            <button class="btn btn-secondary btn-sm">Message</button>
+        `;
+
+        assignmentList.appendChild(assignment);
+    }
+
+    // [Rest of the existing code remains the same]
+});
+
+// Generate sample assignments on page load
+function generateSampleAssignments() {
+    const assignments = [
+        {
+            event: "Sunday Worship Service",
+            person: "John Doe (Pastor)",
+            role: "Pastor",
+            notes: "Main speaker for the service"
+        },
+        {
+            event: "Sunday Worship Service",
+            person: "Jane Smith (Worship Leader)",
+            role: "Worship Leader",
+            notes: "Leading praise and worship"
+        },
+        {
+            event: "Thursday Counseling",
+            person: "Mike Johnson (Deacon)",
+            role: "Counselor",
+            notes: "Evening counseling session"
+        }
+    ];
+
+    assignments.forEach(assignment => {
+        addAssignmentToView(
+            assignment.event,
+            assignment.person.toLowerCase().replace(/\s+/g, '-'),
+            assignment.role.toLowerCase().replace(/\s+/g, '-'),
+            assignment.notes
+        );
+    });
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', generateSampleAssignments);

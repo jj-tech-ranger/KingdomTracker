@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingdom Tracker - Equipment Tracking</title>
+    <title>Kingdom Tracker Equipment Tracking</title>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/inventory.css">
     <link rel="stylesheet" href="../css/equipment_tracking.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body class="light-mode">
 
@@ -17,8 +17,8 @@
         <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
     </div>
     <a href="../templates/index.html" class="home-button">
-            <i class="fas fa-home"></i> Back to Home
-        </a>
+        <i class="fas fa-home"></i> Back to Home
+    </a>
     <h2>Inventory</h2>
     <ul class="menu">
         <li><a href="inventory_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -32,7 +32,7 @@
 <div class="main">
     <header>
         <div class="search-bar">
-            <input type="text" id="equipmentSearch" placeholder="Search equipment...">
+            <input type="text" placeholder="Search equipment...">
             <span class="notification-bell"><i class="fas fa-bell"></i></span>
         </div>
 
@@ -43,649 +43,143 @@
         </div>
     </header>
 
-    <div class="section-header">
-        <h3>Equipment Tracking</h3>
-        <div class="action-buttons">
-            <button class="add-button" id="addEquipmentBtn">
-                <i class="fas fa-plus"></i> Add Equipment
-            </button>
-            <button class="export-button" id="scanEquipmentBtn">
-                <i class="fas fa-qrcode"></i> Scan Barcode
-            </button>
+    <div class="overview">
+        <div class="card">
+            <h4>Total Equipment</h4>
+            <p>187</p>
+            <i class="fas fa-laptop card-icon"></i>
         </div>
-    </div>
-
-    <div class="filters">
-        <div class="filter-group">
-            <label for="equipmentTypeFilter">Type:</label>
-            <select id="equipmentTypeFilter">
-                <option value="all">All Types</option>
-                <option value="Laptop">Laptop</option>
-                <option value="Desktop">Desktop</option>
-                <option value="Printer">Printer</option>
-                <option value="Projector">Projector</option>
-                <option value="Phone">Phone</option>
-                <option value="Tablet">Tablet</option>
-                <option value="Other">Other</option>
-            </select>
+        <div class="card">
+            <h4>In Use</h4>
+            <p>92</p>
+            <i class="fas fa-user-check card-icon"></i>
         </div>
-        <div class="filter-group">
-            <label for="statusFilter">Status:</label>
-            <select id="statusFilter">
-                <option value="all">All Statuses</option>
-                <option value="In Use">In Use</option>
-                <option value="Available">Available</option>
-                <option value="Under Maintenance">Under Maintenance</option>
-                <option value="Retired">Retired</option>
-            </select>
+        <div class="card">
+            <h4>Under Maintenance</h4>
+            <p>15</p>
+            <i class="fas fa-tools card-icon"></i>
         </div>
-        <div class="filter-group">
-            <label for="assignedToFilter">Assigned To:</label>
-            <select id="assignedToFilter">
-                <option value="all">All Users</option>
-                <option value="John Doe">John Doe</option>
-                <option value="Jane Smith">Jane Smith</option>
-                <option value="Mike Johnson">Mike Johnson</option>
-                <option value="Sarah Williams">Sarah Williams</option>
-                <option value="Unassigned">Unassigned</option>
-            </select>
+        <div class="card">
+            <h4>Available</h4>
+            <p>80</p>
+            <i class="fas fa-check-circle card-icon"></i>
         </div>
-        <div class="filter-group">
-            <label for="locationFilter">Location:</label>
-            <select id="locationFilter">
-                <option value="all">All Locations</option>
-                <option value="Main Office">Main Office</option>
-                <option value="IT Department">IT Department</option>
-                <option value="Meeting Room">Meeting Room</option>
-                <option value="Warehouse">Warehouse</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="dateRangeFilter">Purchase Date:</label>
-            <input type="text" id="dateRangeFilter" placeholder="Select date range">
-        </div>
-        <button class="filter-button" id="applyFiltersBtn">Apply</button>
-        <button class="filter-button" id="resetFiltersBtn">Reset</button>
-    </div>
-
-    <div class="sort-options">
-        <label>Sort by:</label>
-        <select id="sortBy">
-            <option value="assetTag">Asset Tag</option>
-            <option value="name">Equipment Name</option>
-            <option value="purchaseDate">Purchase Date (Newest)</option>
-            <option value="purchaseDateOldest">Purchase Date (Oldest)</option>
-            <option value="status">Status</option>
-            <option value="assignedTo">Assigned To</option>
-        </select>
     </div>
 
     <div class="project-summary">
-        <table id="equipmentTable">
+        <div class="section-header">
+            <h3>Equipment Tracking</h3>
+            <div class="filter-controls">
+                <select id="location-filter" class="filter-select">
+                    <option value="">All Locations</option>
+                    <option value="Main Hall">Main Hall</option>
+                    <option value="Youth Wing">Youth Wing</option>
+                    <option value="Media Booth">Media Booth</option>
+                    <option value="Storage">Storage</option>
+                </select>
+                <select id="status-filter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="In Use">In Use</option>
+                    <option value="Maintenance">Under Maintenance</option>
+                    <option value="Missing">Missing</option>
+                </select>
+                <select id="condition-filter" class="filter-select">
+                    <option value="">All Conditions</option>
+                    <option value="Good">Good</option>
+                    <option value="Needs Repair">Needs Repair</option>
+                    <option value="Damaged">Damaged</option>
+                </select>
+            </div>
+        </div>
+        <table>
             <thead>
                 <tr>
-                    <th>Asset Tag</th>
-                    <th>Equipment</th>
-                    <th>Serial #</th>
+                    <th>Asset ID</th>
+                    <th>Equipment Name</th>
+                    <th>Category</th>
+                    <th>Condition</th>
                     <th>Assigned To</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th>Condition</th>
-                    <th>Purchase Date</th>
+                    <th>Last Checked</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Will be populated by JavaScript -->
+                <tr>
+                    <td>AST-0042</td>
+                    <td>Canon EOS 90D Camera</td>
+                    <td>Media</td>
+                    <td><span class="status good">Good</span></td>
+                    <td>Media Team</td>
+                    <td>Media Booth</td>
+                    <td><span class="status neutral">In Use</span></td>
+                    <td>2023-11-15</td>
+                    <td>
+                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AST-0087</td>
+                    <td>MacBook Pro 16"</td>
+                    <td>IT</td>
+                    <td><span class="status good">Good</span></td>
+                    <td>Pastor John</td>
+                    <td>Main Office</td>
+                    <td><span class="status neutral">In Use</span></td>
+                    <td>2023-11-10</td>
+                    <td>
+                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AST-0125</td>
+                    <td>Yamaha MG10XU Mixer</td>
+                    <td>Audio</td>
+                    <td><span class="status warning">Needs Repair</span></td>
+                    <td>Sound Team</td>
+                    <td>Main Hall</td>
+                    <td><span class="status warning">Maintenance</span></td>
+                    <td>2023-11-05</td>
+                    <td>
+                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AST-0156</td>
+                    <td>Shure SM58 Microphone</td>
+                    <td>Audio</td>
+                    <td><span class="status critical">Damaged</span></td>
+                    <td>Unassigned</td>
+                    <td>Storage</td>
+                    <td><span class="status critical">Missing</span></td>
+                    <td>2023-10-28</td>
+                    <td>
+                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AST-0189</td>
+                    <td>Epson EB-1781W Projector</td>
+                    <td>AV</td>
+                    <td><span class="status good">Good</span></td>
+                    <td>Youth Team</td>
+                    <td>Youth Wing</td>
+                    <td><span class="status good">Available</span></td>
+                    <td>2023-11-12</td>
+                    <td>
+                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <div class="pagination">
-            <button id="prevPageBtn" disabled><i class="fas fa-chevron-left"></i></button>
-            <span id="pageInfo">Page 1 of 1</span>
-            <button id="nextPageBtn" disabled><i class="fas fa-chevron-right"></i></button>
-        </div>
+        <!-- Add this right after the closing </table> tag in equipment_tracking.html -->
+    <div class="pagination-controls">
+        <button id="prev-page" class="pagination-btn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+        <div id="page-numbers" class="page-numbers"></div>
+        <button id="next-page" class="pagination-btn">Next <i class="fas fa-chevron-right"></i></button>
     </div>
-</div>
-
-<!-- Add/Edit Equipment Modal -->
-<div id="equipmentModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 id="modalTitle">Add New Equipment</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="equipmentForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="assetTag">Asset Tag *</label>
-                        <input type="text" id="assetTag" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="serialNumber">Serial Number *</label>
-                        <input type="text" id="serialNumber" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="equipmentName">Equipment Name *</label>
-                        <input type="text" id="equipmentName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="equipmentType">Equipment Type *</label>
-                        <select id="equipmentType" required>
-                            <option value="">Select type</option>
-                            <option value="Laptop">Laptop</option>
-                            <option value="Desktop">Desktop</option>
-                            <option value="Printer">Printer</option>
-                            <option value="Projector">Projector</option>
-                            <option value="Phone">Phone</option>
-                            <option value="Tablet">Tablet</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="manufacturer">Manufacturer</label>
-                        <input type="text" id="manufacturer">
-                    </div>
-                    <div class="form-group">
-                        <label for="model">Model</label>
-                        <input type="text" id="model">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="purchaseDate">Purchase Date</label>
-                        <input type="text" id="purchaseDate" class="date-picker">
-                    </div>
-                    <div class="form-group">
-                        <label for="purchasePrice">Purchase Price</label>
-                        <input type="number" id="purchasePrice" step="0.01">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="warrantyExpiry">Warranty Expiry</label>
-                        <input type="text" id="warrantyExpiry" class="date-picker">
-                    </div>
-                    <div class="form-group">
-                        <label for="expectedLife">Expected Life (months)</label>
-                        <input type="number" id="expectedLife">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="assignedTo">Assigned To</label>
-                        <select id="assignedTo">
-                            <option value="">Unassigned</option>
-                            <option value="John Doe">John Doe</option>
-                            <option value="Jane Smith">Jane Smith</option>
-                            <option value="Mike Johnson">Mike Johnson</option>
-                            <option value="Sarah Williams">Sarah Williams</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Location *</label>
-                        <select id="location" required>
-                            <option value="">Select location</option>
-                            <option value="Main Office">Main Office</option>
-                            <option value="IT Department">IT Department</option>
-                            <option value="Meeting Room">Meeting Room</option>
-                            <option value="Warehouse">Warehouse</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="status">Status *</label>
-                        <select id="status" required>
-                            <option value="Available">Available</option>
-                            <option value="In Use">In Use</option>
-                            <option value="Under Maintenance">Under Maintenance</option>
-                            <option value="Retired">Retired</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="condition">Condition *</label>
-                        <select id="condition" required>
-                            <option value="New">New</option>
-                            <option value="Excellent">Excellent</option>
-                            <option value="Good">Good</option>
-                            <option value="Fair">Fair</option>
-                            <option value="Poor">Poor</option>
-                            <option value="Broken">Broken</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="notes">Notes</label>
-                    <textarea id="notes" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="equipmentImage">Equipment Image</label>
-                    <input type="file" id="equipmentImage" accept="image/*">
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="cancel-button" id="cancelEquipmentBtn">Cancel</button>
-                    <button type="submit" class="submit-button">Save Equipment</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Equipment Details Modal -->
-<div id="detailsModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Equipment Details</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="details-container">
-                <div class="details-sidebar">
-                    <div class="equipment-image">
-                        <img id="detailImage" src="../img/default-equipment.png" alt="Equipment Image">
-                    </div>
-                    <div class="quick-status">
-                        <div class="status-badge" id="detailStatusBadge">
-                            <span class="status-text">Available</span>
-                        </div>
-                        <div class="condition-badge" id="detailConditionBadge">
-                            <span class="condition-text">Good</span>
-                        </div>
-                    </div>
-                    <div class="qr-code">
-                        <img src="../img/sample-qr.png" alt="QR Code">
-                        <button class="small-button">Print Label</button>
-                    </div>
-                </div>
-                <div class="details-content">
-                    <div class="details-section">
-                        <h5>Basic Information</h5>
-                        <div class="detail-row">
-                            <span class="detail-label">Asset Tag:</span>
-                            <span class="detail-value" id="detailAssetTag">EQP-001</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Serial Number:</span>
-                            <span class="detail-value" id="detailSerialNumber">SN123456789</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Equipment Name:</span>
-                            <span class="detail-value" id="detailEquipmentName">Laptop Dell XPS</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Type:</span>
-                            <span class="detail-value" id="detailEquipmentType">Laptop</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Manufacturer:</span>
-                            <span class="detail-value" id="detailManufacturer">Dell</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Model:</span>
-                            <span class="detail-value" id="detailModel">XPS 15</span>
-                        </div>
-                    </div>
-
-                    <div class="details-section">
-                        <h5>Assignment Information</h5>
-                        <div class="detail-row">
-                            <span class="detail-label">Assigned To:</span>
-                            <span class="detail-value" id="detailAssignedTo">John Doe</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-value" id="detailLocation">IT Department</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Purchase Date:</span>
-                            <span class="detail-value" id="detailPurchaseDate">2023-01-15</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Purchase Price:</span>
-                            <span class="detail-value" id="detailPurchasePrice">$1,299.99</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Warranty Expiry:</span>
-                            <span class="detail-value" id="detailWarrantyExpiry">2025-01-15</span>
-                        </div>
-                    </div>
-
-                    <div class="details-section">
-                        <h5>Additional Information</h5>
-                        <div class="detail-row">
-                            <span class="detail-label">Expected Life:</span>
-                            <span class="detail-value" id="detailExpectedLife">36 months</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Notes:</span>
-                            <span class="detail-value" id="detailNotes">Issued to John Doe for development work</span>
-                        </div>
-                    </div>
-
-                    <div class="details-section">
-                        <h5>Activity Log</h5>
-                        <div class="activity-log">
-                            <div class="log-entry">
-                                <div class="log-date">2023-06-20</div>
-                                <div class="log-action">Assigned to John Doe</div>
-                                <div class="log-user">by Jane Smith</div>
-                            </div>
-                            <div class="log-entry">
-                                <div class="log-date">2023-05-15</div>
-                                <div class="log-action">Status changed to In Use</div>
-                                <div class="log-user">by Mike Johnson</div>
-                            </div>
-                            <div class="log-entry">
-                                <div class="log-date">2023-01-15</div>
-                                <div class="log-action">Equipment added to system</div>
-                                <div class="log-user">by Admin</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="action-btn view"><i class="fas fa-print"></i> Print Details</button>
-            <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
-            <button class="action-btn assign"><i class="fas fa-user"></i> Assign</button>
-            <button class="action-btn service"><i class="fas fa-tools"></i> Log Service</button>
-            <button class="action-btn retire"><i class="fas fa-trash"></i> Retire</button>
-        </div>
-    </div>
-</div>
-
-<!-- Status Change Modal -->
-<div id="statusModal" class="modal small-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Change Equipment Status</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="statusForm">
-                <div class="form-group">
-                    <label for="newStatus">New Status *</label>
-                    <select id="newStatus" required>
-                        <option value="Available">Available</option>
-                        <option value="In Use">In Use</option>
-                        <option value="Under Maintenance">Under Maintenance</option>
-                        <option value="Retired">Retired</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="statusReason">Reason</label>
-                    <textarea id="statusReason" rows="3"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="cancel-button" id="cancelStatusBtn">Cancel</button>
-                    <button type="submit" class="submit-button">Update Status</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Assign Equipment Modal -->
-<div id="assignModal" class="modal small-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Assign Equipment</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="assignForm">
-                <div class="form-group">
-                    <label for="assignTo">Assign To *</label>
-                    <select id="assignTo" required>
-                        <option value="">Select user</option>
-                        <option value="John Doe">John Doe</option>
-                        <option value="Jane Smith">Jane Smith</option>
-                        <option value="Mike Johnson">Mike Johnson</option>
-                        <option value="Sarah Williams">Sarah Williams</option>
-                        <option value="Unassigned">Unassign</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="assignLocation">Location *</label>
-                    <select id="assignLocation" required>
-                        <option value="">Select location</option>
-                        <option value="Main Office">Main Office</option>
-                        <option value="IT Department">IT Department</option>
-                        <option value="Meeting Room">Meeting Room</option>
-                        <option value="Warehouse">Warehouse</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="assignNotes">Notes</label>
-                    <textarea id="assignNotes" rows="3"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="cancel-button" id="cancelAssignBtn">Cancel</button>
-                    <button type="submit" class="submit-button">Save Assignment</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Service Log Modal -->
-<div id="serviceModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Log Service Activity</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="serviceForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="serviceDate">Service Date *</label>
-                        <input type="text" id="serviceDate" class="date-picker" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="serviceType">Service Type *</label>
-                        <select id="serviceType" required>
-                            <option value="">Select type</option>
-                            <option value="Maintenance">Routine Maintenance</option>
-                            <option value="Repair">Repair</option>
-                            <option value="Upgrade">Upgrade</option>
-                            <option value="Calibration">Calibration</option>
-                            <option value="Inspection">Inspection</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="serviceDescription">Description *</label>
-                    <textarea id="serviceDescription" rows="3" required></textarea>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="serviceProvider">Service Provider</label>
-                        <input type="text" id="serviceProvider">
-                    </div>
-                    <div class="form-group">
-                        <label for="serviceCost">Cost</label>
-                        <input type="number" id="serviceCost" step="0.01">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="serviceOutcome">Outcome/Result *</label>
-                    <select id="serviceOutcome" required>
-                        <option value="">Select outcome</option>
-                        <option value="Completed">Completed Successfully</option>
-                        <option value="PartiallyCompleted">Partially Completed</option>
-                        <option value="Failed">Failed</option>
-                        <option value="Pending">Pending Parts/Follow-up</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="serviceNotes">Technician Notes</label>
-                    <textarea id="serviceNotes" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="serviceAttachments">Attachments</label>
-                    <input type="file" id="serviceAttachments" multiple>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="cancel-button" id="cancelServiceBtn">Cancel</button>
-                    <button type="submit" class="submit-button">Log Service</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Retire Equipment Modal -->
-<div id="retireModal" class="modal small-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Retire Equipment</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <form id="retireForm">
-                <div class="form-group">
-                    <label for="retireDate">Retirement Date *</label>
-                    <input type="text" id="retireDate" class="date-picker" required>
-                </div>
-                <div class="form-group">
-                    <label for="retireReason">Reason *</label>
-                    <select id="retireReason" required>
-                        <option value="">Select reason</option>
-                        <option value="EndOfLife">End of Useful Life</option>
-                        <option value="Obsolete">Obsolete Technology</option>
-                        <option value="Broken">Beyond Repair</option>
-                        <option value="Upgraded">Replaced by Upgrade</option>
-                        <option value="Donated">Donated/Sold</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="retireNotes">Disposition Notes</label>
-                    <textarea id="retireNotes" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="retireValue">Residual Value</label>
-                    <input type="number" id="retireValue" step="0.01">
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="cancel-button" id="cancelRetireBtn">Cancel</button>
-                    <button type="submit" class="submit-button">Confirm Retirement</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Audit Modal -->
-<div id="auditModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Equipment Audit</h4>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="audit-instructions">
-                <p>Scan or enter equipment tags to verify their presence and condition.</p>
-                <div class="audit-search">
-                    <input type="text" id="auditSearch" placeholder="Scan or enter asset tag...">
-                    <button class="small-button"><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-
-            <div class="audit-progress">
-                <div class="progress-info">
-                    <span>Audit Progress:</span>
-                    <span>5 of 25 items verified</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 20%"></div>
-                </div>
-            </div>
-
-            <div class="audit-results">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Asset Tag</th>
-                            <th>Equipment</th>
-                            <th>Expected Location</th>
-                            <th>Status</th>
-                            <th>Condition</th>
-                            <th>Verified By</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="verified">
-                            <td>EQP-001</td>
-                            <td>Laptop Dell XPS</td>
-                            <td>IT Department</td>
-                            <td><span class="status good">Verified</span></td>
-                            <td>Good</td>
-                            <td>John Doe</td>
-                        </tr>
-                        <tr class="verified">
-                            <td>EQP-002</td>
-                            <td>Projector Epson</td>
-                            <td>Meeting Room</td>
-                            <td><span class="status good">Verified</span></td>
-                            <td>Excellent</td>
-                            <td>John Doe</td>
-                        </tr>
-                        <tr class="discrepancy">
-                            <td>EQP-003</td>
-                            <td>Printer HP</td>
-                            <td>Office</td>
-                            <td><span class="status warning">Location Mismatch</span></td>
-                            <td>Good</td>
-                            <td>John Doe</td>
-                        </tr>
-                        <tr class="missing">
-                            <td>EQP-004</td>
-                            <td>Conference Phone</td>
-                            <td>Meeting Room</td>
-                            <td><span class="status critical">Not Found</span></td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr class="verified">
-                            <td>EQP-005</td>
-                            <td>Desktop PC</td>
-                            <td>IT Department</td>
-                            <td><span class="status good">Verified</span></td>
-                            <td>Fair</td>
-                            <td>John Doe</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="action-btn"><i class="fas fa-file-export"></i> Export Results</button>
-            <button class="action-btn"><i class="fas fa-save"></i> Save Audit</button>
-            <button class="action-btn"><i class="fas fa-times"></i> Cancel Audit</button>
-        </div>
     </div>
 </div>
 
@@ -697,8 +191,6 @@
 </footer>
 
 <script src="../js/inventory.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr.js"></script>
 <script src="../js/equipment_tracking.js"></script>
 </body>
 </html>

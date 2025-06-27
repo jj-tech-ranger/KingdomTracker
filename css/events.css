@@ -479,3 +479,110 @@ body.dark-mode .form-group textarea {
 .hidden {
     display: none;
 }
+/* [Previous CSS content remains the same until the end] */
+
+/* Assignment Modal Styles */
+.assignment-modal .form-group {
+    margin-bottom: 20px;
+}
+
+.assignment-modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--font-dark);
+}
+
+body.dark-mode .assignment-modal .form-group label {
+    color: var(--white);
+}
+
+.assignment-modal .form-group select,
+.assignment-modal .form-group textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 16px;
+    transition: var(--transition);
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+}
+
+body.dark-mode .assignment-modal .form-group select,
+body.dark-mode .assignment-modal .form-group textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+/* Assignment Card Styles */
+.assignment-card {
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary);
+}
+
+body.dark-mode .assignment-card {
+    background-color: rgba(242, 241, 242, 0.1);
+    border-left-color: var(--secondary);
+}
+
+.assignment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.assignment-title {
+    font-weight: 600;
+    color: var(--primary);
+    margin: 0;
+}
+
+body.dark-mode .assignment-title {
+    color: var(--secondary);
+}
+
+.assignment-details {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.assignment-detail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.assignment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Add Assignment Button */
+.add-assignment-btn {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+body.dark-mode .add-assignment-btn {
+    color: var(--secondary);
+}
+
+.add-assignment-btn:hover {
+    text-decoration: underline;
+}

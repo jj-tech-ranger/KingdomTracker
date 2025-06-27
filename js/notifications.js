@@ -382,3 +382,72 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+    // Show/hide notifications toggle
+    const toggleNotifications = document.getElementById('toggle-notifications');
+    const notificationsContainer = document.querySelector('.notifications-container');
+
+    toggleNotifications.addEventListener('change', function() {
+        notificationsContainer.style.display = this.checked ? 'block' : 'none';
+    });
+
+    // Send notification functionality
+    const sendNotificationBtn = document.getElementById('send-notification-btn');
+    const sendNotificationModal = document.getElementById('send-notification-modal');
+    const closeSendModalBtn = document.getElementById('close-send-modal');
+    const cancelSendBtn = document.getElementById('cancel-send-notification');
+    const sendNotificationFormBtn = document.getElementById('send-notification');
+
+    // Open send notification modal
+    sendNotificationBtn.addEventListener('click', function() {
+        sendNotificationModal.classList.add('show');
+    });
+
+    // Close send notification modal
+    closeSendModalBtn.addEventListener('click', function() {
+        sendNotificationModal.classList.remove('show');
+    });
+
+    // Cancel send notification
+    cancelSendBtn.addEventListener('click', function() {
+        sendNotificationModal.classList.remove('show');
+    });
+
+    // Send notification
+    sendNotificationFormBtn.addEventListener('click', function() {
+        const subject = document.getElementById('notification-subject').value;
+        const message = document.getElementById('notification-message').value;
+        const isCritical = document.getElementById('notification-priority').checked;
+
+        if (!subject || !message) {
+            alert('Please fill in both subject and message fields');
+            return;
+        }
+
+        // Create a new notification (in a real app, this would send to the server)
+        const newNotification = {
+            id: notifications.length + 1,
+            title: subject,
+            description: message,
+            time: "Just now",
+            type: "team",
+            read: false,
+            critical: isCritical
+        };
+
+        // Add to the beginning of the notifications array
+        notifications.unshift(newNotification);
+        currentNotifications.unshift(newNotification);
+
+        // Re-render notifications
+        renderNotifications(currentNotifications);
+        updateEmptyState();
+
+        // Close modal and reset form
+        sendNotificationModal.classList.remove('show');
+        document.getElementById('notification-subject').value = '';
+        document.getElementById('notification-message').value = '';
+        document.getElementById('notification-priority').checked = false;
+
+        // Show success message
+        alert('Notification sent to your team leader successfully!');
+    });

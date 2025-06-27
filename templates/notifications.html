@@ -53,8 +53,15 @@
             <div class="notifications-header">
                 <h1><i class="fas fa-bell"></i> Notifications</h1>
                 <div class="notifications-actions">
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="toggle-notifications" checked>
+                        <label for="toggle-notifications">Show Notifications</label>
+                    </div>
                     <button class="btn btn-mark-all" id="mark-all-read">
                         <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                    <button class="btn btn-send-notification" id="send-notification-btn">
+                        <i class="fas fa-paper-plane"></i> Send Notification
                     </button>
                     <div class="notifications-filter">
                         <select id="filter-category" class="filter-select">
@@ -193,6 +200,42 @@
             <div class="modal-footer">
                 <button class="btn btn-save" id="save-preferences">Save Preferences</button>
                 <button class="btn btn-cancel" id="cancel-preferences">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Notification Modal -->
+    <div class="modal" id="send-notification-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Notification to Team Leader</h2>
+                <button class="modal-close" id="close-send-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="notification-subject">Subject</label>
+                    <select name="" id="notification-subject">
+                        <option value="select" disabled>Select subject</option>
+                        <option value="inquiry">Inquiry</option>
+                        <option value="prayer_request">Prayer request</option>
+                        <option value="food-bank">Food bank</option>
+
+                    </select>
+                    </div>
+                <div class="form-group">
+                    <label for="notification-message">Message</label>
+                    <textarea id="notification-message" class="form-control" rows="5" placeholder="Enter your message"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notification-priority">
+                        <input type="checkbox" id="notification-priority">
+                        Mark as critical
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="send-notification">Send Notification</button>
+                <button class="btn btn-cancel" id="cancel-send-notification">Cancel</button>
             </div>
         </div>
     </div>
