@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Prayer Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/leader_prayer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/leader_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/leader_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li class="active"><a href="../templates/leader_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/food_bank.html"><i class="fas fa-bank"></i>Bank</a></li>
+                <li><a href="../templates/leader_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/leader_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/leader_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="content-header">
+                <h1><i class="fas fa-hands-praying"></i> Team Prayer Management</h1>
+                <div class="content-actions">
+                    <button class="btn btn-primary" id="new-prayer-btn">
+                        <i class="fas fa-plus"></i> New Prayer Request
+                    </button>
+                    <button class="btn btn-secondary" id="assign-prayer">
+                        <i class="fas fa-user-plus"></i> Assign Prayer
+                    </button>
+                    <div class="content-filter">
+                        <select id="filter-status" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="answered">Answered</option>
+                            <option value="escalated">Escalated</option>
+                        </select>
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="health">Health</option>
+                            <option value="family">Family</option>
+                            <option value="financial">Financial</option>
+                            <option value="spiritual">Spiritual</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <select id="filter-priority" class="filter-select">
+                            <option value="all">All Priorities</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="prayer-search" placeholder="Search prayer requests...">
+            </div>
+
+            <div class="content-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="my-requests">My Requests</button>
+                <button class="tab-btn" data-filter="assigned">Assigned to Me</button>
+                <button class="tab-btn" data-filter="pending">Pending Review</button>
+                <button class="tab-btn" data-filter="answered">Answered Prayers</button>
+                <button class="tab-btn" data-filter="groups">Prayer Groups</button>
+            </div>
+
+            <div class="content-container">
+                <div class="prayer-grid" id="prayer-list">
+                    <!-- Prayer items will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/prayer_empty.png" alt="No prayer requests">
+                    <h3>No prayer requests to display</h3>
+                    <p>When prayer requests are added, they will appear here.</p>
+                    <button class="btn btn-primary" id="new-prayer-empty">
+                        <i class="fas fa-plus"></i> Submit Your First Prayer Request
+                    </button>
+                </div>
+            </div>
+
+            <div class="leader-dashboard">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-bar"></i> Team Prayer Overview</h3>
+                    <button class="btn btn-export" id="export-prayer-report">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Active Requests</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">New This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Answered This Month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Prayer Coverage</div>
+                        </div>
+                    </div>
+
+                    <div class="pending-actions">
+                        <h4>Prayer Actions Needed</h4>
+                        <ul class="action-list">
+                            <li>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>5 urgent prayer requests</span>
+                                <button class="btn btn-small">View</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>3 prayers marked answered</span>
+                                <button class="btn btn-small">Review</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-arrow-up"></i>
+                                <span>2 requests needing escalation</span>
+                                <button class="btn btn-small">Review</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Prayer Request Modal -->
+    <div class="modal" id="prayer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="prayer-modal-title">Prayer Request Details</h2>
+                <button class="modal-close" id="close-prayer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="prayer-details">
+                    <div class="prayer-meta">
+                        <span class="prayer-status" id="prayer-modal-status">Pending</span>
+                        <span class="prayer-date" id="prayer-modal-date">May 15, 2025</span>
+                        <span class="prayer-category" id="prayer-modal-category">Health</span>
+                        <span class="prayer-priority" id="prayer-modal-priority">High</span>
+                    </div>
+
+                    <div class="prayer-member" id="prayer-modal-member-info">
+                        <!-- Member info will be inserted here -->
+                    </div>
+
+                    <div class="prayer-content">
+                        <h3>Prayer Request</h3>
+                        <p id="prayer-modal-content">Loading prayer content...</p>
+                    </div>
+
+                    <div class="prayer-updates">
+                        <h3>Updates</h3>
+                        <div class="updates-container" id="prayer-updates">
+                            <!-- Updates will be inserted here -->
+                        </div>
+                        <div class="add-update">
+                            <textarea id="update-content" placeholder="Add an update..."></textarea>
+                            <button class="btn btn-primary" id="add-update">Add Update</button>
+                        </div>
+                    </div>
+
+                    <div class="prayer-resolution" id="answered-section">
+                        <h3>Answered Prayer</h3>
+                        <p><strong>Date Answered:</strong> <span id="answered-date">May 20, 2025</span></p>
+                        <p><strong>Notes:</strong> <span id="answered-notes">The surgery went well and recovery is progressing.</span></p>
+                    </div>
+
+                    <div class="prayer-escalation" id="escalated-section">
+                        <h3>Escalated To</h3>
+                        <p><strong>Leader:</strong> <span id="escalated-to">Pastor John Smith</span></p>
+                        <p><strong>Region:</strong> <span id="escalated-region">North Region</span></p>
+                        <p><strong>Date Escalated:</strong> <span id="escalated-date">May 16, 2025</span></p>
+                        <p><strong>Notes:</strong> <span id="escalation-notes-display">Needs specialized pastoral care</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="mark-answered">Mark as Answered</button>
+                <button class="btn btn-secondary" id="escalate-prayer">Escalate to Regional</button>
+                <button class="btn btn-danger" id="delete-prayer">Delete Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Prayer Request Modal -->
+    <div class="modal" id="new-prayer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Prayer Request</h2>
+                <button class="modal-close" id="close-new-prayer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-prayer-form">
+                    <div class="form-group">
+                        <label for="prayer-category">Category</label>
+                        <select id="prayer-category" required>
+                            <option value="">Select a category</option>
+                            <option value="health">Health</option>
+                            <option value="family">Family</option>
+                            <option value="financial">Financial</option>
+                            <option value="spiritual">Spiritual</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prayer-priority">Priority</label>
+                        <select id="prayer-priority" required>
+                            <option value="">Select priority</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prayer-content">Prayer Request Details</label>
+                        <textarea id="prayer-content" rows="5" required placeholder="Please share your prayer request..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="escalate-now">
+                            <span>Escalate to regional leader immediately</span>
+                        </label>
+                    </div>
+
+                    <div class="escalation-details" id="escalation-details" style="display: none;">
+                        <div class="form-group">
+                            <label for="immediate-leader">Select Regional Leader</label>
+                            <select id="immediate-leader">
+                                <option value="">Select a leader</option>
+                                <option value="Pastor John Smith">Pastor John Smith</option>
+                                <option value="Pastor Sarah Williams">Pastor Sarah Williams</option>
+                                <option value="Pastor Mark Johnson">Pastor Mark Johnson</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="immediate-notes">Escalation Notes</label>
+                            <textarea id="immediate-notes" rows="3" placeholder="Why does this need escalation?"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="submit-prayer">Submit Prayer Request</button>
+                <button class="btn btn-secondary" id="cancel-new-prayer">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Escalate Prayer Modal -->
+    <div class="modal" id="escalate-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Escalate Prayer Request</h2>
+                <button class="modal-close" id="close-escalate">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="escalate-form">
+                    <div class="form-group">
+                        <label for="regional-leader">Regional Leader</label>
+                        <select id="regional-leader" required>
+                            <option value="">Select a regional leader</option>
+                            <option value="Pastor John Smith">Pastor John Smith</option>
+                            <option value="Pastor Sarah Williams">Pastor Sarah Williams</option>
+                            <option value="Pastor Mark Johnson">Pastor Mark Johnson</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="escalation-notes">Escalation Notes</label>
+                        <textarea id="escalation-notes" rows="4" required placeholder="Why are you escalating this prayer request?"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="confirm-escalate">Confirm Escalation</button>
+                <button class="btn btn-secondary" id="cancel-escalate">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/leader_prayer.js"></script>
+</body>
+</html>

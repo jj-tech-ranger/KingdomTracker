@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/hr.css">
     <link rel="stylesheet" href="../css/recruitment.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 <body class="light-mode">
 
@@ -24,6 +25,7 @@
             <li><a href="members.html"><i class="fas fa-users"></i> Staff & Members</a></li>
             <li class="active"><a href="recruitment.html"><i class="fas fa-user-plus"></i> Recruitment & Onboarding</a></li>
             <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Event Scheduling</a></li>
+            <li><a href="payroll.html"><i class="fas fa-money-bill-wave"></i> Payroll</a></li>
             <li><a href="compliance.html"><i class="fas fa-file-alt"></i> Compliance & Documentation</a></li>
             <li><a href="hr_reports.html"><i class="fas fa-chart-bar"></i> Reports & Analytics</a></li>
         </ul>
@@ -61,196 +63,34 @@
             </div>
         </div>
 
-        <div class="pipeline-container">
-            <div class="pipeline-stage" id="application-received">
-                <h4>Application Received <span class="stage-count">(3)</span></h4>
-                <div class="candidate-card" draggable="true" id="candidate-1">
-                    <div class="candidate-info">
-                        <img src="../img/user.png" alt="Candidate" class="candidate-photo">
-                        <div>
-                            <h5>David Johnson</h5>
-                            <p>Worship Leader</p>
-                            <span class="status-badge new">New</span>
-                        </div>
-                    </div>
-                    <div class="candidate-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-                <div class="candidate-card" draggable="true" id="candidate-2">
-                    <div class="candidate-info">
-                        <img src="../img/user.png" alt="Candidate" class="candidate-photo">
-                        <div>
-                            <h5>Sarah Miller</h5>
-                            <p>Children's Ministry</p>
-                            <span class="status-badge">Screened</span>
-                        </div>
-                    </div>
-                    <div class="candidate-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pipeline-stage" id="screening">
-                <h4>Screening <span class="stage-count">(2)</span></h4>
-                <div class="candidate-card" draggable="true" id="candidate-3">
-                    <div class="candidate-info">
-                        <img src="../img/user.png" alt="Candidate" class="candidate-photo">
-                        <div>
-                            <h5>Michael Brown</h5>
-                            <p>Youth Pastor</p>
-                            <span class="status-badge">In Review</span>
-                        </div>
-                    </div>
-                    <div class="candidate-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pipeline-stage" id="interviewing">
-                <h4>Interviewing <span class="stage-count">(1)</span></h4>
-                <div class="candidate-card" draggable="true" id="candidate-4">
-                    <div class="candidate-info">
-                        <img src="../img/user.png" alt="Candidate" class="candidate-photo">
-                        <div>
-                            <h5>Emily Wilson</h5>
-                            <p>Administrative Assistant</p>
-                            <span class="status-badge">Interview 1/3</span>
-                        </div>
-                    </div>
-                    <div class="candidate-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pipeline-stage" id="offer-stage">
-                <h4>Offer Stage <span class="stage-count">(1)</span></h4>
-                <div class="candidate-card" draggable="true" id="candidate-5">
-                    <div class="candidate-info">
-                        <img src="../img/user.png" alt="Candidate" class="candidate-photo">
-                        <div>
-                            <h5>Robert Taylor</h5>
-                            <p>Finance Manager</p>
-                            <span class="status-badge">Offer Pending</span>
-                        </div>
-                    </div>
-                    <div class="candidate-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-            </div>
+        <div class="pipeline-container" id="pipeline-container">
+            <!-- Will be populated by JavaScript -->
         </div>
 
         <div class="open-positions">
             <h3>Open Positions</h3>
-            <table class="positions-table">
+            <table class="positions-table" id="positions-table">
                 <thead>
-                    <tr>
-                        <th>Position Title</th>
-                        <th>Department</th>
-                        <th>Type</th>
-                        <th>Applications</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>Position Title</th>
+                    <th>Department</th>
+                    <th>Type</th>
+                    <th>Contract</th>
+                    <th>Applications</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Worship Leader</td>
-                        <td>Music Ministry</td>
-                        <td>Full-time</td>
-                        <td>5</td>
-                        <td><span class="status-badge">Active</span></td>
-                        <td>
-                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Children's Ministry Coordinator</td>
-                        <td>Children's Ministry</td>
-                        <td>Part-time</td>
-                        <td>3</td>
-                        <td><span class="status-badge">Active</span></td>
-                        <td>
-                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Youth Pastor</td>
-                        <td>Youth Ministry</td>
-                        <td>Full-time</td>
-                        <td>2</td>
-                        <td><span class="status-badge">Interviewing</span></td>
-                        <td>
-                            <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Data will be populated by JavaScript -->
+    </tbody>
+</table>
         </div>
 
         <div class="onboarding-section">
             <h3>Onboarding Process</h3>
-            <div class="onboarding-card">
-                <div class="progress-tracker">
-                    <div class="progress-step completed"><i class="fas fa-check"></i></div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step completed"><i class="fas fa-check"></i></div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step active">3</div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step">4</div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step">5</div>
-                </div>
-                <div class="onboarding-details">
-                    <h4>Robert Taylor - Finance Manager</h4>
-                    <div class="onboarding-tasks">
-                        <div class="task completed">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Offer Accepted</span>
-                            <small>Completed on 05/15/2023</small>
-                        </div>
-                        <div class="task completed">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Background Check</span>
-                            <small>Completed on 05/18/2023</small>
-                        </div>
-                        <div class="task active">
-                            <i class="fas fa-spinner"></i>
-                            <span>Orientation Scheduled</span>
-                            <small>Due by 05/25/2023</small>
-                        </div>
-                        <div class="task">
-                            <i class="far fa-circle"></i>
-                            <span>System Access Setup</span>
-                            <small>Pending</small>
-                        </div>
-                        <div class="task">
-                            <i class="far fa-circle"></i>
-                            <span>First Week Check-in</span>
-                            <small>Pending</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="onboarding-actions">
-                    <button class="btn btn-primary"><i class="fas fa-envelope"></i> Send Welcome Email</button>
-                    <button class="btn btn-secondary"><i class="fas fa-edit"></i> Edit Timeline</button>
-                </div>
+            <div class="onboarding-card" id="onboarding-card">
+                <!-- Will be populated by JavaScript -->
             </div>
         </div>
 
@@ -298,6 +138,15 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="contract-type">Contract Type</label>
+                        <select id="contract-type" required>
+                            <option value="">Select Contract</option>
+                            <option value="permanent">Permanent</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="fixed-term">Fixed-term</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="job-description">Job Description</label>
                         <textarea id="job-description" rows="5" required></textarea>
                     </div>
@@ -314,6 +163,8 @@
         </div>
     </div>
 
+    <script src="../js/code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="../js/hr.js"></script>
     <script src="../js/recruitment.js"></script>
 </body>

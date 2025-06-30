@@ -1,686 +1,689 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Sample prayer request data with more detailed information
-    const prayerRequests = [
+    // DOM Elements
+    const elements = {
+        prayerList: document.getElementById('prayer-list'),
+        emptyState: document.getElementById('empty-state'),
+        filterStatus: document.getElementById('filter-status'),
+        filterCategory: document.getElementById('filter-category'),
+        filterPriority: document.getElementById('filter-priority'),
+        searchInput: document.getElementById('prayer-search'),
+        tabButtons: document.querySelectorAll('.tab-btn'),
+        newPrayerBtn: document.getElementById('new-prayer-btn'),
+        newPrayerEmptyBtn: document.getElementById('new-prayer-empty'),
+        assignPrayerBtn: document.getElementById('assign-prayer'),
+        exportReportBtn: document.getElementById('export-prayer-report'),
+        prayerModal: document.getElementById('prayer-modal'),
+        closePrayerModal: document.getElementById('close-prayer'),
+        newPrayerModal: document.getElementById('new-prayer-modal'),
+        closeNewPrayerModal: document.getElementById('close-new-prayer'),
+        escalateModal: document.getElementById('escalate-modal'),
+        closeEscalateModal: document.getElementById('close-escalate'),
+        cancelEscalateBtn: document.getElementById('cancel-escalate'),
+        confirmEscalateBtn: document.getElementById('confirm-escalate'),
+        submitPrayerBtn: document.getElementById('submit-prayer'),
+        cancelNewPrayerBtn: document.getElementById('cancel-new-prayer'),
+        markAnsweredBtn: document.getElementById('mark-answered'),
+        escalatePrayerBtn: document.getElementById('escalate-prayer'),
+        deletePrayerBtn: document.getElementById('delete-prayer'),
+        addUpdateBtn: document.getElementById('add-update'),
+        updateContent: document.getElementById('update-content'),
+        escalateNowCheckbox: document.getElementById('escalate-now'),
+        escalationDetails: document.getElementById('escalation-details')
+    };
+
+    // Sample prayer data
+    const prayers = [
         {
             id: 1,
+            title: "Healing from surgery",
+            content: "Please pray for complete healing from my recent knee replacement surgery. The recovery has been more difficult than expected.",
+            category: "health",
+            priority: "urgent",
+            status: "pending",
+            date: "June 15, 2023",
             member: {
                 name: "Sarah Johnson",
-                id: "M1001",
-                email: "sarah.j@example.com",
-                phone: "(555) 123-4567",
-                group: "Women's Bible Study"
+                avatar: "../img/user2.png",
+                role: "Member"
             },
-            category: "health",
-            content: "Please pray for my mother who is undergoing surgery next week. The doctors found a small tumor and we're trusting God for complete healing and successful surgery. The surgery is scheduled for May 22 at City General Hospital.",
-            date: "May 15, 2025",
-            status: "pending",
-            priority: "high",
             updates: [
                 {
-                    date: "May 16, 2025",
-                    text: "Prayer chain notified about the request",
-                    by: "Pastor Mark"
+                    id: 101,
+                    date: "June 16, 2023",
+                    content: "Pain has decreased slightly today. Doctor says recovery is progressing normally.",
+                    author: "Sarah Johnson"
                 }
             ],
-            escalated: false
+            metrics: {
+                praying: 12,
+                comments: 3
+            }
         },
         {
             id: 2,
-            member: {
-                name: "Michael Brown",
-                id: "M1002",
-                email: "michael.b@example.com",
-                phone: "(555) 234-5678",
-                group: "Men's Fellowship"
-            },
+            title: "Job opportunity",
+            content: "I have a final interview next week for a position that would be perfect for our family. Pray for wisdom and favor.",
             category: "financial",
-            content: "I lost my job last month and we're struggling to pay our bills. Pray for God's provision and for the right job opportunity to come soon. We have three children and mortgage payments are due.",
-            date: "May 12, 2025",
+            priority: "high",
             status: "pending",
-            priority: "medium",
+            date: "June 12, 2023",
+            member: {
+                name: "Michael Chen",
+                avatar: "../img/user3.png",
+                role: "Volunteer"
+            },
             updates: [],
-            escalated: false
+            metrics: {
+                praying: 8,
+                comments: 1
+            }
         },
         {
             id: 3,
-            member: {
-                name: "Emily Davis",
-                id: "M1003",
-                email: "emily.d@example.com",
-                phone: "(555) 345-6789",
-                group: "Young Adults"
-            },
+            title: "Marital reconciliation",
+            content: "Pray for reconciliation with my spouse. We've been separated for 3 months and need God's intervention.",
             category: "family",
-            content: "My son Jason (age 19) is struggling with addiction. Please pray for his deliverance and for our family to have wisdom in how to support him through this. He's been in and out of rehab twice.",
-            date: "May 10, 2025",
+            priority: "high",
             status: "escalated",
-            priority: "urgent",
+            date: "June 5, 2023",
+            escalatedTo: "Pastor John Smith",
+            escalatedDate: "June 7, 2023",
+            escalationNotes: "Needs specialized pastoral counseling",
+            member: {
+                name: "David Wilson",
+                avatar: "../img/user4.jpg",
+                role: "Member"
+            },
             updates: [
                 {
-                    date: "May 11, 2025",
-                    text: "Referred to counseling ministry",
-                    by: "Deacon James"
+                    id: 102,
+                    date: "June 8, 2023",
+                    content: "Had first counseling session with Pastor John. It was difficult but productive.",
+                    author: "David Wilson"
                 }
             ],
-            escalated: true,
-            escalatedTo: {
-                name: "Pastor John Smith",
-                region: "North Region",
-                date: "May 11, 2025"
-            },
-            escalationNotes: "Family has been dealing with this for years, needs specialized pastoral care and possible intervention"
+            metrics: {
+                praying: 15,
+                comments: 5
+            }
         },
         {
             id: 4,
-            member: {
-                name: "David Wilson",
-                id: "M1004",
-                email: "david.w@example.com",
-                phone: "(555) 456-7890",
-                group: "Sunday School Teachers"
-            },
+            title: "Son's salvation",
+            content: "My 16-year-old son is struggling with faith. Pray that God would draw him to Himself.",
             category: "spiritual",
-            content: "I've been feeling distant from God lately. Pray that I would rekindle my passion for Christ and grow in my faith. I'm struggling with consistency in prayer and Bible reading.",
-            date: "May 8, 2025",
-            status: "answered",
-            priority: "low",
-            updates: [
-                {
-                    date: "May 10, 2025",
-                    text: "Connected with a prayer partner",
-                    by: "Sister Martha"
-                },
-                {
-                    date: "May 14, 2025",
-                    text: "Reported feeling renewed after joining a small group",
-                    by: "David Wilson"
-                }
-            ],
-            answeredDate: "May 14, 2025",
-            answeredNotes: "Started attending men's discipleship group and reports significant improvement"
+            priority: "medium",
+            status: "pending",
+            date: "June 1, 2023",
+            member: {
+                name: "Lisa Rodriguez",
+                avatar: "../img/user5.jpg",
+                role: "Member"
+            },
+            updates: [],
+            metrics: {
+                praying: 6,
+                comments: 2
+            }
         },
         {
             id: 5,
+            title: "Mission trip funding",
+            content: "Praise report! All the funding for our youth mission trip has come in! Thank you for praying!",
+            category: "financial",
+            priority: "low",
+            status: "answered",
+            date: "May 28, 2023",
+            answeredDate: "June 10, 2023",
+            answeredNotes: "Received final donation to cover all expenses",
             member: {
-                name: "Jessica Lee",
-                id: "M1005",
-                email: "jessica.l@example.com",
-                phone: "(555) 567-8901",
-                group: "Missions Team"
+                name: "Youth Pastor Mike",
+                avatar: "../img/user6.jpg",
+                role: "Staff"
             },
-            category: "other",
-            content: "Pray for our upcoming mission trip to Kenya (June 5-20). For safe travels, effective ministry, and that God would prepare the hearts of those we'll be serving. Also pray for the $2,500 still needed for team expenses.",
-            date: "May 5, 2025",
-            status: "pending",
-            priority: "high",
             updates: [
                 {
-                    date: "May 6, 2025",
-                    text: "Added to weekly prayer meeting list",
-                    by: "Brother Tim"
+                    id: 103,
+                    date: "June 10, 2023",
+                    content: "We've received all the funding needed for the trip! God is faithful!",
+                    author: "Youth Pastor Mike"
                 }
             ],
-            escalated: false
+            metrics: {
+                praying: 9,
+                comments: 4
+            }
         }
     ];
 
-    // DOM Elements
-    const prayerList = document.getElementById('prayer-list');
-    const emptyState = document.getElementById('empty-state');
-    const prayerSearch = document.getElementById('prayer-search');
-    const filterStatus = document.getElementById('filter-status');
-    const filterCategory = document.getElementById('filter-category');
-    const filterPriority = document.getElementById('filter-priority');
-    const prayerModal = document.getElementById('prayer-modal');
-    const closePrayerBtn = document.getElementById('close-prayer');
-    const prayerModalTitle = document.getElementById('prayer-modal-title');
-    const prayerModalStatus = document.getElementById('prayer-modal-status');
-    const prayerModalMember = document.getElementById('prayer-modal-member');
-    const prayerModalDate = document.getElementById('prayer-modal-date');
-    const prayerModalCategory = document.getElementById('prayer-modal-category');
-    const prayerModalPriority = document.getElementById('prayer-modal-priority');
-    const prayerModalContent = document.getElementById('prayer-modal-content');
-    const prayerModalMemberInfo = document.getElementById('prayer-modal-member-info');
-    const prayerUpdatesContainer = document.getElementById('prayer-updates');
-    const addUpdateBtn = document.getElementById('add-update');
-    const updateContent = document.getElementById('update-content');
-    const markAnsweredBtn = document.getElementById('mark-answered');
-    const answeredNotes = document.getElementById('answered-notes');
-    const escalatePrayerBtn = document.getElementById('escalate-prayer');
-    const deletePrayerBtn = document.getElementById('delete-prayer');
-    const newPrayerBtn = document.getElementById('new-prayer-btn');
-    const newPrayerModal = document.getElementById('new-prayer-modal');
-    const closeNewPrayerBtn = document.getElementById('close-new-prayer');
-    const cancelNewPrayerBtn = document.getElementById('cancel-new-prayer');
-    const submitPrayerBtn = document.getElementById('submit-prayer');
-    const newPrayerForm = document.getElementById('new-prayer-form');
-    const escalateModal = document.getElementById('escalate-modal');
-    const closeEscalateBtn = document.getElementById('close-escalate');
-    const cancelEscalateBtn = document.getElementById('cancel-escalate');
-    const confirmEscalateBtn = document.getElementById('confirm-escalate');
-    const regionalLeaderSelect = document.getElementById('regional-leader');
-    const escalationNotes = document.getElementById('escalation-notes');
-
-    // Regional leaders data
-    const regionalLeaders = [
-        { id: "leader1", name: "Pastor John Smith", region: "North Region", email: "john.smith@church.org" },
-        { id: "leader2", name: "Pastor Sarah Johnson", region: "East Region", email: "sarah.j@church.org" },
-        { id: "leader3", name: "Pastor Michael Brown", region: "West Region", email: "michael.b@church.org" },
-        { id: "leader4", name: "Pastor Emily Davis", region: "South Region", email: "emily.d@church.org" }
-    ];
-
-    let currentPrayer = null;
-    let currentRequests = [...prayerRequests];
+    // State management
+    let state = {
+        currentPrayers: [...prayers],
+        selectedPrayer: null,
+        activeFilters: {
+            status: 'all',
+            category: 'all',
+            priority: 'all',
+            tab: 'all',
+            search: ''
+        }
+    };
 
     // Initialize the page
-    renderRegionalLeaderOptions();
-    renderPrayerRequests(currentRequests);
-    updateEmptyState();
+    function init() {
+        renderPrayers();
+        setupEventListeners();
+        updateEmptyState();
+    }
 
-    // Event Listeners
-    prayerSearch.addEventListener('input', filterPrayerRequests);
-    filterStatus.addEventListener('change', filterPrayerRequests);
-    filterCategory.addEventListener('change', filterPrayerRequests);
-    filterPriority.addEventListener('change', filterPrayerRequests);
-    closePrayerBtn.addEventListener('click', closePrayerModal);
-    markAnsweredBtn.addEventListener('click', markPrayerAnswered);
-    escalatePrayerBtn.addEventListener('click', openEscalateModal);
-    deletePrayerBtn.addEventListener('click', deletePrayerRequest);
-    newPrayerBtn.addEventListener('click', openNewPrayerModal);
-    closeNewPrayerBtn.addEventListener('click', closeNewPrayerModal);
-    cancelNewPrayerBtn.addEventListener('click', closeNewPrayerModal);
-    submitPrayerBtn.addEventListener('click', submitNewPrayer);
-    closeEscalateBtn.addEventListener('click', closeEscalateModal);
-    cancelEscalateBtn.addEventListener('click', closeEscalateModal);
-    confirmEscalateBtn.addEventListener('click', escalateToRegional);
-    addUpdateBtn.addEventListener('click', addPrayerUpdate);
+    // Set up all event listeners
+    function setupEventListeners() {
+        // New prayer buttons
+        elements.newPrayerBtn.addEventListener('click', openNewPrayerModal);
+        elements.newPrayerEmptyBtn.addEventListener('click', openNewPrayerModal);
+        elements.cancelNewPrayerBtn.addEventListener('click', closeNewPrayerModal);
 
-    // Render regional leader options in select dropdown
-    function renderRegionalLeaderOptions() {
-        regionalLeaderSelect.innerHTML = '';
-        regionalLeaders.forEach(leader => {
-            const option = document.createElement('option');
-            option.value = leader.id;
-            option.textContent = `${leader.name} (${leader.region})`;
-            regionalLeaderSelect.appendChild(option);
+        // Export report
+        elements.exportReportBtn.addEventListener('click', exportPrayerReport);
+
+        // Modal close
+        elements.closePrayerModal.addEventListener('click', closePrayerModal);
+        elements.closeNewPrayerModal.addEventListener('click', closeNewPrayerModal);
+        elements.closeEscalateModal.addEventListener('click', closeEscalateModal);
+
+        // Filter changes
+        elements.filterStatus.addEventListener('change', (e) => {
+            state.activeFilters.status = e.target.value;
+            filterAndSortPrayers();
+        });
+
+        elements.filterCategory.addEventListener('change', (e) => {
+            state.activeFilters.category = e.target.value;
+            filterAndSortPrayers();
+        });
+
+        elements.filterPriority.addEventListener('change', (e) => {
+            state.activeFilters.priority = e.target.value;
+            filterAndSortPrayers();
+        });
+
+        // Search input
+        elements.searchInput.addEventListener('input', (e) => {
+            state.activeFilters.search = e.target.value.toLowerCase();
+            filterAndSortPrayers();
+        });
+
+        // Tab filtering
+        elements.tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                elements.tabButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                state.activeFilters.tab = this.dataset.filter;
+                filterAndSortPrayers();
+            });
+        });
+
+        // Form submissions
+        elements.submitPrayerBtn.addEventListener('click', handleNewPrayerSubmit);
+        elements.markAnsweredBtn.addEventListener('click', markPrayerAnswered);
+        elements.escalatePrayerBtn.addEventListener('click', openEscalateModal);
+        elements.confirmEscalateBtn.addEventListener('click', confirmEscalation);
+        elements.cancelEscalateBtn.addEventListener('click', closeEscalateModal);
+        elements.deletePrayerBtn.addEventListener('click', deleteSelectedPrayer);
+        elements.addUpdateBtn.addEventListener('click', addPrayerUpdate);
+
+        // Escalate now toggle
+        elements.escalateNowCheckbox.addEventListener('change', function() {
+            elements.escalationDetails.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Handle clicks on dynamic elements
+        document.addEventListener('click', function(e) {
+            // View prayer buttons
+            if (e.target.closest('.btn-view-prayer')) {
+                const card = e.target.closest('.prayer-item');
+                const id = parseInt(card.dataset.prayerId);
+                const prayer = prayers.find(p => p.id === id);
+                if (prayer) openPrayerModal(prayer);
+            }
+
+            // Mark as answered buttons
+            if (e.target.closest('.btn-answered')) {
+                const card = e.target.closest('.prayer-item');
+                const id = parseInt(card.dataset.prayerId);
+                markPrayerAnswered(id);
+            }
+
+            // Escalate buttons
+            if (e.target.closest('.btn-escalate')) {
+                const card = e.target.closest('.prayer-item');
+                const id = parseInt(card.dataset.prayerId);
+                const prayer = prayers.find(p => p.id === id);
+                if (prayer) {
+                    state.selectedPrayer = prayer;
+                    openEscalateModal();
+                }
+            }
+
+            // Delete buttons
+            if (e.target.closest('.btn-delete-prayer')) {
+                const card = e.target.closest('.prayer-item');
+                const id = parseInt(card.dataset.prayerId);
+                deleteSelectedPrayer(id);
+            }
         });
     }
 
-    // Filter prayer requests based on search and filters
-    function filterPrayerRequests() {
-        let filtered = [...prayerRequests];
-        const searchTerm = prayerSearch.value.toLowerCase();
-        const statusFilter = filterStatus.value;
-        const categoryFilter = filterCategory.value;
-        const priorityFilter = filterPriority.value;
+    // Filter and sort prayers based on current filters
+    function filterAndSortPrayers() {
+        let filtered = [...prayers];
 
         // Apply search filter
-        if (searchTerm) {
-            filtered = filtered.filter(request =>
-                request.member.name.toLowerCase().includes(searchTerm) ||
-                request.content.toLowerCase().includes(searchTerm) ||
-                request.member.group.toLowerCase().includes(searchTerm)
+        if (state.activeFilters.search) {
+            filtered = filtered.filter(prayer =>
+                prayer.title.toLowerCase().includes(state.activeFilters.search) ||
+                prayer.content.toLowerCase().includes(state.activeFilters.search) ||
+                prayer.member.name.toLowerCase().includes(state.activeFilters.search)
             );
         }
 
         // Apply status filter
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(request => request.status === statusFilter);
+        if (state.activeFilters.status !== 'all') {
+            filtered = filtered.filter(prayer => prayer.status === state.activeFilters.status);
         }
 
         // Apply category filter
-        if (categoryFilter !== 'all') {
-            filtered = filtered.filter(request => request.category === categoryFilter);
+        if (state.activeFilters.category !== 'all') {
+            filtered = filtered.filter(prayer => prayer.category === state.activeFilters.category);
         }
 
         // Apply priority filter
-        if (priorityFilter !== 'all') {
-            filtered = filtered.filter(request => request.priority === priorityFilter);
+        if (state.activeFilters.priority !== 'all') {
+            filtered = filtered.filter(prayer => prayer.priority === state.activeFilters.priority);
         }
 
-        currentRequests = filtered;
-        renderPrayerRequests(filtered);
+        // Apply tab filter
+        switch (state.activeFilters.tab) {
+            case 'my-requests':
+                // In a real app, this would filter to the current user's requests
+                filtered = filtered.filter(prayer => prayer.member.role === 'Staff');
+                break;
+            case 'assigned':
+                // In a real app, this would filter to requests assigned to current user
+                filtered = filtered.filter(prayer => prayer.status === 'escalated');
+                break;
+            case 'pending':
+                filtered = filtered.filter(prayer => prayer.status === 'pending');
+                break;
+            case 'answered':
+                filtered = filtered.filter(prayer => prayer.status === 'answered');
+                break;
+            case 'groups':
+                // In a real app, this would show prayer groups
+                filtered = [];
+                break;
+        }
+
+        // Apply sorting (default is by date, newest first)
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        state.currentPrayers = filtered;
+        renderPrayers();
         updateEmptyState();
     }
 
-    // Render prayer requests to the DOM
-    function renderPrayerRequests(requests) {
-        prayerList.innerHTML = '';
+    // Render prayers to the list
+    function renderPrayers() {
+        elements.prayerList.innerHTML = '';
 
-        // Sort by priority (urgent > high > medium > low) then by date (newest first)
-        requests.sort((a, b) => {
-            const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 };
-            if (priorityOrder[b.priority] !== priorityOrder[a.priority]) {
-                return priorityOrder[b.priority] - priorityOrder[a.priority];
-            }
-            return new Date(b.date) - new Date(a.date);
-        });
+        if (state.currentPrayers.length === 0) {
+            updateEmptyState();
+            return;
+        }
 
-        requests.forEach(request => {
+        state.currentPrayers.forEach(prayer => {
             const prayerItem = document.createElement('div');
             prayerItem.className = 'prayer-item';
-
-            // Get display values
-            const categoryDisplay = getCategoryDisplay(request.category);
-            const priorityDisplay = getPriorityDisplay(request.priority);
-
-            // Truncate content for preview
-            const excerpt = request.content.length > 150
-                ? request.content.substring(0, 150) + '...'
-                : request.content;
+            prayerItem.dataset.prayerId = prayer.id;
 
             prayerItem.innerHTML = `
                 <div class="prayer-header">
-                    <span class="prayer-category ${request.category}">${categoryDisplay}</span>
-                    <span class="prayer-priority ${request.priority}">${priorityDisplay}</span>
-                    <span class="prayer-status ${request.status}">${request.status}</span>
+                    <h3 class="prayer-title">${prayer.title}</h3>
+                    <span class="prayer-status ${prayer.status}">${prayer.status.charAt(0).toUpperCase() + prayer.status.slice(1)}</span>
                 </div>
-                <h3 class="prayer-title">${request.member.name}</h3>
-                <p class="prayer-group"><i class="fas fa-users"></i> ${request.member.group}</p>
-                <p class="prayer-excerpt">${excerpt}</p>
                 <div class="prayer-meta">
-                    <span><i class="far fa-calendar"></i> ${request.date}</span>
-                    ${request.updates.length > 0 ? 
-                        `<span><i class="fas fa-comment-dots"></i> ${request.updates.length} update${request.updates.length !== 1 ? 's' : ''}</span>` : ''}
-                    ${request.escalated ? 
-                        `<span class="escalated-info"><i class="fas fa-arrow-up"></i> Escalated</span>` : ''}
+                    <span class="prayer-category">
+                        <i class="fas fa-tag"></i> ${prayer.category.charAt(0).toUpperCase() + prayer.category.slice(1)}
+                    </span>
+                    <span class="prayer-priority">
+                        <i class="fas fa-exclamation-circle priority-${prayer.priority}"></i> ${prayer.priority.charAt(0).toUpperCase() + prayer.priority.slice(1)}
+                    </span>
+                    <span class="prayer-date">
+                        <i class="fas fa-calendar-alt"></i> ${prayer.date}
+                    </span>
                 </div>
-                <div class="prayer-actions">
-                    <button class="btn btn-view" data-id="${request.id}">
-                        <i class="fas fa-eye"></i> View Details
-                    </button>
+                <div class="prayer-content">
+                    <p>${prayer.content}</p>
+                </div>
+                <div class="prayer-footer">
+                    <div class="prayer-metrics">
+                        <span><i class="fas fa-hands-praying"></i> ${prayer.metrics.praying} praying</span>
+                        <span><i class="fas fa-comment"></i> ${prayer.metrics.comments} comments</span>
+                    </div>
+                    <div class="prayer-actions">
+                        <button class="btn btn-small btn-view-prayer">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        ${prayer.status !== 'answered' ? `
+                            <button class="btn btn-small btn-answered">
+                                <i class="fas fa-check"></i> Answered
+                            </button>
+                        ` : ''}
+                        ${prayer.status !== 'escalated' ? `
+                            <button class="btn btn-small btn-escalate">
+                                <i class="fas fa-arrow-up"></i> Escalate
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-small btn-delete-prayer">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
                 </div>
             `;
-
-            prayerList.appendChild(prayerItem);
-        });
-
-        // Add event listeners to view buttons
-        document.querySelectorAll('.btn-view').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = parseInt(this.dataset.id);
-                const request = prayerRequests.find(r => r.id === id);
-
-                if (request) {
-                    currentPrayer = request;
-                    openPrayerModal(request);
-                }
-            });
+            elements.prayerList.appendChild(prayerItem);
         });
     }
 
-    // Open prayer request modal with details
-    function openPrayerModal(request) {
-        // Get display values
-        const categoryDisplay = getCategoryDisplay(request.category);
-        const priorityDisplay = getPriorityDisplay(request.priority);
+    // Open prayer modal with details
+    function openPrayerModal(prayer) {
+        state.selectedPrayer = prayer;
 
-        // Set modal content
-        prayerModalTitle.textContent = `${request.member.name}'s Prayer Request`;
-        prayerModalStatus.textContent = request.status;
-        prayerModalStatus.className = `prayer-status ${request.status}`;
-        prayerModalDate.textContent = request.date;
-        prayerModalCategory.textContent = categoryDisplay;
-        prayerModalCategory.className = `prayer-category ${request.category}`;
-        prayerModalPriority.textContent = priorityDisplay;
-        prayerModalPriority.className = `prayer-priority ${request.priority}`;
-        prayerModalContent.textContent = request.content;
+        // Update modal content
+        document.getElementById('prayer-modal-title').textContent = prayer.title;
+        document.getElementById('prayer-modal-content').textContent = prayer.content;
+        document.getElementById('prayer-modal-status').textContent = prayer.status.charAt(0).toUpperCase() + prayer.status.slice(1);
+        document.getElementById('prayer-modal-status').className = `prayer-status ${prayer.status}`;
+        document.getElementById('prayer-modal-date').textContent = prayer.date;
+        document.getElementById('prayer-modal-category').textContent = prayer.category.charAt(0).toUpperCase() + prayer.category.slice(1);
+        document.getElementById('prayer-modal-priority').textContent = prayer.priority.charAt(0).toUpperCase() + prayer.priority.slice(1);
+        document.getElementById('prayer-modal-priority').className = `priority-${prayer.priority}`;
 
-        // Set member information
-        prayerModalMemberInfo.innerHTML = `
-            <div class="member-detail">
-                <i class="fas fa-id-card"></i>
-                <span>Member ID: ${request.member.id}</span>
-            </div>
-            <div class="member-detail">
-                <i class="fas fa-envelope"></i>
-                <span>${request.member.email}</span>
-            </div>
-            <div class="member-detail">
-                <i class="fas fa-phone"></i>
-                <span>${request.member.phone}</span>
-            </div>
-            <div class="member-detail">
-                <i class="fas fa-users"></i>
-                <span>${request.member.group}</span>
+        // Update member info
+        const memberInfo = document.getElementById('prayer-modal-member-info');
+        memberInfo.innerHTML = `
+            <img src="${prayer.member.avatar}" alt="${prayer.member.name}" class="prayer-member-avatar">
+            <div class="prayer-member-details">
+                <h4>${prayer.member.name}</h4>
+                <p>${prayer.member.role}</p>
             </div>
         `;
 
-        // Render updates
-        renderPrayerUpdates(request.updates);
+        // Update updates section
+        renderPrayerUpdates(prayer.updates);
 
-        // Update button visibility based on status
-        if (request.status === 'answered') {
-            markAnsweredBtn.style.display = 'none';
-            escalatePrayerBtn.style.display = 'none';
-            document.getElementById('answered-section').style.display = 'block';
-            answeredNotes.textContent = request.answeredNotes || 'No additional notes provided';
+        // Show/hide answered section
+        const answeredSection = document.getElementById('answered-section');
+        if (prayer.status === 'answered') {
+            answeredSection.style.display = 'block';
+            document.getElementById('answered-date').textContent = prayer.answeredDate;
+            document.getElementById('answered-notes').textContent = prayer.answeredNotes;
         } else {
-            markAnsweredBtn.style.display = 'inline-block';
-            escalatePrayerBtn.style.display = 'inline-block';
-            document.getElementById('answered-section').style.display = 'none';
+            answeredSection.style.display = 'none';
         }
 
-        // Update escalate button if already escalated
-        if (request.escalated) {
-            escalatePrayerBtn.innerHTML = '<i class="fas fa-info-circle"></i> Already Escalated';
-            escalatePrayerBtn.disabled = true;
-            document.getElementById('escalated-section').style.display = 'block';
-            document.getElementById('escalated-to').textContent = request.escalatedTo.name;
-            document.getElementById('escalated-region').textContent = request.escalatedTo.region;
-            document.getElementById('escalated-date').textContent = request.escalatedTo.date;
-            document.getElementById('escalation-notes-display').textContent = request.escalationNotes || 'No additional notes provided';
+        // Show/hide escalated section
+        const escalatedSection = document.getElementById('escalated-section');
+        if (prayer.status === 'escalated') {
+            escalatedSection.style.display = 'block';
+            document.getElementById('escalated-to').textContent = prayer.escalatedTo;
+            document.getElementById('escalated-date').textContent = prayer.escalatedDate;
+            document.getElementById('escalation-notes-display').textContent = prayer.escalationNotes;
         } else {
-            escalatePrayerBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Escalate to Regional';
-            escalatePrayerBtn.disabled = false;
-            document.getElementById('escalated-section').style.display = 'none';
+            escalatedSection.style.display = 'none';
         }
 
-        // Clear update input
-        updateContent.value = '';
+        // Update button states
+        elements.markAnsweredBtn.style.display = prayer.status === 'answered' ? 'none' : 'inline-block';
+        elements.escalatePrayerBtn.style.display = prayer.status === 'escalated' ? 'none' : 'inline-block';
 
-        prayerModal.classList.add('show');
+        // Show modal
+        elements.prayerModal.classList.add('show');
     }
 
     // Close prayer modal
     function closePrayerModal() {
-        prayerModal.classList.remove('show');
-    }
-
-    // Render prayer updates
-    function renderPrayerUpdates(updates) {
-        prayerUpdatesContainer.innerHTML = '';
-
-        if (updates.length === 0) {
-            prayerUpdatesContainer.innerHTML = '<p class="no-updates">No updates yet</p>';
-            return;
-        }
-
-        updates.forEach(update => {
-            const updateElement = document.createElement('div');
-            updateElement.className = 'prayer-update';
-            updateElement.innerHTML = `
-                <div class="update-header">
-                    <span class="update-date">${update.date}</span>
-                    <span class="update-by">by ${update.by}</span>
-                </div>
-                <div class="update-content">
-                    ${update.text}
-                </div>
-            `;
-            prayerUpdatesContainer.appendChild(updateElement);
-        });
-    }
-
-    // Add a new update to a prayer request
-    function addPrayerUpdate() {
-        if (!currentPrayer || !updateContent.value.trim()) return;
-
-        const newUpdate = {
-            date: new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }),
-            text: updateContent.value.trim(),
-            by: "Alex Meian" // Current user
-        };
-
-        currentPrayer.updates.push(newUpdate);
-        renderPrayerUpdates(currentPrayer.updates);
-        updateContent.value = '';
-
-        // Update the list to show new update count
-        filterPrayerRequests();
-    }
-
-    // Mark prayer as answered
-    function markPrayerAnswered() {
-        if (!currentPrayer) return;
-
-        const notes = answeredNotes.value.trim();
-        if (!notes && !confirm('Are you sure you want to mark this as answered without adding any notes?')) {
-            return;
-        }
-
-        // Update prayer request
-        currentPrayer.status = 'answered';
-        currentPrayer.answeredDate = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        currentPrayer.answeredNotes = notes;
-
-        // Add as an update
-        currentPrayer.updates.push({
-            date: currentPrayer.answeredDate,
-            text: `Prayer marked as answered. Notes: ${notes || "No additional notes"}`,
-            by: "Alex Meian"
-        });
-
-        // Update the modal
-        prayerModalStatus.textContent = 'answered';
-        prayerModalStatus.className = 'prayer-status answered';
-        markAnsweredBtn.style.display = 'none';
-        escalatePrayerBtn.style.display = 'none';
-        document.getElementById('answered-section').style.display = 'block';
-        answeredNotes.textContent = notes;
-        renderPrayerUpdates(currentPrayer.updates);
-
-        // Update the list
-        filterPrayerRequests();
-    }
-
-    // Open escalate modal
-    function openEscalateModal() {
-        if (!currentPrayer || currentPrayer.escalated) return;
-        escalationNotes.value = '';
-        escalateModal.classList.add('show');
-    }
-
-    // Close escalate modal
-    function closeEscalateModal() {
-        escalateModal.classList.remove('show');
-    }
-
-    // Escalate prayer to regional leader
-    function escalateToRegional() {
-        if (!currentPrayer) return;
-
-        const leaderId = regionalLeaderSelect.value;
-        const leader = regionalLeaders.find(l => l.id === leaderId);
-        const notes = escalationNotes.value.trim();
-
-        if (!leader) {
-            alert('Please select a regional leader');
-            return;
-        }
-
-        // Update prayer request
-        currentPrayer.status = 'escalated';
-        currentPrayer.escalated = true;
-        currentPrayer.escalatedTo = {
-            name: leader.name,
-            region: leader.region,
-            date: new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            })
-        };
-        currentPrayer.escalationNotes = notes;
-
-        // Add as an update
-        currentPrayer.updates.push({
-            date: currentPrayer.escalatedTo.date,
-            text: `Prayer escalated to ${leader.name} (${leader.region}). Notes: ${notes || "No additional notes"}`,
-            by: "Alex Meian"
-        });
-
-        // Update the modal
-        prayerModalStatus.textContent = 'escalated';
-        prayerModalStatus.className = 'prayer-status escalated';
-        escalatePrayerBtn.innerHTML = '<i class="fas fa-info-circle"></i> Already Escalated';
-        escalatePrayerBtn.disabled = true;
-        document.getElementById('escalated-section').style.display = 'block';
-        document.getElementById('escalated-to').textContent = leader.name;
-        document.getElementById('escalated-region').textContent = leader.region;
-        document.getElementById('escalated-date').textContent = currentPrayer.escalatedTo.date;
-        document.getElementById('escalation-notes-display').textContent = notes || 'No additional notes provided';
-        renderPrayerUpdates(currentPrayer.updates);
-
-        // Close modal
-        escalateModal.classList.remove('show');
-
-        // Update the list
-        filterPrayerRequests();
-
-        // In a real app, you would send an email notification here
-        console.log(`Sending escalation email to ${leader.email}`);
-    }
-
-    // Delete prayer request
-    function deletePrayerRequest() {
-        if (!currentPrayer) return;
-
-        if (confirm('Are you sure you want to delete this prayer request? This cannot be undone.')) {
-            // Find and remove from array
-            const index = prayerRequests.findIndex(r => r.id === currentPrayer.id);
-            if (index !== -1) {
-                prayerRequests.splice(index, 1);
-            }
-
-            // Close modal and update list
-            prayerModal.classList.remove('show');
-            filterPrayerRequests();
-        }
+        elements.prayerModal.classList.remove('show');
+        state.selectedPrayer = null;
     }
 
     // Open new prayer modal
     function openNewPrayerModal() {
-        newPrayerForm.reset();
-        newPrayerModal.classList.add('show');
+        elements.newPrayerModal.classList.add('show');
     }
 
     // Close new prayer modal
     function closeNewPrayerModal() {
-        newPrayerModal.classList.remove('show');
+        elements.newPrayerModal.classList.remove('show');
     }
 
-    // Submit new prayer request
-    function submitNewPrayer() {
-        const category = document.getElementById('prayer-category').value;
-        const content = document.getElementById('prayer-content').value;
-        const priority = document.getElementById('prayer-priority').value;
-        const escalateNow = document.getElementById('escalate-now').checked;
+    // Open escalate modal
+    function openEscalateModal() {
+        elements.escalateModal.classList.add('show');
+    }
 
-        if (!category || !content || !priority) {
+    // Close escalate modal
+    function closeEscalateModal() {
+        elements.escalateModal.classList.remove('show');
+    }
+
+    // Render prayer updates
+    function renderPrayerUpdates(updates) {
+        const updatesContainer = document.getElementById('prayer-updates');
+        updatesContainer.innerHTML = '';
+
+        if (!updates || updates.length === 0) {
+            updatesContainer.innerHTML = `
+                <div class="empty-updates">
+                    <p>No updates yet.</p>
+                </div>
+            `;
+            return;
+        }
+
+        updates.forEach(update => {
+            const updateEl = document.createElement('div');
+            updateEl.className = 'update-item';
+            updateEl.innerHTML = `
+                <div class="update-header">
+                    <span>${update.author}</span>
+                    <span>${update.date}</span>
+                </div>
+                <div class="update-content">
+                    <p>${update.content}</p>
+                </div>
+            `;
+            updatesContainer.appendChild(updateEl);
+        });
+    }
+
+    // Handle new prayer submission
+    function handleNewPrayerSubmit() {
+        const category = document.getElementById('prayer-category').value;
+        const priority = document.getElementById('prayer-priority').value;
+        const content = document.getElementById('prayer-content').value.trim();
+        const escalateNow = document.getElementById('escalate-now').checked;
+        const immediateLeader = document.getElementById('immediate-leader').value;
+        const immediateNotes = document.getElementById('immediate-notes').value.trim();
+
+        if (!category || !priority || !content) {
             alert('Please fill in all required fields');
             return;
         }
 
-        // Create new prayer request
-        const newRequest = {
-            id: Math.max(...prayerRequests.map(r => r.id), 0) + 1,
-            member: {
-                name: "Alex Meian",
-                id: "L2001",
-                email: "alex.m@church.org",
-                phone: "(555) 987-6543",
-                group: "Leadership Team"
-            },
-            category: category,
-            content: content,
-            priority: priority,
-            date: new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }),
-            status: 'pending',
-            updates: [],
-            escalated: false
-        };
-
-        // Escalate immediately if selected
-        if (escalateNow) {
-            const leaderId = document.getElementById('immediate-leader').value;
-            const leader = regionalLeaders.find(l => l.id === leaderId);
-            const notes = document.getElementById('immediate-notes').value.trim();
-
-            if (!leader) {
-                alert('Please select a regional leader');
-                return;
-            }
-
-            newRequest.status = 'escalated';
-            newRequest.escalated = true;
-            newRequest.escalatedTo = {
-                name: leader.name,
-                region: leader.region,
-                date: new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                })
-            };
-            newRequest.escalationNotes = notes;
-
-            // Add as an update
-            newRequest.updates.push({
-                date: newRequest.escalatedTo.date,
-                text: `Prayer escalated to ${leader.name} (${leader.region}). Notes: ${notes || "No additional notes"}`,
-                by: "Alex Meian"
-            });
-
-            alert('Your prayer request has been submitted and escalated to the regional leader.');
-        } else {
-            alert('Your prayer request has been submitted.');
+        if (escalateNow && !immediateLeader) {
+            alert('Please select a regional leader to escalate to');
+            return;
         }
 
-        // Add to prayer requests
-        prayerRequests.unshift(newRequest);
+        // Create new prayer
+        const newPrayer = {
+            id: Date.now(),
+            title: content.length > 50 ? content.substring(0, 47) + '...' : content,
+            content: content,
+            category: category,
+            priority: priority,
+            status: escalateNow ? 'escalated' : 'pending',
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            member: {
+                name: "You",
+                avatar: "../img/user1.png",
+                role: "Leader"
+            },
+            updates: [],
+            metrics: {
+                praying: 0,
+                comments: 0
+            }
+        };
 
-        // Reset form and close modal
-        newPrayerForm.reset();
-        newPrayerModal.classList.remove('show');
+        if (escalateNow) {
+            newPrayer.escalatedTo = immediateLeader;
+            newPrayer.escalatedDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            newPrayer.escalationNotes = immediateNotes;
+        }
 
-        // Update the list
-        filterPrayerRequests();
+        // Add to prayers array
+        prayers.unshift(newPrayer);
+
+        // Update UI
+        state.currentPrayers = [newPrayer, ...state.currentPrayers];
+        renderPrayers();
+        closeNewPrayerModal();
+        updateEmptyState();
+
+        alert('Prayer request submitted successfully');
+    }
+
+    // Mark prayer as answered
+    function markPrayerAnswered(prayerId) {
+        let prayer;
+
+        if (prayerId) {
+            // Called from list view
+            prayer = prayers.find(p => p.id === prayerId);
+        } else {
+            // Called from modal
+            prayer = state.selectedPrayer;
+        }
+
+        if (!prayer) return;
+
+        if (confirm('Are you sure you want to mark this prayer as answered?')) {
+            prayer.status = 'answered';
+            prayer.answeredDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            prayer.answeredNotes = prompt('Please enter how this prayer was answered:') || 'No details provided';
+
+            // Update UI
+            if (prayerId) {
+                filterAndSortPrayers();
+            } else {
+                closePrayerModal();
+                filterAndSortPrayers();
+            }
+        }
+    }
+
+    // Confirm escalation
+    function confirmEscalation() {
+        const leader = document.getElementById('regional-leader').value;
+        const notes = document.getElementById('escalation-notes').value.trim();
+
+        if (!leader || !notes) {
+            alert('Please select a leader and provide escalation notes');
+            return;
+        }
+
+        if (!state.selectedPrayer) return;
+
+        state.selectedPrayer.status = 'escalated';
+        state.selectedPrayer.escalatedTo = leader;
+        state.selectedPrayer.escalatedDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        state.selectedPrayer.escalationNotes = notes;
+
+        // Update UI
+        closeEscalateModal();
+        closePrayerModal();
+        filterAndSortPrayers();
+    }
+
+    // Add prayer update
+    function addPrayerUpdate() {
+        const content = elements.updateContent.value.trim();
+        if (!content) return;
+
+        if (!state.selectedPrayer.updates) {
+            state.selectedPrayer.updates = [];
+        }
+
+        const newUpdate = {
+            id: Date.now(),
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            content: content,
+            author: "You"
+        };
+
+        state.selectedPrayer.updates.push(newUpdate);
+        renderPrayerUpdates(state.selectedPrayer.updates);
+        elements.updateContent.value = '';
+    }
+
+    // Delete selected prayer
+    function deleteSelectedPrayer(prayerId) {
+        let prayer;
+
+        if (prayerId) {
+            // Called from list view
+            prayer = prayers.find(p => p.id === prayerId);
+        } else {
+            // Called from modal
+            prayer = state.selectedPrayer;
+        }
+
+        if (!prayer) return;
+
+        if (confirm('Are you sure you want to delete this prayer request? This action cannot be undone.')) {
+            const index = prayers.findIndex(p => p.id === prayer.id);
+            if (index !== -1) {
+                prayers.splice(index, 1);
+            }
+
+            // Update UI
+            if (prayerId) {
+                filterAndSortPrayers();
+            } else {
+                closePrayerModal();
+                filterAndSortPrayers();
+            }
+        }
+    }
+
+    // Export prayer report
+    function exportPrayerReport() {
+        // In a real app, this would generate and download a report
+        alert('Exporting prayer report...');
     }
 
     // Update empty state visibility
     function updateEmptyState() {
-        if (currentRequests.length === 0) {
-            emptyState.style.display = 'block';
-            prayerList.style.display = 'none';
+        if (state.currentPrayers.length === 0) {
+            elements.emptyState.style.display = 'flex';
+            elements.prayerList.style.display = 'none';
         } else {
-            emptyState.style.display = 'none';
-            prayerList.style.display = 'grid';
+            elements.emptyState.style.display = 'none';
+            elements.prayerList.style.display = 'block';
         }
     }
 
-    // Helper function to get category display name
-    function getCategoryDisplay(category) {
-        const categories = {
-            health: 'Health',
-            family: 'Family',
-            financial: 'Financial',
-            spiritual: 'Spiritual',
-            other: 'Other'
-        };
-        return categories[category] || category;
-    }
-
-    // Helper function to get priority display
-    function getPriorityDisplay(priority) {
-        const priorities = {
-            urgent: 'Urgent',
-            high: 'High',
-            medium: 'Medium',
-            low: 'Low'
-        };
-        return priorities[priority] || priority;
-    }
+    // Initialize the application
+    init();
 });

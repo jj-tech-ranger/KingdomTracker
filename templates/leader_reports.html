@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Leader Reports</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/leader_reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/leader_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/leader_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/leader_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/food_bank.html"><i class="fas fa-bank"></i>Bank</a></li>
+                <li class="active"><a href="../templates/leader_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/leader_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/leader_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="reports-header">
+                <h1><i class="fas fa-chart-bar"></i> Team Analytics & Reports</h1>
+                <div class="reports-actions">
+                    <button class="btn btn-generate" id="generate-report">
+                        <i class="fas fa-plus"></i> Generate Report
+                    </button>
+                    <button class="btn btn-schedule" id="schedule-report">
+                        <i class="fas fa-calendar-plus"></i> Schedule Report
+                    </button>
+                    <div class="reports-filter">
+                        <select id="filter-team" class="filter-select">
+                            <option value="all">All Teams</option>
+                            <option value="youth">Youth Group</option>
+                            <option value="worship">Worship Team</option>
+                            <option value="outreach">Outreach Team</option>
+                            <option value="leaders">Leadership Team</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="type">Report Type</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="report-search" placeholder="Search reports...">
+            </div>
+
+            <div class="reports-tabs">
+                <button class="tab-btn active" data-tab="analytics">Analytics Dashboard</button>
+                <button class="tab-btn" data-tab="saved">Saved Reports</button>
+                <button class="tab-btn" data-tab="scheduled">Scheduled Reports</button>
+                <button class="tab-btn" data-tab="exports">Data Exports</button>
+            </div>
+
+            <div class="reports-container">
+                <!-- Analytics Dashboard Tab -->
+                <div class="tab-content active" id="analytics-tab">
+                    <div class="dashboard-grid">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">87%</div>
+                                <div class="stat-label">Engagement Rate</div>
+                                <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 5%</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Active Members</div>
+                                <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 3</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">92%</div>
+                                <div class="stat-label">Assignment Completion</div>
+                                <div class="stat-trend down"><i class="fas fa-arrow-down"></i> 2%</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">New Prayer Requests</div>
+                                <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 6</div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h4>Engagement Over Time</h4>
+                                    <select class="chart-period">
+                                        <option value="week">Last 7 Days</option>
+                                        <option value="month">Last 30 Days</option>
+                                        <option value="quarter">Last 90 Days</option>
+                                        <option value="year">Last Year</option>
+                                    </select>
+                                </div>
+                                <canvas id="engagement-chart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h4>Content Categories</h4>
+                                    <select class="chart-team">
+                                        <option value="all">All Teams</option>
+                                        <option value="youth">Youth Group</option>
+                                        <option value="worship">Worship Team</option>
+                                    </select>
+                                </div>
+                                <canvas id="category-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <div class="data-header">
+                                    <h4>Recent Activity</h4>
+                                    <button class="btn btn-export">Export</button>
+                                </div>
+                                <div class="activity-list">
+                                    <div class="activity-item">
+                                        <div class="activity-icon"><i class="fas fa-book"></i></div>
+                                        <div class="activity-details">
+                                            <div class="activity-title">Teaching Completed</div>
+                                            <div class="activity-meta">Sarah Johnson - 2 hours ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon"><i class="fas fa-hands-praying"></i></div>
+                                        <div class="activity-details">
+                                            <div class="activity-title">Prayer Request Added</div>
+                                            <div class="activity-meta">Michael Brown - 4 hours ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                                        <div class="activity-details">
+                                            <div class="activity-title">Assignment Completed</div>
+                                            <div class="activity-meta">3 members - Today</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="data-card">
+                                <div class="data-header">
+                                    <h4>Pending Actions</h4>
+                                    <button class="btn btn-view-all">View All</button>
+                                </div>
+                                <div class="actions-list">
+                                    <div class="action-item">
+                                        <div class="action-icon"><i class="fas fa-comment"></i></div>
+                                        <div class="action-details">
+                                            <div class="action-title">5 comments to moderate</div>
+                                            <button class="btn btn-small">Review</button>
+                                        </div>
+                                    </div>
+                                    <div class="action-item">
+                                        <div class="action-icon"><i class="fas fa-user-check"></i></div>
+                                        <div class="action-details">
+                                            <div class="action-title">3 new member applications</div>
+                                            <button class="btn btn-small">Review</button>
+                                        </div>
+                                    </div>
+                                    <div class="action-item">
+                                        <div class="action-icon"><i class="fas fa-file-alt"></i></div>
+                                        <div class="action-details">
+                                            <div class="action-title">2 report requests</div>
+                                            <button class="btn btn-small">Respond</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Reports Tab -->
+                <div class="tab-content" id="saved-tab">
+                    <div class="reports-list" id="saved-reports-list">
+                        <!-- Saved reports will be dynamically inserted here -->
+                    </div>
+                    <div class="empty-state" id="saved-empty-state">
+                        <img src="../img/reports_empty.png" alt="No saved reports">
+                        <h3>No saved reports found</h3>
+                        <p>When you save report templates, they'll appear here.</p>
+                        <button class="btn btn-generate" id="create-first-report">
+                            <i class="fas fa-plus"></i> Create Your First Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Scheduled Reports Tab -->
+                <div class="tab-content" id="scheduled-tab">
+                    <div class="reports-list" id="scheduled-reports-list">
+                        <!-- Scheduled reports will be dynamically inserted here -->
+                    </div>
+                    <div class="empty-state" id="scheduled-empty-state">
+                        <img src="../img/schedule_empty.png" alt="No scheduled reports">
+                        <h3>No scheduled reports</h3>
+                        <p>Set up automated report generation to have them appear here.</p>
+                        <button class="btn btn-schedule" id="schedule-first-report">
+                            <i class="fas fa-calendar-plus"></i> Schedule Your First Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Exports Tab -->
+                <div class="tab-content" id="exports-tab">
+                    <div class="exports-list" id="exports-list">
+                        <!-- Data exports will be dynamically inserted here -->
+                    </div>
+                    <div class="empty-state" id="exports-empty-state">
+                        <img src="../img/data_empty.png" alt="No data exports">
+                        <h3>No data exports yet</h3>
+                        <p>When you export data, your files will appear here.</p>
+                        <button class="btn btn-export" id="create-first-export">
+                            <i class="fas fa-file-export"></i> Export Data Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Generate Report Modal -->
+    <div class="modal" id="generate-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Generate New Report</h2>
+                <button class="modal-close" id="close-generate">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="generate-form">
+                    <div class="form-group">
+                        <label for="report-name">Report Name</label>
+                        <input type="text" id="report-name" placeholder="Enter report name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-type">Report Type</label>
+                        <select id="report-type" required>
+                            <option value="">Select report type</option>
+                            <option value="engagement">Engagement Report</option>
+                            <option value="prayer">Prayer Activity</option>
+                            <option value="content">Content Performance</option>
+                            <option value="assignments">Assignment Completion</option>
+                            <option value="members">Member Activity</option>
+                            <option value="custom">Custom Report</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-team">Team/Group</label>
+                        <select id="report-team">
+                            <option value="all">All Teams</option>
+                            <option value="youth">Youth Group</option>
+                            <option value="worship">Worship Team</option>
+                            <option value="outreach">Outreach Team</option>
+                            <option value="leaders">Leadership Team</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-period">Date Range</label>
+                        <div class="date-range">
+                            <input type="date" id="report-start-date" placeholder="Start date">
+                            <span>to</span>
+                            <input type="date" id="report-end-date" placeholder="End date">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="custom-fields" style="display: none;">
+                        <label>Custom Data Points</label>
+                        <div class="checkbox-grid">
+                            <label><input type="checkbox" name="data-point" value="views"> Content Views</label>
+                            <label><input type="checkbox" name="data-point" value="comments"> Comments</label>
+                            <label><input type="checkbox" name="data-point" value="prayers"> Prayer Requests</label>
+                            <label><input type="checkbox" name="data-point" value="assignments"> Assignments</label>
+                            <label><input type="checkbox" name="data-point" value="completions"> Completions</label>
+                            <label><input type="checkbox" name="data-point" value="new-members"> New Members</label>
+                            <label><input type="checkbox" name="data-point" value="active-members"> Active Members</label>
+                            <label><input type="checkbox" name="data-point" value="inactive-members"> Inactive Members</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-format">Output Format</label>
+                        <select id="report-format">
+                            <option value="web">Web View</option>
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                            <option value="excel">Excel</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="save-template">
+                            <span>Save as template for future use</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-generate">Generate Report</button>
+                <button class="btn btn-cancel" id="cancel-generate">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Report Modal -->
+    <div class="modal" id="schedule-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Schedule Automated Report</h2>
+                <button class="modal-close" id="close-schedule">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="schedule-form">
+                    <div class="form-group">
+                        <label for="schedule-report">Select Report</label>
+                        <select id="schedule-report" required>
+                            <option value="">Choose report to schedule</option>
+                            <option value="weekly-engagement">Weekly Engagement</option>
+                            <option value="monthly-members">Monthly Member Activity</option>
+                            <option value="prayer-summary">Prayer Summary</option>
+                            <option value="custom">Custom Report</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="schedule-frequency">Frequency</label>
+                        <select id="schedule-frequency" required>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="schedule-day-group" style="display: none;">
+                        <label for="schedule-day">Day of Week</label>
+                        <select id="schedule-day">
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="schedule-date-group" style="display: none;">
+                        <label for="schedule-date">Day of Month</label>
+                        <input type="number" id="schedule-date" min="1" max="31" value="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="schedule-time">Time</label>
+                        <select id="schedule-time">
+                            <option value="08:00">8:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="custom">Custom Time</option>
+                        </select>
+                        <input type="time" id="custom-time" style="display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="schedule-recipients">Recipients</label>
+                        <select id="schedule-recipients" multiple>
+                            <option value="me">Me (Alex Meian)</option>
+                            <option value="leadership">Leadership Team</option>
+                            <option value="youth">Youth Leaders</option>
+                            <option value="worship">Worship Team</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="schedule-format">Output Format</label>
+                        <select id="schedule-format">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                            <option value="excel">Excel</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-schedule">Schedule Report</button>
+                <button class="btn btn-cancel" id="cancel-schedule">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/leader_reports.js"></script>
+</body>
+</html>

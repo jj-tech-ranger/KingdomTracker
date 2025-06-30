@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingdom Tracker - Donations & Tithe</title>
+    <title>Kingdom Tracker - Donations, Tithe & Offerings</title>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/finance.css">
-    <link rel="stylesheet" href="../css/donations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
-    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="../css/donations.css">
+    <link rel="stylesheet" href="../css/finance.css">
 </head>
 <body class="light-mode">
-
     <div class="sidebar">
         <div class="logo">
-            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">
+            <span>Kingdom Tracker</span>
         </div>
-        <a href="../templates/index.html" class="home-button">
+        <a href="index.html" class="home-button">
             <i class="fas fa-home"></i> Back to Home
         </a>
         <h2>Finance</h2>
         <ul class="menu">
             <li><a href="finance_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li class="active"><a href="donations.html"><i class="fas fa-coins"></i> Donations & Tithe</a></li>
+            <li class="active"><a href="donations.html"><i class="fas fa-coins"></i> Donations, Tithe and Offerings</a></li>
             <li><a href="expense_management.html"><i class="fas fa-receipt"></i> Expense Management</a></li>
             <li><a href="budget_planning.html"><i class="fas fa-chart-pie"></i> Budget Planning</a></li>
-            <li><a href="payroll.html"><i class="fas fa-money-bill-wave"></i> Payroll</a></li>
+            <li><a href="receivables.html"><i class="fas fa-receipt"></i> Receivables and Payables</a></li>
+            <li><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
             <li><a href="financial_reports.html"><i class="fas fa-file-invoice-dollar"></i> Financial Reports</a></li>
         </ul>
     </div>
@@ -34,10 +34,9 @@
     <div class="main">
         <header>
             <div class="search-bar">
-                <input type="text" placeholder="Search donations...">
+                <input type="text" placeholder="Search donations, tithe or offerings...">
                 <span class="notification-bell"><i class="fas fa-bell"></i></span>
             </div>
-
             <div class="profile-section">
                 <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
                 <span class="dropdown">Finance Team <i class="fas fa-chevron-down"></i></span>
@@ -45,239 +44,183 @@
             </div>
         </header>
 
-        <div class="donation-overview">
+        <div class="overview">
             <div class="card">
                 <h4>Total Donations</h4>
-                <p>$24,580</p>
-                <i class="fas fa-hand-holding-usd card-icon"></i>
+                <p>$8,750</p>
+                <i class="fas fa-hand-holding-heart card-icon"></i>
             </div>
             <div class="card">
-                <h4>Tithe Collected</h4>
-                <p>$8,420</p>
+                <h4>Total Tithe</h4>
+                <p>$12,420</p>
                 <i class="fas fa-church card-icon"></i>
             </div>
             <div class="card">
-                <h4>This Month</h4>
-                <p>$3,245</p>
-                <i class="fas fa-calendar-alt card-icon"></i>
+                <h4>Total Offerings</h4>
+                <p>$5,300</p>
+                <i class="fas fa-gift card-icon"></i>
             </div>
             <div class="card">
-                <h4>Top Donor</h4>
-                <p>John Smith</p>
-                <i class="fas fa-user card-icon"></i>
+                <h4>This Month</h4>
+                <p>$4,860</p>
+                <i class="fas fa-calendar-alt card-icon"></i>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="donations">Donations</button>
+                <button class="tab-btn" data-tab="tithe">Tithe</button>
+                <button class="tab-btn" data-tab="offerings">Offerings</button>
+            </div>
+        </div>
+
+        <div class="filters-container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="type-filter">Type:</label>
+                    <select id="type-filter">
+                        <option value="all">All</option>
+                        <option value="general">General Donation</option>
+                        <option value="sponsorship">Sponsorship</option>
+                        <option value="memorial">Memorial</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date Range:</label>
+                    <select id="date-filter">
+                        <option value="all">All</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="amount-filter">Amount:</label>
+                    <select id="amount-filter">
+                        <option value="all">All</option>
+                        <option value="small">Under $100</option>
+                        <option value="medium">$100-$500</option>
+                        <option value="large">Over $500</option>
+                    </select>
+                </div>
+                <button class="clear-filters">Clear Filters</button>
+            </div>
+        </div>
+
+        <div class="tab-content active" id="donations">
+            <div class="section-header">
+                <h3>Donations</h3>
+                <button class="add-button" id="addDonationBtn">
+                    <i class="fas fa-plus"></i> Add Donation
+                </button>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Donor Name</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Payment Method</th>
+                        <th>Purpose</th>
+                        <th>Reference #</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="donationsTableBody"></tbody>
+            </table>
+            <div class="pagination-container">
+                <div class="pagination-info" id="donationsPaginationInfo"></div>
+                <div class="pagination-controls">
+                    <button id="donationsPrevPage" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="donationsPageNumbers" class="page-numbers"></div>
+                    <button id="donationsNextPage" class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tithe">
+            <div class="section-header">
+                <h3>Tithe</h3>
+                <button class="add-button" id="addTitheBtn">
+                    <i class="fas fa-plus"></i> Add Tithe
+                </button>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Payment Method</th>
+                        <th>Reference #</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="titheTableBody"></tbody>
+            </table>
+            <div class="pagination-container">
+                <div class="pagination-info" id="tithePaginationInfo"></div>
+                <div class="pagination-controls">
+                    <button id="tithePrevPage" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="tithePageNumbers" class="page-numbers"></div>
+                    <button id="titheNextPage" class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="offerings">
+            <div class="section-header">
+                <h3>Offerings</h3>
+                <button class="add-button" id="addOfferingBtn">
+                    <i class="fas fa-plus"></i> Add Offering
+                </button>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Payment Method</th>
+                        <th>Service</th>
+                        <th>Reference #</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="offeringsTableBody"></tbody>
+            </table>
+            <div class="pagination-container">
+                <div class="pagination-info" id="offeringsPaginationInfo"></div>
+                <div class="pagination-controls">
+                    <button id="offeringsPrevPage" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="offeringsPageNumbers" class="page-numbers"></div>
+                    <button id="offeringsNextPage" class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
         <div class="chart-container">
             <div class="chart-card">
-                <h3>Monthly Donations</h3>
-                <canvas id="monthlyDonationsChart"></canvas>
+                <h3>Monthly Contributions</h3>
+                <canvas id="monthlyChart"></canvas>
             </div>
             <div class="chart-card">
-                <h3>Tithe vs Other Donations</h3>
-                <canvas id="titheRatioChart"></canvas>
-            </div>
-        </div>
-
-        <div class="donation-controls">
-            <div class="filter-section">
-                <div class="filter-group">
-                    <label for="date-range">Date Range:</label>
-                    <input type="text" id="date-range" class="date-range" placeholder="Select date range">
-                </div>
-                <div class="filter-group">
-                    <label for="donation-type">Donation Type:</label>
-                    <select id="donation-type">
-                        <option value="all">All Types</option>
-                        <option value="tithe">Tithe</option>
-                        <option value="offering">Offering</option>
-                        <option value="building">Building Fund</option>
-                        <option value="mission">Missions</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="payment-method">Payment Method:</label>
-                    <select id="payment-method">
-                        <option value="all">All Methods</option>
-                        <option value="cash">Cash</option>
-                        <option value="check">Check</option>
-                        <option value="card">Credit Card</option>
-                        <option value="transfer">Bank Transfer</option>
-                        <option value="online">Online</option>
-                    </select>
-                </div>
-                <button class="filter-btn" id="apply-filters">Apply Filters</button>
-                <button class="filter-btn secondary" id="reset-filters">Reset</button>
-            </div>
-
-            <div class="action-buttons">
-                <button class="add-button" id="add-donation-btn">
-                    <i class="fas fa-plus"></i> Add New Donation
-                </button>
-                <button class="export-button">
-                    <i class="fas fa-file-export"></i> Export Data
-                </button>
-            </div>
-        </div>
-
-        <div class="donation-table-container">
-            <table class="donation-table">
-                <thead>
-                    <tr>
-                        <th data-sort="donor">Donor <i class="fas fa-sort"></i></th>
-                        <th data-sort="amount">Amount <i class="fas fa-sort"></i></th>
-                        <th data-sort="date">Date <i class="fas fa-sort"></i></th>
-                        <th data-sort="type">Type <i class="fas fa-sort"></i></th>
-                        <th data-sort="method">Method <i class="fas fa-sort"></i></th>
-                        <th data-sort="designation">Designation <i class="fas fa-sort"></i></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>John Smith</td>
-                        <td>$500.00</td>
-                        <td>2023-11-15</td>
-                        <td>Tithe</td>
-                        <td>Credit Card</td>
-                        <td>General Fund</td>
-                        <td>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn receipt"><i class="fas fa-receipt"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Sarah Johnson</td>
-                        <td>$250.00</td>
-                        <td>2023-11-14</td>
-                        <td>Offering</td>
-                        <td>Bank Transfer</td>
-                        <td>Building Fund</td>
-                        <td>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn receipt"><i class="fas fa-receipt"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Michael Brown</td>
-                        <td>$1,000.00</td>
-                        <td>2023-11-12</td>
-                        <td>Tithe</td>
-                        <td>Check</td>
-                        <td>General Fund</td>
-                        <td>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn receipt"><i class="fas fa-receipt"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Grace Ministries</td>
-                        <td>$2,500.00</td>
-                        <td>2023-11-10</td>
-                        <td>Donation</td>
-                        <td>Bank Transfer</td>
-                        <td>Missions</td>
-                        <td>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn receipt"><i class="fas fa-receipt"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>David Wilson</td>
-                        <td>$100.00</td>
-                        <td>2023-11-08</td>
-                        <td>Offering</td>
-                        <td>Cash</td>
-                        <td>Youth Program</td>
-                        <td>
-                            <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn receipt"><i class="fas fa-receipt"></i></button>
-                            <button class="action-btn delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="pagination">
-                <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
-                <span class="page-info">Page 1 of 5</span>
-                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-
-        <!-- Donation Form Modal -->
-        <div class="modal" id="donation-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Add New Donation</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="donation-form">
-                        <div class="form-group">
-                            <label for="donor-name">Donor Name</label>
-                            <input type="text" id="donor-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="donor-email">Donor Email</label>
-                            <input type="email" id="donor-email">
-                        </div>
-                        <div class="form-group">
-                            <label for="donor-phone">Donor Phone</label>
-                            <input type="tel" id="donor-phone">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="donation-amount">Amount</label>
-                                <input type="number" id="donation-amount" step="0.01" min="0" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="donation-date">Date</label>
-                                <input type="text" id="donation-date" class="date-picker" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="donation-type">Donation Type</label>
-                                <select id="donation-type" required>
-                                    <option value="">Select Type</option>
-                                    <option value="tithe">Tithe</option>
-                                    <option value="offering">Offering</option>
-                                    <option value="building">Building Fund</option>
-                                    <option value="mission">Missions</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="payment-method">Payment Method</label>
-                                <select id="payment-method" required>
-                                    <option value="">Select Method</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="check">Check</option>
-                                    <option value="card">Credit Card</option>
-                                    <option value="transfer">Bank Transfer</option>
-                                    <option value="online">Online</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="designation">Designation</label>
-                            <input type="text" id="designation" placeholder="General Fund">
-                        </div>
-                        <div class="form-group">
-                            <label for="notes">Notes</label>
-                            <textarea id="notes" rows="3"></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="cancel-btn">Cancel</button>
-                            <button type="submit" class="submit-btn">Save Donation</button>
-                        </div>
-                    </form>
-                </div>
+                <h3>Contribution Types</h3>
+                <canvas id="typesChart"></canvas>
             </div>
         </div>
 
@@ -289,9 +232,133 @@
         </footer>
     </div>
 
-    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script src="../js/cdn.jsdelivr.net/npm/flatpickr.js"></script>
-    <script src="../js/finance.js"></script>
+    <!-- Modals -->
+    <div class="modal" id="donationModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add New Donation</h3>
+            <form id="donationForm">
+                <div class="form-group">
+                    <label for="donorName">Donor Name:</label>
+                    <input type="text" id="donorName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="donationType">Type:</label>
+                        <select id="donationType" required>
+                            <option value="general">General Donation</option>
+                            <option value="sponsorship">Sponsorship</option>
+                            <option value="memorial">Memorial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="donationAmount">Amount:</label>
+                        <input type="number" id="donationAmount" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="donationDate">Date:</label>
+                        <input type="date" id="donationDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method:</label>
+                        <select id="paymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="donationPurpose">Purpose:</label>
+                    <input type="text" id="donationPurpose">
+                </div>
+                <button type="submit" class="submit-btn">Save Donation</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="titheModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add New Tithe</h3>
+            <form id="titheForm">
+                <div class="form-group">
+                    <label for="memberName">Member Name:</label>
+                    <input type="text" id="memberName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="titheAmount">Amount:</label>
+                        <input type="number" id="titheAmount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="titheDate">Date:</label>
+                        <input type="date" id="titheDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tithePaymentMethod">Payment Method:</label>
+                        <select id="tithePaymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="titheReference">Reference #:</label>
+                        <input type="text" id="titheReference">
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Save Tithe</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="offeringModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add New Offering</h3>
+            <form id="offeringForm">
+                <div class="form-group">
+                    <label for="offeringMemberName">Member Name:</label>
+                    <input type="text" id="offeringMemberName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="offeringAmount">Amount:</label>
+                        <input type="number" id="offeringAmount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offeringDate">Date:</label>
+                        <input type="date" id="offeringDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="offeringPaymentMethod">Payment Method:</label>
+                        <select id="offeringPaymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="offeringService">Service:</label>
+                        <select id="offeringService" required>
+                            <option value="sunday">Sunday Service</option>
+                            <option value="wednesday">Wednesday Service</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Save Offering</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/donations.js"></script>
 </body>
 </html>

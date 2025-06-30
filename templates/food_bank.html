@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Food Bank</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/food_bank.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/leader_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/leader_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/leader_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li class="active"><a href="../templates/food_bank.html"><i class="fas fa-bank"></i>Bank</a></li>
+                <li><a href="../templates/leader_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/leader_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/leader_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Alex Meian</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="foodbank-header">
+                <h1><i class="fas fa-bank"></i> Food Bank Management</h1>
+                <div class="foodbank-actions">
+                    <button class="btn btn-primary" id="add-inventory">
+                        <i class="fas fa-plus"></i> Add Inventory
+                    </button>
+                    <button class="btn btn-secondary" id="record-distribution">
+                        <i class="fas fa-hand-holding-heart"></i> Record Distribution
+                    </button>
+                    <button class="btn btn-tertiary" id="manage-beneficiaries">
+                        <i class="fas fa-users"></i> Manage Beneficiaries
+                    </button>
+                    <div class="foodbank-filter">
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="perishable">Perishable Goods</option>
+                            <option value="non-perishable">Non-Perishable</option>
+                            <option value="hygiene">Hygiene Products</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="received">Received</option>
+                            <option value="distributed">Distributed</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="quantity-high">Quantity (High-Low)</option>
+                            <option value="quantity-low">Quantity (Low-High)</option>
+                            <option value="alphabetical">A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="foodbank-search" placeholder="Search inventory or beneficiaries...">
+            </div>
+
+            <div class="foodbank-tabs">
+                <button class="tab-btn active" data-tab="inventory">Inventory</button>
+                <button class="tab-btn" data-tab="distribution">Distribution Log</button>
+                <button class="tab-btn" data-tab="beneficiaries">Beneficiaries</button>
+                <button class="tab-btn" data-tab="donations">Donations Received</button>
+                <button class="tab-btn" data-tab="needs">Needs List</button>
+            </div>
+
+            <div class="foodbank-container">
+                <div class="foodbank-grid" id="inventory-grid">
+                    <!-- Inventory items will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/foodbank_empty.png" alt="No inventory">
+                    <h3>No inventory items to display</h3>
+                    <p>When items are added, they will appear here.</p>
+                    <button class="btn btn-primary" id="add-inventory-empty">
+                        <i class="fas fa-plus"></i> Add Your First Inventory Item
+                    </button>
+                </div>
+            </div>
+
+            <div class="foodbank-dashboard">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-line"></i> Food Bank Overview</h3>
+                    <button class="btn btn-export" id="export-report">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-items">0</div>
+                            <div class="stat-label">Total Items in Stock</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="families-served">0</div>
+                            <div class="stat-label">Families Served This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="donations-received">0</div>
+                            <div class="stat-label">Donations Received This Month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="expiring-soon">0</div>
+                            <div class="stat-label">Expiring Soon (Next 7 Days)</div>
+                        </div>
+                    </div>
+
+                    <div class="pending-actions">
+                        <h4>Pending Actions</h4>
+                        <ul class="action-list" id="pending-actions-list">
+                            <li>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>5 items low in stock</span>
+                                <button class="btn btn-small">View</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>2 donation pickups scheduled</span>
+                                <button class="btn btn-small">Details</button>
+                            </li>
+                            <li>
+                                <i class="fas fa-calendar-times"></i>
+                                <span>3 items expiring soon</span>
+                                <button class="btn btn-small">Review</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add Inventory Modal -->
+    <div class="modal" id="add-inventory-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Inventory Item</h2>
+                <button class="modal-close" id="close-add-inventory">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-inventory-form">
+                    <div class="form-group">
+                        <label for="item-name">Item Name</label>
+                        <input type="text" id="item-name" placeholder="Enter item name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" placeholder="Enter item description" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-category">Category</label>
+                        <select id="item-category" required>
+                            <option value="">Select a category</option>
+                            <option value="perishable">Perishable Goods</option>
+                            <option value="non-perishable">Non-Perishable Goods</option>
+                            <option value="hygiene">Hygiene Products</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="item-quantity">Quantity</label>
+                            <input type="number" id="item-quantity" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-unit">Unit</label>
+                            <select id="item-unit" required>
+                                <option value="each">Each</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="lb">Pounds</option>
+                                <option value="box">Box</option>
+                                <option value="bag">Bag</option>
+                                <option value="bottle">Bottle</option>
+                                <option value="can">Can</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-expiration">Expiration Date (if applicable)</label>
+                        <input type="date" id="item-expiration">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-received">Date Received</label>
+                        <input type="date" id="item-received" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-source">Source/Donor</label>
+                        <input type="text" id="item-source" placeholder="Enter source or donor name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-add-inventory">Add Item</button>
+                <button class="btn btn-cancel" id="cancel-add-inventory">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Record Distribution Modal -->
+    <div class="modal" id="record-distribution-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Record Distribution</h2>
+                <button class="modal-close" id="close-record-distribution">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="record-distribution-form">
+                    <div class="form-group">
+                        <label for="distribution-items">Select Items</label>
+                        <select id="distribution-items" class="assign-select" multiple required>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="distribution-quantities">
+                        <!-- Quantity inputs will be dynamically added for each selected item -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distribution-beneficiary">Beneficiary</label>
+                        <select id="distribution-beneficiary" class="assign-select" required>
+                            <option value="">Select beneficiary</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distribution-date">Date of Distribution</label>
+                        <input type="date" id="distribution-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distribution-notes">Notes</label>
+                        <textarea id="distribution-notes" placeholder="Add any notes about this distribution" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-record-distribution">Record Distribution</button>
+                <button class="btn btn-cancel" id="cancel-record-distribution">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Beneficiaries Modal -->
+    <div class="modal" id="manage-beneficiaries-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manage Beneficiaries</h2>
+                <button class="modal-close" id="close-manage-beneficiaries">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="beneficiary-list-header">
+                    <h4>Current Beneficiaries</h4>
+                    <button class="btn btn-small" id="add-new-beneficiary">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                </div>
+                <div class="beneficiary-list" id="beneficiary-list">
+                    <!-- Beneficiaries will be listed here -->
+                </div>
+
+                <div class="beneficiary-form-container" id="beneficiary-form-container" style="display: none;">
+                    <h4 id="beneficiary-form-title">Add New Beneficiary</h4>
+                    <form id="beneficiary-form">
+                        <input type="hidden" id="beneficiary-id">
+                        <div class="form-group">
+                            <label for="beneficiary-name">Full Name</label>
+                            <input type="text" id="beneficiary-name" placeholder="Enter full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="beneficiary-contact">Contact Number</label>
+                            <input type="tel" id="beneficiary-contact" placeholder="Enter contact number">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="beneficiary-address">Address</label>
+                            <textarea id="beneficiary-address" placeholder="Enter address" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="beneficiary-household">Household Size</label>
+                                <input type="number" id="beneficiary-household" min="1" value="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="beneficiary-registered">Date Registered</label>
+                                <input type="date" id="beneficiary-registered" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="beneficiary-notes">Notes</label>
+                            <textarea id="beneficiary-notes" placeholder="Add any notes about this beneficiary" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-beneficiary" style="display: none;">Save Beneficiary</button>
+                <button class="btn btn-cancel" id="cancel-beneficiary" style="display: none;">Cancel</button>
+                <button class="btn btn-close" id="close-beneficiaries-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/food_bank.js"></script>
+</body>
+</html>

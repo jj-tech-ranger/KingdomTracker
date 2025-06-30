@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Sunday School - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li class="active"><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search students, classes...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="welcome-banner">
+            <h1>Sunday School Dashboard</h1>
+            <p>Welcome back! Here's what's happening in your Sunday School this week.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="emoji">👧👦</span>
+                <h3>Total Students</h3>
+                <div class="number">142</div>
+                <div class="subtext">+5 this month</div>
+            </div>
+            <div class="stat-card">
+                <span class="emoji">🏫</span>
+                <h3>Active Classes</h3>
+                <div class="number">8</div>
+                <div class="subtext">2 preschool, 3 elementary, 3 youth</div>
+            </div>
+            <div class="stat-card">
+                <span class="emoji">📅</span>
+                <h3>Upcoming Events</h3>
+                <div class="number">3</div>
+                <div class="subtext">Next: Christmas Pageant</div>
+            </div>
+            <div class="stat-card">
+                <span class="emoji">✅</span>
+                <h3>Last Week Attendance</h3>
+                <div class="number">87%</div>
+                <div class="subtext">124 of 142 students</div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="action-btn" id="add-student">
+                <span class="emoji">➕</span>
+                <span>Add New Student</span>
+            </button>
+            <button class="action-btn" id="record-attendance">
+                <span class="emoji">👩‍🏫</span>
+                <span>Record Attendance</span>
+            </button>
+            <button class="action-btn" id="create-lesson">
+                <span class="emoji">📝</span>
+                <span>Create Lesson Plan</span>
+            </button>
+            <button class="action-btn" id="send-announcement">
+                <span class="emoji">📢</span>
+                <span>Send Announcement</span>
+            </button>
+        </div>
+
+        <div class="section">
+            <h2><span class="emoji">📅</span> Upcoming Events</h2>
+            <ul class="event-list" id="events-list">
+                <li class="event-item">
+                    <div class="event-date">
+                        <div class="day">15</div>
+                        <div class="month">Dec</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Christmas Pageant Rehearsal</h4>
+                        <p>10:00 AM - Sanctuary • All classes participate</p>
+                    </div>
+                </li>
+                <li class="event-item">
+                    <div class="event-date">
+                        <div class="day">22</div>
+                        <div class="month">Dec</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Christmas Pageant</h4>
+                        <p>9:30 AM - Sanctuary • Special Sunday schedule</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><span class="emoji">📢</span> Recent Announcements</h2>
+            <div class="announcement-list" id="announcements-list">
+                <div class="announcement-item">
+                    <h4><span class="emoji">🎄</span> Christmas Pageant Details</h4>
+                    <p>All students should arrive by 9:00 AM on December 22nd in their costumes.</p>
+                    <div class="date">Posted 2 days ago by Pastor Sarah</div>
+                </div>
+                <div class="announcement-item">
+                    <h4><span class="emoji">📚</span> New Curriculum Materials</h4>
+                    <p>The January curriculum books have arrived. Please pick yours up from the office.</p>
+                    <div class="date">Posted 1 week ago by Admin</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sunday_school.js"></script>
+</body>
+</html>

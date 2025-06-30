@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Receivables & Payables</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/finance.css">
+    <link rel="stylesheet" href="../css/receivables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Finance</h2>
+        <ul class="menu">
+            <li><a href="finance_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="donations.html"><i class="fas fa-coins"></i> Donations, Tithe and Offerings</a></li>
+            <li><a href="expense_management.html"><i class="fas fa-receipt"></i> Expense Management</a></li>
+            <li><a href="budget_planning.html"><i class="fas fa-chart-pie"></i> Budget Planning</a></li>
+            <li class="active"><a href="receivables.html"><i class="fas fa-receipt"></i> Receivables and Payables</a></li>
+            <li><a href="invoice_processing.html"><i class="fas fa-file-invoice"></i> Invoice Processing</a></li>
+            <li><a href="payment_processing.html"><i class="fas fa-money-check-alt"></i> Payment Processing</a></li>
+            <li><a href="financial_reports.html"><i class="fas fa-file-invoice-dollar"></i> Financial Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search receivables or payables...">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Finance Team <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card">
+                <h4>Total Receivables</h4>
+                <p>$15,280</p>
+                <i class="fas fa-hand-holding-usd card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Total Payables</h4>
+                <p>$9,420</p>
+                <i class="fas fa-money-bill-wave card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Overdue Receivables</h4>
+                <p>$3,750</p>
+                <i class="fas fa-exclamation-triangle card-icon"></i>
+            </div>
+            <div class="card">
+                <h4>Net Position</h4>
+                <p>$5,860</p>
+                <i class="fas fa-balance-scale card-icon"></i>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="receivables">Receivables</button>
+                <button class="tab-btn" data-tab="payables">Payables</button>
+            </div>
+        </div>
+
+        <div class="filters-container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="overdue">Overdue</option>
+                        <option value="paid">Paid</option>
+                        <option value="partial">Partially Paid</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Due Date:</label>
+                    <select id="date-filter">
+                        <option value="all">All</option>
+                        <option value="week">Next 7 Days</option>
+                        <option value="month">Next 30 Days</option>
+                        <option value="overdue">Overdue</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="amount-filter">Amount:</label>
+                    <select id="amount-filter">
+                        <option value="all">All</option>
+                        <option value="small">Under $500</option>
+                        <option value="medium">$500-$2,000</option>
+                        <option value="large">Over $2,000</option>
+                    </select>
+                </div>
+                <button class="clear-filters">Clear Filters</button>
+            </div>
+        </div>
+
+        <div class="tab-content active" id="receivables">
+            <div class="section-header">
+                <h3>Receivables</h3>
+                <button class="add-button" id="addReceivableBtn">
+                    <i class="fas fa-plus"></i> Add Receivable
+                </button>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Payer/Donor</th>
+                        <th>Description</th>
+                        <th>Amount Due</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Date Incurred</th>
+                        <th>Invoice #</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Smith</td>
+                        <td>Building Fund Pledge</td>
+                        <td>$1,000.00</td>
+                        <td>2023-12-15</td>
+                        <td><span class="status-badge pending">Pending</span></td>
+                        <td>2023-11-01</td>
+                        <td>INV-2023-1142</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn received" title="Mark as Received"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn reminder" title="Send Reminder"><i class="fas fa-envelope"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ABC Corporation</td>
+                        <td>Event Sponsorship</td>
+                        <td>$5,000.00</td>
+                        <td>2023-11-30</td>
+                        <td><span class="status-badge overdue">Overdue</span></td>
+                        <td>2023-10-15</td>
+                        <td>INV-2023-1087</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn received" title="Mark as Received"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn reminder" title="Send Reminder"><i class="fas fa-envelope"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sarah Johnson</td>
+                        <td>Tithe Commitment</td>
+                        <td>$250.00</td>
+                        <td>2023-12-05</td>
+                        <td><span class="status-badge partial">50% Paid</span></td>
+                        <td>2023-11-10</td>
+                        <td>INV-2023-1156</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn received" title="Mark as Received"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn reminder" title="Send Reminder"><i class="fas fa-envelope"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-content" id="payables">
+            <div class="section-header">
+                <h3>Payables</h3>
+                <button class="add-button" id="addPayableBtn">
+                    <i class="fas fa-plus"></i> Add Payable
+                </button>
+            </div>
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Payee/Vendor</th>
+                        <th>Description</th>
+                        <th>Amount Owed</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Date Incurred</th>
+                        <th>Invoice #</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>XYZ Utilities</td>
+                        <td>Monthly Electricity Bill</td>
+                        <td>$450.00</td>
+                        <td>2023-12-10</td>
+                        <td><span class="status-badge pending">Pending</span></td>
+                        <td>2023-11-25</td>
+                        <td>UTIL-1123</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn paid" title="Mark as Paid"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn schedule" title="Schedule Payment"><i class="fas fa-calendar-check"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Office Supply Co.</td>
+                        <td>Office Supplies</td>
+                        <td>$1,200.00</td>
+                        <td>2023-11-20</td>
+                        <td><span class="status-badge overdue">Overdue</span></td>
+                        <td>2023-11-05</td>
+                        <td>OS-2023-421</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn paid" title="Mark as Paid"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn schedule" title="Schedule Payment"><i class="fas fa-calendar-check"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ACME Cleaning</td>
+                        <td>Monthly Cleaning Service</td>
+                        <td>$600.00</td>
+                        <td>2023-12-01</td>
+                        <td><span class="status-badge paid">Paid</span></td>
+                        <td>2023-11-15</td>
+                        <td>CLN-2023-12</td>
+                        <td>
+                            <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn paid" title="Mark as Paid"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn schedule" title="Schedule Payment"><i class="fas fa-calendar-check"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-card">
+                <h3>Aging Receivables</h3>
+                <canvas id="agingReceivablesChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Aging Payables</h3>
+                <canvas id="agingPayablesChart"></canvas>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add Receivable Modal -->
+    <div class="modal" id="receivableModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add New Receivable</h3>
+            <form id="receivableForm">
+                <div class="form-group">
+                    <label for="payer">Payer/Donor:</label>
+                    <input type="text" id="payer" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date:</label>
+                        <input type="date" id="dueDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="invoiceNumber">Invoice/Reference #:</label>
+                        <input type="text" id="invoiceNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status">
+                            <option value="pending">Pending</option>
+                            <option value="partial">Partially Paid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save Receivable</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Payable Modal -->
+    <div class="modal" id="payableModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add New Payable</h3>
+            <form id="payableForm">
+                <div class="form-group">
+                    <label for="payee">Payee/Vendor:</label>
+                    <input type="text" id="payee" required>
+                </div>
+                <div class="form-group">
+                    <label for="payableDescription">Description:</label>
+                    <textarea id="payableDescription" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="payableAmount">Amount:</label>
+                        <input type="number" id="payableAmount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payableDueDate">Due Date:</label>
+                        <input type="date" id="payableDueDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="payableInvoiceNumber">Invoice/Reference #:</label>
+                        <input type="text" id="payableInvoiceNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="payableStatus">Status:</label>
+                        <select id="payableStatus">
+                            <option value="pending">Pending</option>
+                            <option value="partial">Partially Paid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="payableNotes">Notes:</label>
+                    <textarea id="payableNotes"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save Payable</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/finance.js"></script>
+    <script src="../js/receivables.js"></script>
+</body>
+</html>

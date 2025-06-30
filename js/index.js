@@ -72,7 +72,7 @@ moduleCards.forEach((card, index) => {
             'hr': 'Human Resource',
             'finance': 'Finance',
             'procurement': 'Procurement',
-            'inventory': 'Inventory',
+            'sunday_school': 'Sunday School',
             'crosspoint': 'CrossPoint'
         };
         

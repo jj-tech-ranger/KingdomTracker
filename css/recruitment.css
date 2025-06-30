@@ -469,3 +469,111 @@ body.dark-mode .pipeline-stage.drop-zone {
     opacity: 0.5;
     transform: scale(0.95);
 }
+/* Add these to your existing recruitment.css */
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 15px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px;
+    margin: 0 3px;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    color: var(--font-dark);
+    cursor: pointer;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: var(--primary);
+    color: var(--white) !important;
+    border-color: var(--primary);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(252, 1, 0, 0.1);
+    color: var(--font-dark) !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(252, 1, 0, 0.2);
+    color: var(--white) !important;
+}
+
+.dataTables_wrapper .dataTables_info {
+    margin-top: 15px;
+    color: var(--font-dark);
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_info {
+    color: var(--white);
+}
+/* Replace existing table header styles with these */
+#positions-table thead th {
+    position: relative;
+    background: linear-gradient(to right, var(--primary), var(--highlight)) !important;
+    color: var(--white) !important;
+    padding: 12px 15px !important;
+    font-weight: 600 !important;
+    border: none !important;
+}
+
+/* Specific style for the first header if needed */
+#positions-table thead th:first-child {
+    border-top-left-radius: 8px !important;
+}
+
+/* Specific style for the last header if needed */
+#positions-table thead th:last-child {
+    border-top-right-radius: 8px !important;
+}
+
+/* Sorting icons */
+#positions-table thead th.sorting:after,
+#positions-table thead th.sorting_asc:after,
+#positions-table thead th.sorting_desc:after {
+    color: var(--white) !important;
+    opacity: 1 !important;
+    right: 8px !important;
+    top: 16px !important;
+}
+
+#positions-table thead th.sorting,
+#positions-table thead th.sorting_asc,
+#positions-table thead th.sorting_desc {
+    background: linear-gradient(to right, var(--primary), var(--highlight)) !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid var(--secondary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_filter input {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid var(--secondary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_length select {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
