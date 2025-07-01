@@ -1,0 +1,827 @@
+/* Attendance Page Specific Styles */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(98, 39, 37, 0.1);
+}
+
+body.dark-mode .page-header {
+    border-bottom: 1px solid rgba(242, 241, 242, 0.1);
+}
+
+.page-header h1 {
+    color: var(--primary);
+    font-size: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode .page-header h1 {
+    color: var(--secondary);
+}
+
+.page-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.date-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-picker label {
+    font-weight: 600;
+}
+
+.date-picker input[type="date"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    background-color: var(--white);
+    font-family: inherit;
+}
+
+body.dark-mode .date-picker input[type="date"] {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.attendance-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.class-filter-nav {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.class-filter-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+body.dark-mode .class-filter-btn {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+}
+
+.class-filter-btn:hover {
+    background-color: var(--secondary);
+    color: var(--font-dark);
+}
+
+.class-filter-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+.attendance-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.attendance-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+body.dark-mode .stat-card {
+    background-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+}
+
+.stat-icon.present {
+    background-color: #4CAF50;
+}
+
+.stat-icon.absent {
+    background-color: #F44336;
+}
+
+.stat-icon.percentage {
+    background-color: #2196F3;
+}
+
+.stat-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: var(--font-dark);
+}
+
+body.dark-mode .stat-info h3 {
+    color: var(--white);
+}
+
+.stat-info p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--font-dark);
+}
+
+body.dark-mode .stat-info p {
+    color: var(--white);
+}
+
+.attendance-table-container {
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+body.dark-mode .attendance-table-container {
+    background-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.attendance-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .attendance-table td {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.2);
+}
+
+.attendance-table tr:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.attendance-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.attendance-status.present {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.attendance-status.absent {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
+
+.attendance-status.late {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #FFC107;
+}
+
+body.dark-mode .attendance-status.present {
+    background-color: rgba(76, 175, 80, 0.3);
+    color: #A5D6A7;
+}
+
+body.dark-mode .attendance-status.absent {
+    background-color: rgba(244, 67, 54, 0.3);
+    color: #EF9A9A;
+}
+
+body.dark-mode .attendance-status.late {
+    background-color: rgba(255, 193, 7, 0.3);
+    color: #FFE082;
+}
+
+.status-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.status-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.status-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.status-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .status-slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .status-slider:before {
+    transform: translateX(26px);
+}
+
+.notes-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--secondary);
+    font-size: 12px;
+}
+
+body.dark-mode .notes-input {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+body.dark-mode .pagination button {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#page-info {
+    margin: 0 10px;
+}
+
+.rows-per-page {
+    margin-left: 15px;
+}
+
+.attendance-history {
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+body.dark-mode .attendance-history {
+    background-color: var(--accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.attendance-history h2 {
+    color: var(--primary);
+    font-size: 20px;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode .attendance-history h2 {
+    color: var(--secondary);
+}
+
+.history-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.history-controls select,
+.history-controls input[type="date"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    background-color: var(--white);
+    font-family: inherit;
+}
+
+body.dark-mode .history-controls select,
+body.dark-mode .history-controls input[type="date"] {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.custom-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-chart {
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .history-table td {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.2);
+}
+
+.history-table tr:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+/* Modal Styles (similar to students.css) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--accent);
+    color: var(--white);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(98, 39, 37, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid rgba(242, 241, 242, 0.1);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--primary);
+}
+
+body.dark-mode .modal-header h2 {
+    color: var(--secondary);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--font-dark);
+    transition: var(--transition);
+}
+
+body.dark-mode .close-modal {
+    color: var(--white);
+}
+
+.close-modal:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid rgba(98, 39, 37, 0.1);
+}
+
+body.dark-mode .modal-actions {
+    border-top: 1px solid rgba(242, 241, 242, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .attendance-controls {
+        flex-direction: column;
+    }
+
+    .attendance-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .history-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .custom-range {
+        width: 100%;
+    }
+}
+/* Add this to attendance.css */
+.btn-primary {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, var(--highlight), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(252, 1, 0, 0.2);
+}
+
+.btn-secondary {
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+    border: 1px solid var(--secondary);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary);
+    color: var(--font-dark);
+}
+
+.bulk-status-btn {
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: 1px solid var(--secondary);
+    background-color: var(--light-bg);
+    color: var(--font-dark);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+body.dark-mode .bulk-status-btn {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.bulk-status-btn:hover {
+    background-color: var(--secondary);
+    color: var(--font-dark);
+}
+
+.bulk-status-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+.bulk-time-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.bulk-time-input label {
+    font-weight: 600;
+}
+
+.bulk-time-input input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--secondary);
+}
+
+body.dark-mode .bulk-time-input input {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.bulk-notes {
+    margin-bottom: 15px;
+}
+
+.bulk-notes label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.bulk-notes textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    min-height: 80px;
+    font-family: inherit;
+}
+
+body.dark-mode .bulk-notes textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+/* Add this to attendance.css */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+.toast.success {
+    background-color: #4CAF50;
+}
+
+.toast.error {
+    background-color: #F44336;
+}
+
+.notification-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification-content {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .notification-content {
+    background-color: var(--accent);
+}
+
+.notification-options {
+    margin: 15px 0;
+}
+
+.notification-options label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.notification-message {
+    margin-bottom: 15px;
+}
+
+.notification-message textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--secondary);
+    font-family: inherit;
+}
+
+body.dark-mode .notification-message textarea {
+    background-color: rgba(242, 241, 242, 0.1);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+.notification-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+/* Add to attendance.css */
+.history-chart {
+    height: 300px;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+body.dark-mode .history-chart {
+    background-color: var(--accent);
+}
+
+.history-chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.history-table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    color: var(--white);
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.history-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+body.dark-mode .history-table td {
+    border-bottom: 1px solid rgba(242, 204, 128, 0.2);
+}
+
+.history-table tr:hover {
+    background-color: rgba(252, 1, 0, 0.1);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary);
+    font-size: 16px;
+    transition: var(--transition);
+    padding: 5px;
+}
+
+body.dark-mode .action-btn {
+    color: var(--secondary);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    color: var(--highlight);
+}

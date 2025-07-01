@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Attendance - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="../css/attendance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li class="active"><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="sunday_school_reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search students..." id="attendance-search">
+                <span class="notification-bell"><i class="fas fa-bell"></i><span class="notification-count">0</span></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <h1><i class="fas fa-clipboard-check"></i> Sunday School Attendance</h1>
+            <div class="page-actions">
+                <div class="date-picker">
+                    <label for="attendance-date">Date:</label>
+                    <input type="date" id="attendance-date" value="">
+                    <button id="today-btn" class="btn-secondary">Today</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="attendance-controls">
+            <div class="class-filter-nav">
+                <button class="class-filter-btn active" data-group="all">All Groups</button>
+                <button class="class-filter-btn" data-group="3-5">Preschool (3-5)</button>
+                <button class="class-filter-btn" data-group="6-8">Early Elementary (6-8)</button>
+                <button class="class-filter-btn" data-group="9-12">Elementary (9-12)</button>
+                <button class="class-filter-btn" data-group="13-15">Early Teens (13-15)</button>
+                <button class="class-filter-btn" data-group="16-18">Teens (16-18)</button>
+            </div>
+
+            <div class="attendance-actions">
+                <button class="btn-secondary" id="save-attendance-btn">
+                    <i class="fas fa-save"></i> Save Attendance
+                </button>
+                <button class="btn-primary" id="send-notifications-btn">
+                    <i class="fas fa-paper-plane"></i> Send Notifications
+                </button>
+                <button class="btn-secondary" id="bulk-action-btn">
+                    <i class="fas fa-edit"></i> Bulk Actions
+                </button>
+            </div>
+        </div>
+
+        <div class="attendance-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>Total Students</h3>
+                    <p id="total-students">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon present"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>Present</h3>
+                    <p id="present-students">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon absent"><i class="fas fa-times-circle"></i></div>
+                <div class="stat-info">
+                    <h3>Absent</h3>
+                    <p id="absent-students">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon percentage"><i class="fas fa-percentage"></i></div>
+                <div class="stat-info">
+                    <h3>Attendance Rate</h3>
+                    <p id="attendance-rate">0%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="attendance-table-container">
+            <div class="table-responsive">
+                <table class="attendance-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="select-all"></th>
+                            <th>Student Name</th>
+                            <th>Age Group</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                            <th>Time In</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-table-body">
+                        <!-- Students will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                <select id="rows-per-page">
+                    <option value="10">10 per page</option>
+                    <option value="25" selected>25 per page</option>
+                    <option value="50">50 per page</option>
+                    <option value="100">100 per page</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="attendance-history">
+            <h2><i class="fas fa-history"></i> Attendance History</h2>
+            <div class="history-controls">
+                <select id="history-period">
+                    <option value="week">This Week</option>
+                    <option value="month" selected>This Month</option>
+                    <option value="year">This Year</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+                <div class="custom-range" id="custom-range" style="display: none;">
+                    <input type="date" id="start-date">
+                    <span>to</span>
+                    <input type="date" id="end-date">
+                </div>
+                <button class="btn-secondary" id="view-history-btn">View</button>
+                <button class="btn-secondary" id="export-history-btn">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+
+            <div class="history-chart">
+                <canvas id="attendance-chart"></canvas>
+            </div>
+
+            <div class="history-table-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Attendance Rate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- History will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Detail Modal -->
+    <div class="modal" id="attendance-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="detail-modal-title">Attendance Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="student-info">
+                    <div class="detail-row">
+                        <span class="detail-label">Student Name:</span>
+                        <span class="detail-value" id="detail-student-name"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Age Group:</span>
+                        <span class="detail-value" id="detail-age-group"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Class:</span>
+                        <span class="detail-value" id="detail-class"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Teacher:</span>
+                        <span class="detail-value" id="detail-teacher"></span>
+                    </div>
+                </div>
+
+                <div class="detail-tabs">
+                    <button class="tab-btn active" data-tab="daily">Daily Records</button>
+                    <button class="tab-btn" data-tab="monthly">Monthly Summary</button>
+                    <button class="tab-btn" data-tab="notes">Notes</button>
+                </div>
+
+                <div class="tab-content active" id="daily-tab">
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Time In</th>
+                                <th>Time Out</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="daily-records-body">
+                            <!-- Daily records will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-content" id="monthly-tab">
+                    <div class="monthly-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                            <div class="stat-info">
+                                <h3>Days Present</h3>
+                                <p id="days-present">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-times"></i></div>
+                            <div class="stat-info">
+                                <h3>Days Absent</h3>
+                                <p id="days-absent">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-percent"></i></div>
+                            <div class="stat-info">
+                                <h3>Attendance Rate</h3>
+                                <p id="monthly-rate">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="monthly-chart"></canvas>
+                </div>
+
+                <div class="tab-content" id="notes-tab">
+                    <div class="notes-container">
+                        <div class="notes-list" id="notes-list">
+                            <!-- Notes will be populated by JavaScript -->
+                        </div>
+                        <div class="add-note">
+                            <textarea id="new-note" placeholder="Add a note about this student..."></textarea>
+                            <button class="btn-primary" id="save-note-btn">Save Note</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary close-modal">Close</button>
+                <button class="btn-primary" id="print-attendance-btn">
+                    <i class="fas fa-print"></i> Print Record
+                </button>
+                <button class="btn-secondary" id="email-parent-btn">
+                    <i class="fas fa-envelope"></i> Email Parent
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Actions Modal -->
+    <div class="modal" id="bulk-actions-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Bulk Attendance Actions</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="bulk-options">
+                    <h3>Mark Selected Students As:</h3>
+                    <div class="bulk-status-options">
+                        <button class="btn-secondary bulk-status-btn" data-status="present">Present</button>
+                        <button class="btn-secondary bulk-status-btn" data-status="absent">Absent</button>
+                        <button class="btn-secondary bulk-status-btn" data-status="late">Late</button>
+                    </div>
+                    <div class="bulk-time-input">
+                        <label for="bulk-time-in">Time In:</label>
+                        <input type="time" id="bulk-time-in">
+                    </div>
+                    <div class="bulk-notes">
+                        <label for="bulk-notes">Notes:</label>
+                        <textarea id="bulk-notes" placeholder="Add notes for all selected students..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary close-modal">Cancel</button>
+                <button class="btn-primary" id="apply-bulk-actions">Apply Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sunday_school.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/attendance.js"></script>
+</body>
+</html>

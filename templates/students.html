@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Students - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="../css/students.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li class="active"><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="sunday_school_reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search students..." id="student-search">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <h1><i class="fas fa-child"></i> Student Directory</h1>
+            <div class="page-actions">
+                <button class="btn-primary" id="add-student-btn">
+                    <i class="fas fa-plus"></i> Add Student
+                </button>
+            </div>
+        </div>
+
+        <div class="class-groups-nav">
+            <div class="class-group active" data-group="all">All Students</div>
+            <div class="class-group" data-group="preschool">Preschool (3-5)</div>
+            <div class="class-group" data-group="elementary">Elementary (6-8)</div>
+            <div class="class-group" data-group="preteens">Preteens (9-12)</div>
+            <div class="class-group" data-group="teens">Teens (13-18)</div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="all">All Students</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="visitor">Visitor</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort-by">Sort By:</label>
+                <select id="sort-by">
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="age-asc">Age (Low-High)</option>
+                    <option value="age-desc">Age (High-Low)</option>
+                    <option value="date-asc">Enrollment Date (Oldest)</option>
+                    <option value="date-desc">Enrollment Date (Newest)</option>
+                </select>
+            </div>
+            <button class="btn-secondary" id="apply-filters-btn">
+                <i class="fas fa-filter"></i> Apply Filters
+            </button>
+        </div>
+
+        <div class="students-table-container">
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Class</th>
+                        <th>Status</th>
+                        <th>Enrollment Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="students-table-body">
+                    <!-- Students will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="pagination-btn" id="prev-page" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="page-numbers"></div>
+            <button class="pagination-btn" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div class="modal" id="add-student-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Student</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-student-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student-first-name">First Name</label>
+                            <input type="text" id="student-first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-last-name">Last Name</label>
+                            <input type="text" id="student-last-name" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student-birthdate">Birthdate</label>
+                            <input type="date" id="student-birthdate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-gender">Gender</label>
+                            <select id="student-gender" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-class-group">Class Group</label>
+                        <select id="student-class-group" required>
+                            <option value="preschool">Preschool (3-5)</option>
+                            <option value="elementary">Elementary (6-8)</option>
+                            <option value="preteens">Preteens (9-12)</option>
+                            <option value="teens">Teens (13-18)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-status">Status</label>
+                        <select id="student-status" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="visitor">Visitor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-enrollment-date">Enrollment Date</label>
+                        <input type="date" id="student-enrollment-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-parent-name">Parent/Guardian Name</label>
+                        <input type="text" id="student-parent-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-parent-phone">Parent/Guardian Phone</label>
+                        <input type="tel" id="student-parent-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-parent-email">Parent/Guardian Email</label>
+                        <input type="email" id="student-parent-email">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-allergies">Allergies</label>
+                        <textarea id="student-allergies" rows="2" placeholder="List any allergies the student has"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-medical">Medical Conditions</label>
+                        <textarea id="student-medical" rows="2" placeholder="List any medical conditions or special needs"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-notes">Additional Notes</label>
+                        <textarea id="student-notes" rows="3" placeholder="Any other important information"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-photo">Photo</label>
+                        <input type="file" id="student-photo" accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Details Modal -->
+    <div class="modal" id="student-details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="student-details-title">Student Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="student-details-container">
+                    <div class="student-photo-container">
+                        <img id="student-details-photo" src="../img/default-student.jpg" alt="Student Photo">
+                        <div class="student-status-badge" id="student-details-status">Active</div>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-row">
+                            <span class="info-label">Name:</span>
+                            <span class="info-value" id="student-details-name"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Age:</span>
+                            <span class="info-value" id="student-details-age"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Birthdate:</span>
+                            <span class="info-value" id="student-details-birthdate"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Gender:</span>
+                            <span class="info-value" id="student-details-gender"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Class Group:</span>
+                            <span class="info-value" id="student-details-class"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Enrollment Date:</span>
+                            <span class="info-value" id="student-details-enrollment"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Parent/Guardian:</span>
+                            <span class="info-value" id="student-details-parent"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Contact Phone:</span>
+                            <span class="info-value" id="student-details-phone"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Contact Email:</span>
+                            <span class="info-value" id="student-details-email"></span>
+                        </div>
+                        <div class="info-row full-width">
+                            <span class="info-label">Allergies:</span>
+                            <span class="info-value" id="student-details-allergies"></span>
+                        </div>
+                        <div class="info-row full-width">
+                            <span class="info-label">Medical Conditions:</span>
+                            <span class="info-value" id="student-details-medical"></span>
+                        </div>
+                        <div class="info-row full-width">
+                            <span class="info-label">Additional Notes:</span>
+                            <span class="info-value" id="student-details-notes"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="edit-student-btn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn-secondary" id="print-student-btn">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button class="btn-primary" id="contact-parent-btn">
+                        <i class="fas fa-envelope"></i> Contact Parent
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sunday_school.js"></script>
+    <script src="../js/students.js"></script>
+</body>
+</html>

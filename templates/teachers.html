@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Teachers - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="../css/teachers.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li class="active"><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="sunday_school_reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search teachers..." id="teacher-search">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <h1><i class="fas fa-user-tie"></i> Teachers Directory</h1>
+            <div class="page-actions">
+                <button class="btn-primary" id="add-teacher-btn">
+                    <i class="fas fa-plus"></i> Add Teacher
+                </button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="age-group-filter">Age Group:</label>
+                <select id="age-group-filter">
+                    <option value="all">All Age Groups</option>
+                    <option value="3-5">Preschool (3-5)</option>
+                    <option value="6-8">Early Elementary (6-8)</option>
+                    <option value="9-12">Elementary (9-12)</option>
+                    <option value="13-15">Early Teens (13-15)</option>
+                    <option value="16-18">Teens (16-18)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="substitute">Substitute</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort-by">Sort By:</label>
+                <select id="sort-by">
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="experience-asc">Experience (Low-High)</option>
+                    <option value="experience-desc">Experience (High-Low)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="teachers-table-container">
+            <table class="teachers-table">
+                <thead>
+                    <tr>
+                        <th>Name <i class="fas fa-sort"></i></th>
+                        <th>Age Group <i class="fas fa-sort"></i></th>
+                        <th>Classes <i class="fas fa-sort"></i></th>
+                        <th>Experience <i class="fas fa-sort"></i></th>
+                        <th>Status <i class="fas fa-sort"></i></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="teachers-table-body">
+                    <!-- Teachers will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="pagination-btn" id="prev-page" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="page-numbers"></div>
+            <button class="pagination-btn" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Teacher Modal -->
+    <div class="modal" id="add-teacher-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Teacher</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-teacher-form">
+                    <div class="form-group">
+                        <label for="teacher-name">Full Name</label>
+                        <input type="text" id="teacher-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-email">Email</label>
+                        <input type="email" id="teacher-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-phone">Phone</label>
+                        <input type="tel" id="teacher-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-age-group">Age Group</label>
+                        <select id="teacher-age-group" required>
+                            <option value="3-5">Preschool (3-5)</option>
+                            <option value="6-8">Early Elementary (6-8)</option>
+                            <option value="9-12">Elementary (9-12)</option>
+                            <option value="13-15">Early Teens (13-15)</option>
+                            <option value="16-18">Teens (16-18)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-experience">Years of Experience</label>
+                        <input type="number" id="teacher-experience" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-status">Status</label>
+                        <select id="teacher-status" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="substitute">Substitute</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-bio">Bio/Notes</label>
+                        <textarea id="teacher-bio" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-photo">Photo</label>
+                        <input type="file" id="teacher-photo" accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Teacher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Details Modal -->
+    <div class="modal" id="teacher-details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="teacher-details-title">Teacher Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="teacher-details-container">
+                    <div class="teacher-photo-container">
+                        <img id="teacher-details-photo" src="../img/default-teacher.jpg" alt="Teacher Photo">
+                        <div class="teacher-status-badge" id="teacher-details-status">Active</div>
+                    </div>
+                    <div class="teacher-info">
+                        <div class="info-row">
+                            <span class="info-label">Name:</span>
+                            <span class="info-value" id="teacher-details-name"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value" id="teacher-details-email"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Phone:</span>
+                            <span class="info-value" id="teacher-details-phone"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Age Group:</span>
+                            <span class="info-value" id="teacher-details-age-group"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Experience:</span>
+                            <span class="info-value" id="teacher-details-experience"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Classes:</span>
+                            <span class="info-value" id="teacher-details-classes"></span>
+                        </div>
+                        <div class="info-row full-width">
+                            <span class="info-label">Bio/Notes:</span>
+                            <span class="info-value" id="teacher-details-bio"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary close-modal">Close</button>
+                    <button class="btn-primary" id="print-teacher-btn">
+                        <i class="fas fa-print"></i> Print Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sunday_school.js"></script>
+    <script src="../js/teachers.js"></script>
+</body>
+</html>

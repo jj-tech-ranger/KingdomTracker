@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Reports - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="../css/sunday_school_reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li class="active"><a href="sunday_school_reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search reports..." id="report-search">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <h1><i class="fas fa-chart-bar"></i> Sunday School Reports</h1>
+            <div class="page-actions">
+                <button class="btn-primary" id="generate-report-btn">
+                    <i class="fas fa-plus"></i> Generate Custom Report
+                </button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="report-type">Report Type:</label>
+                <select id="report-type">
+                    <option value="attendance">Attendance</option>
+                    <option value="growth">Growth</option>
+                    <option value="financial">Financial</option>
+                    <option value="event">Event Participation</option>
+                    <option value="curriculum">Curriculum Progress</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="time-period">Time Period:</label>
+                <select id="time-period">
+                    <option value="week">This Week</option>
+                    <option value="month" selected>This Month</option>
+                    <option value="quarter">This Quarter</option>
+                    <option value="year">This Year</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            <div class="filter-group custom-range" id="custom-range-group" style="display: none;">
+                <label for="custom-start-date">From:</label>
+                <input type="date" id="custom-start-date">
+                <label for="custom-end-date">To:</label>
+                <input type="date" id="custom-end-date">
+            </div>
+            <div class="filter-group">
+                <label for="age-group-filter">Age Group:</label>
+                <select id="age-group-filter">
+                    <option value="all">All Age Groups</option>
+                    <option value="3-5">Preschool (3-5)</option>
+                    <option value="6-8">Early Elementary (6-8)</option>
+                    <option value="9-12">Elementary (9-12)</option>
+                    <option value="13-15">Early Teens (13-15)</option>
+                    <option value="16-18">Teens (16-18)</option>
+                </select>
+            </div>
+            <button class="btn-secondary" id="apply-filters-btn">
+                <i class="fas fa-filter"></i> Apply Filters
+            </button>
+        </div>
+
+        <div class="reports-container">
+            <div class="report-section">
+                <h2><i class="fas fa-users"></i> Attendance Summary</h2>
+                <div class="report-content">
+                    <div class="chart-container">
+                        <canvas id="attendance-chart"></canvas>
+                    </div>
+                    <div class="report-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Average Attendance</div>
+                            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> 2% from last month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">124</div>
+                            <div class="stat-label">Total Attendees</div>
+                            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> 8 from last week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">New Students</div>
+                            <div class="stat-change neutral"><i class="fas fa-minus"></i> Same as last month</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h2><i class="fas fa-child"></i> Class Breakdown</h2>
+                <div class="report-content">
+                    <div class="chart-container">
+                        <canvas id="class-chart"></canvas>
+                    </div>
+                    <div class="report-table-container">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Teacher</th>
+                                    <th>Students</th>
+                                    <th>Avg. Attendance</th>
+                                    <th>Growth</th>
+                                </tr>
+                            </thead>
+                            <tbody id="class-report-data">
+                                <!-- Class data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h2><i class="fas fa-calendar-check"></i> Event Participation</h2>
+                <div class="report-content">
+                    <div class="chart-container">
+                        <canvas id="event-chart"></canvas>
+                    </div>
+                    <div class="event-highlights">
+                        <div class="highlight-card">
+                            <div class="highlight-icon"><i class="fas fa-users"></i></div>
+                            <div class="highlight-content">
+                                <div class="highlight-value">142</div>
+                                <div class="highlight-label">Total Participants in Christmas Pageant</div>
+                            </div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon"><i class="fas fa-star"></i></div>
+                            <div class="highlight-content">
+                                <div class="highlight-value">92%</div>
+                                <div class="highlight-label">Satisfaction Rate for Teacher Training</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-actions">
+                <button class="btn-secondary" id="print-report-btn">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+                <button class="btn-secondary" id="export-pdf-btn">
+                    <i class="fas fa-file-pdf"></i> Export as PDF
+                </button>
+                <button class="btn-secondary" id="export-csv-btn">
+                    <i class="fas fa-file-csv"></i> Export as CSV
+                </button>
+                <button class="btn-primary" id="save-report-btn">
+                    <i class="fas fa-save"></i> Save Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Report Modal -->
+    <div class="modal" id="generate-report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Generate Custom Report</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="generate-report-form">
+                    <div class="form-group">
+                        <label for="custom-report-name">Report Name</label>
+                        <input type="text" id="custom-report-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-report-type">Report Type</label>
+                        <select id="custom-report-type" required>
+                            <option value="attendance">Attendance</option>
+                            <option value="growth">Growth</option>
+                            <option value="financial">Financial</option>
+                            <option value="event">Event Participation</option>
+                            <option value="curriculum">Curriculum Progress</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-report-period">Time Period</label>
+                        <select id="custom-report-period" required>
+                            <option value="week">Last Week</option>
+                            <option value="month">Last Month</option>
+                            <option value="quarter">Last Quarter</option>
+                            <option value="year">Last Year</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="custom-report-range-group" style="display: none;">
+                        <label>Date Range</label>
+                        <div class="form-row">
+                            <input type="date" id="custom-report-start-date">
+                            <span>to</span>
+                            <input type="date" id="custom-report-end-date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-report-age-group">Age Group</label>
+                        <select id="custom-report-age-group">
+                            <option value="all">All Age Groups</option>
+                            <option value="3-5">Preschool (3-5)</option>
+                            <option value="6-8">Early Elementary (6-8)</option>
+                            <option value="9-12">Elementary (9-12)</option>
+                            <option value="13-15">Early Teens (13-15)</option>
+                            <option value="16-18">Teens (16-18)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-report-metrics">Metrics to Include</label>
+                        <div class="metrics-checkboxes">
+                            <label><input type="checkbox" name="metrics" value="attendance" checked> Attendance</label>
+                            <label><input type="checkbox" name="metrics" value="growth" checked> Growth</label>
+                            <label><input type="checkbox" name="metrics" value="demographics"> Demographics</label>
+                            <label><input type="checkbox" name="metrics" value="events"> Event Participation</label>
+                            <label><input type="checkbox" name="metrics" value="curriculum"> Curriculum Progress</label>
+                            <label><input type="checkbox" name="metrics" value="financial"> Financial</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-report-visualization">Visualization Type</label>
+                        <select id="custom-report-visualization">
+                            <option value="chart">Charts</option>
+                            <option value="table">Tables</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Generate Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../js/sunday_school.js"></script>
+    <script src="../js/sunday_school_reports.js"></script>
+</body>
+</html>

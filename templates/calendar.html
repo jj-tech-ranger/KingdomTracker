@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker Calendar - Church Management</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/sunday_school.css">
+    <link rel="stylesheet" href="../css/calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+</head>
+<body class="light-mode">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../img/Kingdom_Tracker.jpg" alt="Kingdom Tracker Logo">Kingdom Tracker
+        </div>
+        <a href="../templates/index.html" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <h2>Sunday School</h2>
+        <ul class="menu">
+            <li><a href="sunday_school.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="classes.html"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+            <li><a href="students.html"><i class="fas fa-child"></i> Students</a></li>
+            <li><a href="teachers.html"><i class="fas fa-user-tie"></i> Teachers</a></li>
+            <li><a href="curriculum.html"><i class="fas fa-book"></i> Curriculum</a></li>
+            <li><a href="attendance.html"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+            <li class="active"><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="sunday_school_reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search events..." id="event-search">
+                <span class="notification-bell"><i class="fas fa-bell"></i></span>
+            </div>
+
+            <div class="profile-section">
+                <img src="../img/CP%20Logo.jpg" alt="Profile" class="profile-pic">
+                <span class="dropdown">Alex Meian <i class="fas fa-chevron-down"></i></span>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <h1><i class="fas fa-calendar-alt"></i> Sunday School Calendar</h1>
+            <div class="page-actions">
+                <button class="btn-primary" id="add-event-btn">
+                    <i class="fas fa-plus"></i> Add Event
+                </button>
+                <div class="view-options">
+                    <button class="view-option active" data-view="month"><i class="fas fa-calendar-alt"></i> Month</button>
+                    <button class="view-option" data-view="week"><i class="fas fa-calendar-week"></i> Week</button>
+                    <button class="view-option" data-view="day"><i class="fas fa-calendar-day"></i> Day</button>
+                    <button class="view-option" data-view="list"><i class="fas fa-list"></i> List</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="event-category-filter">Category:</label>
+                <select id="event-category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="class">Classes</option>
+                    <option value="meeting">Meetings</option>
+                    <option value="event">Special Events</option>
+                    <option value="training">Training</option>
+                    <option value="holiday">Holidays</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="event-audience-filter">Audience:</label>
+                <select id="event-audience-filter">
+                    <option value="all">All Audiences</option>
+                    <option value="teachers">Teachers</option>
+                    <option value="students">Students</option>
+                    <option value="parents">Parents</option>
+                    <option value="volunteers">Volunteers</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="event-date-range">Date Range:</label>
+                <select id="event-date-range">
+                    <option value="month">This Month</option>
+                    <option value="week">This Week</option>
+                    <option value="next-month">Next Month</option>
+                    <option value="next-3-months">Next 3 Months</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            <div class="filter-group custom-range" id="custom-range-group" style="display: none;">
+                <label for="custom-start-date">From:</label>
+                <input type="date" id="custom-start-date">
+                <label for="custom-end-date">To:</label>
+                <input type="date" id="custom-end-date">
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div id="calendar"></div>
+            <div id="calendar-list-view" style="display: none;">
+                <div class="list-view-header">
+                    <h3>Upcoming Events</h3>
+                    <div class="list-view-actions">
+                        <button class="btn-secondary" id="export-events-btn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+                <div class="event-list" id="event-list">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal" id="add-event-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Event</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-event-form">
+                    <div class="form-group">
+                        <label for="event-title">Event Title</label>
+                        <input type="text" id="event-title" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-start-date">Start Date</label>
+                            <input type="date" id="event-start-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-start-time">Start Time</label>
+                            <input type="time" id="event-start-time">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-end-date">End Date</label>
+                            <input type="date" id="event-end-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-end-time">End Time</label>
+                            <input type="time" id="event-end-time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-category">Category</label>
+                        <select id="event-category" required>
+                            <option value="class">Class</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="event">Special Event</option>
+                            <option value="training">Training</option>
+                            <option value="holiday">Holiday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-audience">Audience</label>
+                        <select id="event-audience" required multiple>
+                            <option value="teachers">Teachers</option>
+                            <option value="students">Students</option>
+                            <option value="parents">Parents</option>
+                            <option value="volunteers">Volunteers</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-location">Location</label>
+                        <input type="text" id="event-location">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-description">Description</label>
+                        <textarea id="event-description" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-recurring">Recurring Event</label>
+                        <select id="event-recurring">
+                            <option value="none">Does not repeat</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="recurring-options" style="display: none;">
+                        <label>Recurrence Options</label>
+                        <div class="recurring-options-container">
+                            <div class="recurring-option">
+                                <label for="recurring-end-date">End Date:</label>
+                                <input type="date" id="recurring-end-date">
+                            </div>
+                            <div class="recurring-option">
+                                <label for="recurring-count">Or after:</label>
+                                <input type="number" id="recurring-count" min="1" placeholder="Number of occurrences">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-reminder">Reminder</label>
+                        <select id="event-reminder">
+                            <option value="none">No reminder</option>
+                            <option value="15">15 minutes before</option>
+                            <option value="30">30 minutes before</option>
+                            <option value="60">1 hour before</option>
+                            <option value="1440">1 day before</option>
+                            <option value="10080">1 week before</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal" id="event-details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="event-details-title">Event Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="event-details-container">
+                    <div class="detail-row">
+                        <span class="detail-label">Date:</span>
+                        <span class="detail-value" id="event-details-date"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Time:</span>
+                        <span class="detail-value" id="event-details-time"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Location:</span>
+                        <span class="detail-value" id="event-details-location"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Category:</span>
+                        <span class="detail-value" id="event-details-category"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Audience:</span>
+                        <span class="detail-value" id="event-details-audience"></span>
+                    </div>
+                    <div class="detail-row full-width">
+                        <span class="detail-label">Description:</span>
+                        <span class="detail-value" id="event-details-description"></span>
+                    </div>
+                    <div class="detail-row full-width" id="event-recurring-info" style="display: none;">
+                        <span class="detail-label">Recurrence:</span>
+                        <span class="detail-value" id="event-details-recurring"></span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="edit-event-btn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn-secondary" id="delete-event-btn">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <button class="btn-primary" id="add-to-calendar-btn">
+                        <i class="fas fa-calendar-plus"></i> Add to My Calendar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="../js/sunday_school.js"></script>
+    <script src="../js/calendar.js"></script>
+</body>
+</html>
