@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let filteredStudents = [...students];
     let currentGroup = 'all';
     let currentPage = 1;
-    const studentsPerPage = 5;
+    let studentsPerPage = parseInt(document.getElementById('rows-per-page').value);
     let attendanceRecords = generateAttendanceRecords(students);
 
     // DOM elements
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevPageBtn = document.getElementById('prev-page');
     const nextPageBtn = document.getElementById('next-page');
     const pageInfo = document.getElementById('page-info');
-    const rowsPerPage = document.getElementById('rows-per-page');
+    const rowsPerPageSelect = document.getElementById('rows-per-page');
     const studentSearch = document.getElementById('attendance-search');
     const classFilterBtns = document.querySelectorAll('.class-filter-btn');
     const saveAttendanceBtn = document.getElementById('save-attendance-btn');
@@ -51,11 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set today's date as default
     const today = new Date().toISOString().split('T')[0];
     attendanceDate.value = today;
+    startDate.value = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0];
+    endDate.value = today;
+
+    // Initialize Chart
+    let attendanceChart = initializeChart();
 
     // Event listeners
     prevPageBtn.addEventListener('click', goToPrevPage);
     nextPageBtn.addEventListener('click', goToNextPage);
-    rowsPerPage.addEventListener('change', updateRowsPerPage);
+    rowsPerPageSelect.addEventListener('change', updateRowsPerPage);
     studentSearch.addEventListener('input', filterStudents);
     todayBtn.addEventListener('click', setDateToToday);
     attendanceDate.addEventListener('change', loadAttendanceForDate);
@@ -118,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial render
     filterStudents();
     renderAttendanceTable();
-    loadAttendanceForDate(today);
+    loadAttendanceForDate();
     updateStats();
-    initializeChart();
+    viewAttendanceHistory(); // Load initial history data
 
     // Data generation functions
     function generateStudents() {
@@ -169,39 +174,72 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateAttendanceRecords(students) {
-        const records = [];
-        const today = new Date();
+    const records = [];
+    const today = new Date();
 
-        // Generate records for the past 30 days
-        for (let i = 0; i < 30; i++) {
-            const recordDate = new Date();
-            recordDate.setDate(today.getDate() - i);
-            const dateStr = recordDate.toISOString().split('T')[0];
+    // Generate records for the past 30 days
+    for (let i = 0; i < 30; i++) {
+        const recordDate = new Date();
+        recordDate.setDate(today.getDate() - i);
+        const dateStr = recordDate.toISOString().split('T')[0];
 
-            const dayRecords = {
-                date: dateStr,
-                attendance: {}
-            };
+        const dayRecords = {
+            date: dateStr,
+            attendance: {}
+        };
 
-            students.forEach(student => {
-                // Randomly determine attendance status (80% present, 15% absent, 5% late)
-                const rand = Math.random();
-                let status = 'present';
-                if (rand > 0.95) status = 'late';
-                else if (rand > 0.8) status = 'absent';
+        // Calculate exact numbers for each status
+        const totalStudents = students.length;
+        const presentCount = Math.floor(totalStudents * 0.8); // At least 60 present (80%)
+        const lateCount = Math.floor(totalStudents * 0.05); // 5% late (about 3-4)
+        const absentCount = totalStudents - presentCount - lateCount; // Remainder absent (about 11-12)
 
-                dayRecords.attendance[student.id] = {
-                    status,
-                    timeIn: status === 'absent' ? null : getRandomTime(9, 10), // Between 9:00 and 10:00
-                    notes: status === 'late' ? 'Arrived late' : (status === 'absent' ? 'No show' : '')
-                };
-            });
+        // Create an array to shuffle statuses
+        const statuses = [];
 
-            records.push(dayRecords);
+        // Add present statuses
+        for (let i = 0; i < presentCount; i++) {
+            statuses.push('present');
         }
 
-        return records;
+        // Add late statuses
+        for (let i = 0; i < lateCount; i++) {
+            statuses.push('late');
+        }
+
+        // Add absent statuses
+        for (let i = 0; i < absentCount; i++) {
+            statuses.push('absent');
+        }
+
+        // Shuffle the statuses to distribute randomly
+        shuffleArray(statuses);
+
+        // Assign statuses to students
+        students.forEach((student, index) => {
+            const status = statuses[index];
+
+            dayRecords.attendance[student.id] = {
+                status,
+                timeIn: status === 'absent' ? null : getRandomTime(9, 10), // Between 9:00 and 10:00
+                notes: status === 'late' ? 'Arrived late' : (status === 'absent' ? 'No show' : '')
+            };
+        });
+
+        records.push(dayRecords);
     }
+
+    return records;
+}
+
+// Helper function to shuffle an array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
     function getRandomTime(startHour, endHour) {
         const hour = Math.floor(Math.random() * (endHour - startHour)) + startHour;
@@ -285,6 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updatePaginationInfo();
         addDynamicEventListeners();
+        updateStats();
     }
 
     function addDynamicEventListeners() {
@@ -374,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateRowsPerPage() {
-        studentsPerPage = parseInt(rowsPerPage.value);
+        studentsPerPage = parseInt(rowsPerPageSelect.value);
         currentPage = 1;
         renderAttendanceTable();
     }
@@ -633,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Update chart
+        // Update chart with the filtered records
         updateChart(filteredRecords);
 
         // Add event listeners to view buttons
@@ -803,7 +842,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Chart functions
     function initializeChart() {
-        window.attendanceChart = new Chart(attendanceChartCtx, {
+        const ctx = document.getElementById('attendance-chart').getContext('2d');
+        return new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [],
@@ -813,12 +853,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     borderColor: '#4CAF50',
                     backgroundColor: 'rgba(76, 175, 80, 0.1)',
                     tension: 0.1,
-                    fill: true
+                    fill: true,
+                    borderWidth: 2,
+                    pointBackgroundColor: '#4CAF50',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -827,6 +884,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             callback: function(value) {
                                 return value + '%';
                             }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
                         }
                     }
                 }
@@ -852,9 +917,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
         });
 
-        window.attendanceChart.data.labels = labels;
-        window.attendanceChart.data.datasets[0].data = data;
-        window.attendanceChart.update();
+        // Update chart data
+        attendanceChart.data.labels = labels;
+        attendanceChart.data.datasets[0].data = data;
+        attendanceChart.update();
     }
 
     // Theme functions

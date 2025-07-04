@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Regional Leader Teachings</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/teachings.css">
+    <link rel="stylesheet" href="../css/leader_teachings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/rl_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li class="active"><a href="../templates/rl_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/rl_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/rl_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+                <li><a href="../templates/rl_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/rl_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/rl_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Regional Leader</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <div class="teachings-header">
+                <h1><i class="fas fa-book"></i> Teachings Management</h1>
+                <div class="teachings-actions">
+                    <button class="btn btn-primary" id="new-teaching">
+                        <i class="fas fa-plus"></i> New Teaching
+                    </button>
+                    <div class="teachings-filter">
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="sermons">Sunday Sermons</option>
+                            <option value="bible-study">Bible Study</option>
+                            <option value="youth">Youth Teachings</option>
+                            <option value="leadership">Leadership</option>
+                            <option value="special">Special Teachings</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="series">By Series</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="teaching-search" placeholder="Search teachings by title, speaker, or scripture...">
+            </div>
+
+            <div class="teaching-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="featured">Featured</button>
+                <button class="tab-btn" data-filter="series">Series</button>
+                <button class="tab-btn" data-filter="recent">Recently Added</button>
+                <button class="tab-btn" data-filter="drafts">Drafts</button>
+            </div>
+
+            <div class="leader-dashboard">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-bar"></i> Teaching Analytics</h3>
+                    <button class="btn btn-export" id="export-teaching-report">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Total Teachings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">1,245</div>
+                            <div class="stat-label">Total Views</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Engagement Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Active Discussions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teachings-container">
+                <div class="teachings-grid" id="teachings-grid">
+                    <!-- Teachings will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/content_empty.png" alt="No teachings">
+                    <h3>No teachings to display</h3>
+                    <p>When teachings are added, they'll appear here.</p>
+                    <button class="btn btn-primary" id="add-first-teaching">
+                        <i class="fas fa-plus"></i> Add Your First Teaching
+                    </button>
+                </div>
+            </div>
+
+            <div class="series-container">
+                <h3><i class="fas fa-layer-group"></i> Teaching Series</h3>
+                <div class="series-grid">
+                    <div class="series-card">
+                        <div class="series-thumbnail">
+                            <img src="../img/series1.png" alt="Foundations of Faith">
+                            <div class="series-count">8 teachings</div>
+                        </div>
+                        <div class="series-details">
+                            <h4>Foundations of Faith</h4>
+                            <p>Essential doctrines for every believer</p>
+                            <div class="series-actions">
+                                <button class="btn btn-small btn-edit-series">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <div class="series-thumbnail">
+                            <img src="../img/series2.png" alt="Walking in Victory">
+                            <div class="series-count">5 teachings</div>
+                        </div>
+                        <div class="series-details">
+                            <h4>Walking in Victory</h4>
+                            <p>Overcoming life's challenges</p>
+                            <div class="series-actions">
+                                <button class="btn btn-small btn-edit-series">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <div class="series-thumbnail">
+                            <img src="../img/series3.png" alt="The Book of James">
+                            <div class="series-count">6 teachings</div>
+                        </div>
+                        <div class="series-details">
+                            <h4>The Book of James</h4>
+                            <p>Practical wisdom for daily living</p>
+                            <div class="series-actions">
+                                <button class="btn btn-small btn-edit-series">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-card add-series">
+                        <div class="add-series-content">
+                            <i class="fas fa-plus"></i>
+                            <h4>Create New Series</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Teaching Detail Modal -->
+    <div class="modal" id="teaching-modal">
+        <div class="modal-content teaching-modal-content">
+            <div class="modal-header">
+                <h2>Teaching Details</h2>
+                <div class="modal-actions">
+                    <button class="btn btn-edit" id="edit-teaching">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-delete" id="delete-teaching">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <button class="modal-close" id="close-teaching">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="teaching-player">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play"></i>
+                        <p>Video Player</p>
+                    </div>
+                </div>
+
+                <div class="teaching-details">
+                    <h3 class="teaching-title">The Power of Prayer in Difficult Times</h3>
+                    <div class="teaching-meta">
+                        <span><i class="fas fa-user"></i> Pastor John</span>
+                        <span><i class="fas fa-calendar-alt"></i> June 15, 2023</span>
+                        <span><i class="fas fa-eye"></i> 1,245 views</span>
+                        <span><i class="fas fa-heart"></i> 87 likes</span>
+                        <span><i class="fas fa-comment"></i> 12 comments</span>
+                    </div>
+
+                    <div class="teaching-description">
+                        <p>In this teaching, Pastor John explores the transformative power of prayer during life's most challenging moments. Drawing from Philippians 4:6-7, he shares practical insights on maintaining a consistent prayer life even when circumstances seem overwhelming.</p>
+                        <div class="scripture-references">
+                            <h4>Scripture References:</h4>
+                            <ul>
+                                <li>Philippians 4:6-7</li>
+                                <li>James 5:13-16</li>
+                                <li>Matthew 6:5-15</li>
+                                <li>1 Thessalonians 5:16-18</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="teaching-tags">
+                        <span class="tag">Prayer</span>
+                        <span class="tag">Faith</span>
+                        <span class="tag">Spiritual Growth</span>
+                        <span class="tag">Sunday Sermon</span>
+                    </div>
+
+                    <div class="teaching-visibility">
+                        <h4>Visibility:</h4>
+                        <div class="visibility-options">
+                            <label>
+                                <input type="radio" name="visibility" value="public" checked>
+                                <span>Public (All Users)</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="visibility" value="department">
+                                <span>Department Only</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="visibility" value="private">
+                                <span>Private (Leaders Only)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="teaching-actions">
+                        <button class="btn btn-like">
+                            <i class="fas fa-heart"></i> Like
+                        </button>
+                        <button class="btn btn-share">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="btn btn-download">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-feature">
+                            <i class="fas fa-star"></i> Feature
+                        </button>
+                    </div>
+                </div>
+
+                <div class="attached-resources">
+                    <h3><i class="fas fa-paperclip"></i> Attached Resources</h3>
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-details">
+                                <h4>Prayer Guide.pdf</h4>
+                                <p>1.2 MB • PDF</p>
+                            </div>
+                            <div class="resource-actions">
+                                <button class="btn btn-small btn-download-resource">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn btn-small btn-delete-resource">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="resource-details">
+                                <h4>Discussion Questions.docx</h4>
+                                <p>850 KB • Word</p>
+                            </div>
+                            <div class="resource-actions">
+                                <button class="btn btn-small btn-download-resource">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn btn-small btn-delete-resource">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-add-resource">
+                        <i class="fas fa-plus"></i> Add Resource
+                    </button>
+                </div>
+
+                <div class="comments-section">
+                    <h3><i class="fas fa-comments"></i> Comments (12)</h3>
+
+                    <div class="comment-form">
+                        <img src="../img/user.png" alt="User" class="comment-avatar">
+                        <div class="comment-input-container">
+                            <textarea placeholder="Add a comment..." class="comment-input"></textarea>
+                            <button class="btn btn-comment">Post</button>
+                        </div>
+                    </div>
+
+                    <div class="comments-list">
+                        <div class="comment pinned-comment">
+                            <div class="comment-pin-badge">
+                                <i class="fas fa-thumbtack"></i> Pinned by Leader
+                            </div>
+                            <img src="../img/user2.png" alt="User" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">Sarah Johnson</span>
+                                    <span class="comment-time">2 days ago</span>
+                                </div>
+                                <p class="comment-text">This teaching came at just the right time for me. The point about persistent prayer really spoke to my heart.</p>
+                                <div class="comment-actions">
+                                    <button class="comment-like"><i class="fas fa-heart"></i> 5</button>
+                                    <button class="comment-reply">Reply</button>
+                                    <button class="comment-pin"><i class="fas fa-thumbtack"></i> Pin</button>
+                                    <button class="comment-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+
+                                <div class="comment-replies">
+                                    <div class="comment reply">
+                                        <img src="../img/user3.png" alt="User" class="comment-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-header">
+                                                <span class="comment-author">Michael Chen</span>
+                                                <span class="comment-time">1 day ago</span>
+                                            </div>
+                                            <p class="comment-text">I agree Sarah! That same point stood out to me too.</p>
+                                            <div class="comment-actions">
+                                                <button class="comment-like"><i class="fas fa-heart"></i> 2</button>
+                                                <button class="comment-reply">Reply</button>
+                                                <button class="comment-delete"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <img src="../img/user4.png" alt="User" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">David Wilson</span>
+                                    <span class="comment-time">3 days ago</span>
+                                </div>
+                                <p class="comment-text">Does anyone have the reference to that book Pastor John mentioned about prayer?</p>
+                                <div class="comment-actions">
+                                    <button class="comment-like"><i class="fas fa-heart"></i> 1</button>
+                                    <button class="comment-reply">Reply</button>
+                                    <button class="comment-pin"><i class="fas fa-thumbtack"></i> Pin</button>
+                                    <button class="comment-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Teaching Modal -->
+    <div class="modal" id="new-teaching-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Teaching</h2>
+                <button class="modal-close" id="close-new-teaching">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-teaching-form">
+                    <div class="form-group">
+                        <label for="teaching-title">Title</label>
+                        <input type="text" id="teaching-title" placeholder="Enter teaching title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-description">Description</label>
+                        <textarea id="teaching-description" placeholder="Enter a detailed description" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-category">Category</label>
+                        <select id="teaching-category" required>
+                            <option value="">Select a category</option>
+                            <option value="sermons">Sunday Sermons</option>
+                            <option value="bible-study">Bible Study</option>
+                            <option value="youth">Youth Teachings</option>
+                            <option value="leadership">Leadership</option>
+                            <option value="special">Special Teachings</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-speaker">Speaker</label>
+                        <input type="text" id="teaching-speaker" placeholder="Enter speaker name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-date">Date</label>
+                        <input type="date" id="teaching-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-video">Video File</label>
+                        <div class="file-upload">
+                            <input type="file" id="teaching-video" accept="video/*">
+                            <label for="teaching-video" class="file-label">
+                                <i class="fas fa-video"></i>
+                                <span>Upload video file (MP4, MOV, etc.)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-thumbnail">Thumbnail Image</label>
+                        <div class="file-upload">
+                            <input type="file" id="teaching-thumbnail" accept="image/*">
+                            <label for="teaching-thumbnail" class="file-label">
+                                <i class="fas fa-image"></i>
+                                <span>Upload thumbnail image</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-scriptures">Scripture References (one per line)</label>
+                        <textarea id="teaching-scriptures" placeholder="Enter scripture references" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teaching-tags">Tags (comma separated)</label>
+                        <input type="text" id="teaching-tags" placeholder="e.g., Prayer, Faith, Spiritual Growth">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Visibility</label>
+                        <div class="visibility-options">
+                            <label>
+                                <input type="radio" name="new-teaching-visibility" value="public" checked>
+                                <span>Public (All Users)</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="new-teaching-visibility" value="department">
+                                <span>Department Only</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="new-teaching-visibility" value="private">
+                                <span>Private (Leaders Only)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="feature-teaching">
+                            <span>Feature this teaching</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="is-series">
+                            <span>Part of a series</span>
+                        </label>
+                        <select id="teaching-series" style="display: none;">
+                            <option value="">Select series</option>
+                            <option value="foundations">Foundations of Faith</option>
+                            <option value="victory">Walking in Victory</option>
+                            <option value="james">The Book of James</option>
+                            <option value="new">Create New Series...</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="save-draft">Save Draft</button>
+                <button class="btn btn-publish" id="publish-teaching">Publish Teaching</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Resource Modal -->
+    <div class="modal" id="add-resource-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Resource to Teaching</h2>
+                <button class="modal-close" id="close-resource-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-resource-form">
+                    <div class="form-group">
+                        <label for="resource-title">Title</label>
+                        <input type="text" id="resource-title" placeholder="Enter resource title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resource-description">Description (Optional)</label>
+                        <textarea id="resource-description" placeholder="Enter a brief description" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resource-file">File</label>
+                        <div class="file-upload">
+                            <input type="file" id="resource-file" required>
+                            <label for="resource-file" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choose a file or drag it here</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="resource-downloadable" checked>
+                            <span>Allow downloads</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="submit-resource">Add Resource</button>
+                <button class="btn btn-cancel" id="cancel-resource">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/teachings.js"></script>
+    <script src="../js/leader_teachings.js"></script>
+</body>
+</html>

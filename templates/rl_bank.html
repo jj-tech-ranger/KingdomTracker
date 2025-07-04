@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Food Bank</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/leader_content.css">
+    <link rel="stylesheet" href="../css/rl_bank.css">
+    <link rel="stylesheet" href="../css/content.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/rl_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/rl_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/rl_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li class="active"><a href="../templates/rl_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+                <li><a href="../templates/rl_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/rl_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/rl_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Regional Leader</span>
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main class="crosspoint-main">
+            <div class="content-header">
+                <h1><i class="fas fa-utensils"></i> Food Bank Requests</h1>
+                <div class="content-actions">
+                    <div class="content-filter">
+                        <select id="filter-status" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="denied">Denied</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="distributed">Distributed</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="team">By Team</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bank-tabs">
+                <button class="tab-btn active" data-filter="all">All Requests</button>
+                <button class="tab-btn" data-filter="northside">Northside Team</button>
+                <button class="tab-btn" data-filter="rivervalley">River Valley</button>
+                <button class="tab-btn" data-filter="mountainview">Mountain View</button>
+                <button class="tab-btn" data-filter="lakeside">Lakeside</button>
+                <button class="tab-btn" data-filter="centralcity">Central City</button>
+            </div>
+
+            <div class="bank-container">
+                <div class="bank-grid" id="bank-grid">
+                    <!-- Food bank requests will be loaded here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/bank_empty.png" alt="No food bank requests">
+                    <h3>No food bank requests to display</h3>
+                    <p>When requests are added by teams, they will appear here.</p>
+                </div>
+            </div>
+
+            <div class="bank-analytics">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-pie"></i> Food Bank Analytics</h3>
+                    <button class="btn btn-export" id="export-bank">
+                        <i class="fas fa-file-export"></i> Export Data
+                    </button>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-requests">0</div>
+                            <div class="stat-label">Total Requests</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="approved-requests">0</div>
+                            <div class="stat-label">Approved</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="denied-requests">0</div>
+                            <div class="stat-label">Denied</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="distributed-requests">0</div>
+                            <div class="stat-label">Distributed</div>
+                        </div>
+                    </div>
+
+                    <div class="team-activity">
+                        <h4>Team Activity</h4>
+                        <div class="activity-chart">
+                            <canvas id="bank-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Food Bank Details Modal -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Food Bank Request Details</h2>
+                <button class="modal-close" id="close-details">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="bank-details">
+                    <div class="bank-meta">
+                        <span class="bank-team" id="detail-team">Northside Team</span>
+                        <span class="bank-date" id="detail-date">Today</span>
+                        <span class="bank-status" id="detail-status">Pending</span>
+                    </div>
+                    <h3 id="detail-name">Applicant Name</h3>
+                    <div class="bank-info">
+                        <div class="info-row">
+                            <span class="info-label">Family Size:</span>
+                            <span class="info-value" id="detail-family-size">4</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Request Date:</span>
+                            <span class="info-value" id="detail-request-date">2023-07-15</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Pickup Date:</span>
+                            <span class="info-value" id="detail-pickup-date">Not scheduled</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Contact:</span>
+                            <span class="info-value" id="detail-contact">(555) 123-4567</span>
+                        </div>
+                    </div>
+
+                    <div class="bank-notes">
+                        <h4>Notes</h4>
+                        <p id="detail-notes">No additional notes provided.</p>
+                    </div>
+
+                    <div class="bank-denial" id="denial-reason-container" style="display: none;">
+                        <h4>Denial Reason</h4>
+                        <p id="detail-denial-reason">Reason for denial will appear here.</p>
+                    </div>
+                </div>
+
+                <div class="bank-updates">
+                    <h4><i class="fas fa-comments"></i> Updates</h4>
+                    <div class="updates-list" id="updates-list">
+                        <!-- Updates will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/rl_bank.js"></script>
+</body>
+</html>
