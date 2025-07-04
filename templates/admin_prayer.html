@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Admin Prayer</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/admin_prayer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/admin_content.html"><i class="fas fa-box-open"></i> Content</a>
+                </li>
+                <li><a href="../templates/admin_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li class="active"><a href="../templates/admin_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/admin_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+                <li><a href="../templates/admin_lobby.html"><i class="fas fa-door-open"></i>Lobby</a></li>
+                <li><a href="../templates/admin_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/admin_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/admin_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Admin</span>
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main class="crosspoint-main">
+            <div class="content-header">
+                <h1><i class="fas fa-hands-praying"></i> Regional Prayer Requests</h1>
+                <div class="content-actions">
+                    <button class="btn btn-primary" id="add-prayer">
+                        <i class="fas fa-plus"></i> Add Request
+                    </button>
+                    <div class="content-filter">
+                        <select id="filter-status" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="active">Active</option>
+                            <option value="answered">Answered</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="region">By Region</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prayer-tabs">
+                <button class="tab-btn active" data-filter="all">All Requests</button>
+                <button class="tab-btn" data-filter="northern">Northern Territories</button>
+                <button class="tab-btn" data-filter="eastern">Eastern Provinces</button>
+                <button class="tab-btn" data-filter="southern">Southern Districts</button>
+                <button class="tab-btn" data-filter="western">Western Zones</button>
+                <button class="tab-btn" data-filter="central">Central Valleys</button>
+            </div>
+
+            <div class="prayer-container">
+                <div class="prayer-grid" id="prayer-grid">
+                    <!-- Prayer requests will be loaded here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/prayer_empty.png" alt="No prayer requests">
+                    <h3>No prayer requests to display</h3>
+                    <p>When requests are added, they will appear here.</p>
+                    <button class="btn btn-primary" id="add-empty">
+                        <i class="fas fa-plus"></i> Add First Request
+                    </button>
+                </div>
+            </div>
+
+            <div class="prayer-analytics">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-chart-pie"></i> Prayer Analytics</h3>
+                    <button class="btn btn-export" id="export-prayer">
+                        <i class="fas fa-file-export"></i> Export Data
+                    </button>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-requests">0</div>
+                            <div class="stat-label">Total Requests</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="answered-requests">0</div>
+                            <div class="stat-label">Answered</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="urgent-requests">0</div>
+                            <div class="stat-label">Urgent</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="active-requests">0</div>
+                            <div class="stat-label">Active</div>
+                        </div>
+                    </div>
+
+                    <div class="region-activity">
+                        <h4>Region Activity</h4>
+                        <div class="activity-chart">
+                            <canvas id="prayer-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add Prayer Request Modal -->
+    <div class="modal" id="prayer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Prayer Request</h2>
+                <button class="modal-close" id="close-prayer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="prayer-form">
+                    <div class="form-group">
+                        <label for="prayer-title">Title</label>
+                        <input type="text" id="prayer-title" placeholder="Brief title for the request" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prayer-region">Region</label>
+                        <select id="prayer-region" required>
+                            <option value="">Select region</option>
+                            <option value="northern">Northern Territories</option>
+                            <option value="eastern">Eastern Provinces</option>
+                            <option value="southern">Southern Districts</option>
+                            <option value="western">Western Zones</option>
+                            <option value="central">Central Valleys</option>
+                            <option value="all">All Regions</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prayer-description">Details</label>
+                        <textarea id="prayer-description" placeholder="Enter prayer request details" rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prayer-requester">Requester</label>
+                        <input type="text" id="prayer-requester" placeholder="Who is making this request?">
+                    </div>
+
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="prayer-urgent">
+                                <span>Mark as urgent</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="prayer-anonymous">
+                                <span>Keep anonymous</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="submit-prayer">
+                    <i class="fas fa-pray"></i> Submit Request
+                </button>
+                <button class="btn btn-cancel" id="cancel-prayer">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prayer Details Modal -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Prayer Request Details</h2>
+                <button class="modal-close" id="close-details">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="prayer-details">
+                    <div class="prayer-meta">
+                        <span class="prayer-region" id="detail-region">Northern Territories</span>
+                        <span class="prayer-date" id="detail-date">Today</span>
+                        <span class="prayer-status" id="detail-status">Active</span>
+                    </div>
+                    <h3 id="detail-title">Prayer Request Title</h3>
+                    <p id="detail-description">Prayer request details will appear here.</p>
+                    <div class="prayer-requester" id="detail-requester">
+                        <i class="fas fa-user"></i> Requested by: <span>John Doe</span>
+                    </div>
+                </div>
+
+                <div class="prayer-updates">
+                    <h4><i class="fas fa-comments"></i> Updates</h4>
+                    <div class="updates-list" id="updates-list">
+                        <!-- Updates will be loaded here -->
+                    </div>
+                    <form id="update-form">
+                        <textarea id="update-text" placeholder="Add an update or prayer note..." rows="3"></textarea>
+                        <div class="update-actions">
+                            <label>
+                                <input type="checkbox" id="mark-answered">
+                                <span>Mark as answered</span>
+                            </label>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Post Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin_prayer.js"></script>
+</body>
+</html>

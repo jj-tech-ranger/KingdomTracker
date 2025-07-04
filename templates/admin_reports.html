@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Admin Reports</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/admin_reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+<div class="crosspoint-container">
+    <!-- Top Navigation Bar -->
+    <nav class="crosspoint-nav">
+        <div class="nav-logo">
+            <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+            <span>CrossPoint</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="../templates/admin_content.html"><i class="fas fa-box-open"></i> Content</a>
+            </li>
+            <li><a href="../templates/admin_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+            <li><a href="../templates/admin_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+            <li><a href="../templates/admin_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+            <li><a href="../templates/admin_lobby.html"><i class="fas fa-door-open"></i>Lobby</a></li>
+            <li class="active"><a href="../templates/admin_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+            <li><a href="../templates/admin_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li><a href="../templates/admin_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        </ul>
+
+        <div class="nav-user">
+            <div class="user-dropdown">
+                <img src="../img/user.png" alt="User" class="user-avatar">
+                <span>Admin User</span>
+                <i class="fas fa-chevron-down"></i>
+
+                <div class="dropdown-menu">
+                    <a href="../templates/index.html" class="dropdown-item">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                    <a href="#" class="dropdown-item logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="crosspoint-main">
+        <div class="reports-header">
+            <h1><i class="fas fa-chart-bar"></i> System Analytics & Reports</h1>
+            <div class="reports-actions">
+                <button class="btn btn-generate" id="generate-report">
+                    <i class="fas fa-plus"></i> Generate Report
+                </button>
+                <button class="btn btn-schedule" id="schedule-report">
+                    <i class="fas fa-calendar-plus"></i> Schedule Report
+                </button>
+                <button class="btn btn-export" id="export-data">
+                    <i class="fas fa-file-export"></i> Export Data
+                </button>
+                <div class="reports-filter">
+                    <select id="filter-region" class="filter-select">
+                        <option value="all">All Regions</option>
+                        <option value="north">Northern Territories</option>
+                        <option value="east">Eastern Provinces</option>
+                        <option value="south">Southern Districts</option>
+                        <option value="west">Western Zones</option>
+                        <option value="central">Central Valleys</option>
+                    </select>
+                    <select id="sort-by" class="filter-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="type">Report Type</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="report-search" placeholder="Search reports...">
+        </div>
+
+        <div class="reports-tabs">
+            <button class="tab-btn active" data-tab="analytics">Analytics Dashboard</button>
+            <button class="tab-btn" data-tab="saved">Saved Reports</button>
+            <button class="tab-btn" data-tab="scheduled">Scheduled Reports</button>
+            <button class="tab-btn" data-tab="exports">Data Exports</button>
+            <button class="tab-btn" data-tab="audit">Audit Logs</button>
+        </div>
+
+        <div class="reports-container">
+            <!-- Analytics Dashboard Tab -->
+            <div class="tab-content active" id="analytics-tab">
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">1,284</div>
+                            <div class="stat-label">Total Members</div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 5.2%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Engagement Rate</div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 3%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">$24,580</div>
+                            <div class="stat-label">Monthly Giving</div>
+                            <div class="stat-trend down"><i class="fas fa-arrow-down"></i> 2.5%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Active Teams</div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 3</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">System Uptime</div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 1%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">New Members</div>
+                            <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 6</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h4>System Usage Overview</h4>
+                                <select class="chart-period">
+                                    <option value="week">Last 7 Days</option>
+                                    <option value="month">Last 30 Days</option>
+                                    <option value="quarter">Last 90 Days</option>
+                                    <option value="year">Last Year</option>
+                                </select>
+                            </div>
+                            <canvas id="usage-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h4>Member Distribution</h4>
+                                <select class="chart-region">
+                                    <option value="all">All Regions</option>
+                                    <option value="north">Northern</option>
+                                    <option value="east">Eastern</option>
+                                    <option value="south">Southern</option>
+                                    <option value="west">Western</option>
+                                    <option value="central">Central</option>
+                                </select>
+                            </div>
+                            <canvas id="members-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h4>Financial Overview</h4>
+                                <select class="chart-period">
+                                    <option value="month">This Month</option>
+                                    <option value="quarter">This Quarter</option>
+                                    <option value="year">This Year</option>
+                                </select>
+                            </div>
+                            <canvas id="finance-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h4>Content Categories</h4>
+                                <select class="chart-team">
+                                    <option value="all">All Teams</option>
+                                    <option value="youth">Youth Group</option>
+                                    <option value="worship">Worship Team</option>
+                                </select>
+                            </div>
+                            <canvas id="category-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="data-grid">
+                        <div class="data-card">
+                            <div class="data-header">
+                                <h4>Recent System Activity</h4>
+                                <button class="btn btn-export">Export</button>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-user-plus"></i></div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">5 new member registrations</div>
+                                        <div class="activity-meta">Today</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-money-bill-wave"></i></div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">12 donations received</div>
+                                        <div class="activity-meta">2 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-file-upload"></i></div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">3 new content uploads</div>
+                                        <div class="activity-meta">4 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">System maintenance scheduled</div>
+                                        <div class="activity-meta">Tomorrow at 2:00 AM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="data-card">
+                            <div class="data-header">
+                                <h4>Pending Admin Actions</h4>
+                                <button class="btn btn-view-all">View All</button>
+                            </div>
+                            <div class="actions-list">
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fas fa-user-shield"></i></div>
+                                    <div class="action-details">
+                                        <div class="action-title">3 role change requests</div>
+                                        <button class="btn btn-small">Review</button>
+                                    </div>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                                    <div class="action-details">
+                                        <div class="action-title">5 financial approvals</div>
+                                        <button class="btn btn-small">Review</button>
+                                    </div>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fas fa-server"></i></div>
+                                    <div class="action-details">
+                                        <div class="action-title">System backup required</div>
+                                        <button class="btn btn-small">Run Now</button>
+                                    </div>
+                                </div>
+                                <div class="action-item">
+                                    <div class="action-icon"><i class="fas fa-envelope"></i></div>
+                                    <div class="action-details">
+                                        <div class="action-title">2 report requests</div>
+                                        <button class="btn btn-small">Respond</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Reports Tab -->
+            <div class="tab-content" id="saved-tab">
+                <div class="reports-list" id="saved-reports-list">
+                    <!-- Saved reports will be dynamically inserted here -->
+                </div>
+                <div class="empty-state" id="saved-empty-state">
+                    <img src="../img/reports_empty.png" alt="No saved reports">
+                    <h3>No saved reports found</h3>
+                    <p>When you save report templates, they'll appear here.</p>
+                    <button class="btn btn-generate" id="create-first-report">
+                        <i class="fas fa-plus"></i> Create Your First Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scheduled Reports Tab -->
+            <div class="tab-content" id="scheduled-tab">
+                <div class="reports-list" id="scheduled-reports-list">
+                    <!-- Scheduled reports will be dynamically inserted here -->
+                </div>
+                <div class="empty-state" id="scheduled-empty-state">
+                    <img src="../img/schedule_empty.png" alt="No scheduled reports">
+                    <h3>No scheduled reports</h3>
+                    <p>Set up automated report generation to have them appear here.</p>
+                    <button class="btn btn-schedule" id="schedule-first-report">
+                        <i class="fas fa-calendar-plus"></i> Schedule Your First Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data Exports Tab -->
+            <div class="tab-content" id="exports-tab">
+                <div class="exports-list" id="exports-list">
+                    <!-- Data exports will be dynamically inserted here -->
+                </div>
+                <div class="empty-state" id="exports-empty-state">
+                    <img src="../img/data_empty.png" alt="No data exports">
+                    <h3>No data exports yet</h3>
+                    <p>When you export data, your files will appear here.</p>
+                    <button class="btn btn-export" id="create-first-export">
+                        <i class="fas fa-file-export"></i> Export Data Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Audit Logs Tab -->
+            <div class="tab-content" id="audit-tab">
+                <div class="audit-filters">
+                    <div class="filter-group">
+                        <label for="audit-action">Action Type:</label>
+                        <select id="audit-action" class="filter-select">
+                            <option value="all">All Actions</option>
+                            <option value="login">Logins</option>
+                            <option value="user">User Changes</option>
+                            <option value="content">Content Changes</option>
+                            <option value="financial">Financial Changes</option>
+                            <option value="settings">System Settings</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="audit-user">User:</label>
+                        <select id="audit-user" class="filter-select">
+                            <option value="all">All Users</option>
+                            <option value="admin">Admin User</option>
+                            <option value="jwilliams">Jonathan Williams</option>
+                            <option value="sjohnson">Sarah Johnson</option>
+                            <option value="dthompson">David Thompson</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="audit-date">Date Range:</label>
+                        <input type="date" id="audit-start-date" class="filter-select">
+                        <span>to</span>
+                        <input type="date" id="audit-end-date" class="filter-select">
+                    </div>
+                    <button class="btn btn-filter" id="apply-audit-filters">Apply Filters</button>
+                    <button class="btn btn-export" id="export-audit">Export Logs</button>
+                </div>
+
+                <div class="audit-log-container">
+                    <table class="audit-log-table">
+                        <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Details</th>
+                            <th>IP Address</th>
+                        </tr>
+                        </thead>
+                        <tbody id="audit-log-entries">
+                        <!-- Audit logs will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-controls">
+                    <button class="btn btn-prev" id="audit-prev"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <span id="audit-page-info">Page 1 of 5</span>
+                    <button class="btn btn-next" id="audit-next">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="crosspoint-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+</div>
+
+<!-- Generate Report Modal -->
+<div class="modal" id="generate-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Generate New Report</h2>
+            <button class="modal-close" id="close-generate">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="generate-form">
+                <div class="form-group">
+                    <label for="report-name">Report Name</label>
+                    <input type="text" id="report-name" placeholder="Enter report name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-type">Report Type</label>
+                    <select id="report-type" required>
+                        <option value="">Select report type</option>
+                        <option value="membership">Membership Report</option>
+                        <option value="engagement">Engagement Report</option>
+                        <option value="financial">Financial Report</option>
+                        <option value="content">Content Performance</option>
+                        <option value="system">System Usage</option>
+                        <option value="audit">Audit Log Summary</option>
+                        <option value="custom">Custom Report</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-region">Region</label>
+                    <select id="report-region">
+                        <option value="all">All Regions</option>
+                        <option value="north">Northern Territories</option>
+                        <option value="east">Eastern Provinces</option>
+                        <option value="south">Southern Districts</option>
+                        <option value="west">Western Zones</option>
+                        <option value="central">Central Valleys</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-period">Date Range</label>
+                    <div class="date-range">
+                        <input type="date" id="report-start-date" placeholder="Start date">
+                        <span>to</span>
+                        <input type="date" id="report-end-date" placeholder="End date">
+                    </div>
+                </div>
+
+                <div class="form-group" id="custom-fields" style="display: none;">
+                    <label>Custom Data Points</label>
+                    <div class="checkbox-grid">
+                        <label><input type="checkbox" name="data-point" value="members"> Member Data</label>
+                        <label><input type="checkbox" name="data-point" value="teams"> Team Data</label>
+                        <label><input type="checkbox" name="data-point" value="content"> Content Metrics</label>
+                        <label><input type="checkbox" name="data-point" value="financial"> Financial Data</label>
+                        <label><input type="checkbox" name="data-point" value="system"> System Metrics</label>
+                        <label><input type="checkbox" name="data-point" value="security"> Security Events</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-format">Output Format</label>
+                    <select id="report-format">
+                        <option value="web">Web View</option>
+                        <option value="pdf">PDF</option>
+                        <option value="csv">CSV</option>
+                        <option value="excel">Excel</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="save-template">
+                        <span>Save as template for future use</span>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-save" id="submit-generate">Generate Report</button>
+            <button class="btn btn-cancel" id="cancel-generate">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Report Modal -->
+<div class="modal" id="schedule-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Schedule Automated Report</h2>
+            <button class="modal-close" id="close-schedule">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="schedule-form">
+                <div class="form-group">
+                    <label for="schedule-report">Select Report</label>
+                    <select id="schedule-report" required>
+                        <option value="">Choose report to schedule</option>
+                        <option value="weekly-engagement">Weekly Engagement</option>
+                        <option value="monthly-members">Monthly Member Activity</option>
+                        <option value="quarterly-financial">Quarterly Financial</option>
+                        <option value="system-usage">System Usage</option>
+                        <option value="audit-summary">Audit Log Summary</option>
+                        <option value="custom">Custom Report</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule-frequency">Frequency</label>
+                    <select id="schedule-frequency" required>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="schedule-day-group" style="display: none;">
+                    <label for="schedule-day">Day of Week</label>
+                    <select id="schedule-day">
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="schedule-date-group" style="display: none;">
+                    <label for="schedule-date">Day of Month</label>
+                    <input type="number" id="schedule-date" min="1" max="31" value="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule-time">Time</label>
+                    <select id="schedule-time">
+                        <option value="08:00">8:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="17:00">5:00 PM</option>
+                        <option value="custom">Custom Time</option>
+                    </select>
+                    <input type="time" id="custom-time" style="display: none;">
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule-recipients">Recipients</label>
+                    <select id="schedule-recipients" multiple>
+                        <option value="me">Me (Admin User)</option>
+                        <option value="leadership">Leadership Team</option>
+                        <option value="finance">Finance Team</option>
+                        <option value="it">IT Department</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule-format">Output Format</label>
+                    <select id="schedule-format">
+                        <option value="pdf">PDF</option>
+                        <option value="csv">CSV</option>
+                        <option value="excel">Excel</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-save" id="submit-schedule">Schedule Report</button>
+            <button class="btn btn-cancel" id="cancel-schedule">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Export Data Modal -->
+<div class="modal" id="export-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Export System Data</h2>
+            <button class="modal-close" id="close-export">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="export-form">
+                <div class="form-group">
+                    <label for="export-type">Data Type</label>
+                    <select id="export-type" required>
+                        <option value="">Select data to export</option>
+                        <option value="members">Member Data</option>
+                        <option value="teams">Team Data</option>
+                        <option value="content">Content Library</option>
+                        <option value="financial">Financial Records</option>
+                        <option value="system">System Logs</option>
+                        <option value="audit">Audit Logs</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="export-region">Region</label>
+                    <select id="export-region">
+                        <option value="all">All Regions</option>
+                        <option value="north">Northern Territories</option>
+                        <option value="east">Eastern Provinces</option>
+                        <option value="south">Southern Districts</option>
+                        <option value="west">Western Zones</option>
+                        <option value="central">Central Valleys</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="export-period">Date Range</label>
+                    <div class="date-range">
+                        <input type="date" id="export-start-date" placeholder="Start date">
+                        <span>to</span>
+                        <input type="date" id="export-end-date" placeholder="End date">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="export-format">Output Format</label>
+                    <select id="export-format">
+                        <option value="csv">CSV</option>
+                        <option value="excel">Excel</option>
+                        <option value="json">JSON</option>
+                        <option value="sql">SQL</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="include-sensitive">
+                        <span>Include sensitive data (admin only)</span>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-save" id="submit-export">Export Data</button>
+            <button class="btn btn-cancel" id="cancel-export">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="../js/crosspoint.js"></script>
+<script src="../js/admin_reports.js"></script>
+</body>
+</html>

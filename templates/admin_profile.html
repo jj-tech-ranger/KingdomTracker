@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Admin Profile</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/admin_profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+<div class="crosspoint-container">
+    <!-- Top Navigation Bar -->
+    <nav class="crosspoint-nav">
+        <div class="nav-logo">
+            <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+            <span>CrossPoint Admin</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="../templates/admin_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+            <li><a href="../templates/admin_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+            <li><a href="../templates/admin_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+            <li><a href="../templates/food_bank.html"><i class="fas fa-bank"></i>Bank</a></li>
+            <li><a href="../templates/admin_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+            <li><a href="../templates/admin_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="active"><a href="../templates/admin_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        </ul>
+
+        <div class="nav-user">
+            <div class="user-dropdown">
+                <img src="../img/user.png" alt="User" class="user-avatar">
+                <span>Admin User</span>
+                <i class="fas fa-chevron-down"></i>
+
+                <div class="dropdown-menu">
+                    <a href="../templates/index.html" class="dropdown-item">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                    <a href="#" class="dropdown-item logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="crosspoint-main">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="../img/user.png" alt="Profile Picture" id="profile-picture">
+                <button class="btn-change-avatar" id="change-avatar">
+                    <i class="fas fa-camera"></i> Change
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1>Admin User</h1>
+                <p class="profile-role">System Administrator</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Regions managed: <strong>5</strong></span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <span>Leaders under management: <strong>5</strong></span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Total members: <strong>1970</strong></span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports generated: <strong>32</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-nav">
+            <button class="profile-nav-btn active" data-section="account">Account Settings</button>
+            <button class="profile-nav-btn" data-section="region-management">Region Management</button>
+            <button class="profile-nav-btn" data-section="leader-management">Leader Management</button>
+            <button class="profile-nav-btn" data-section="permissions">Permissions & Roles</button>
+            <button class="profile-nav-btn" data-section="communication">Communication</button>
+            <button class="profile-nav-btn" data-section="password">Password Settings</button>
+            <button class="profile-nav-btn" data-section="danger">Danger Zone</button>
+        </div>
+
+        <!-- Account Settings Section -->
+        <div class="profile-section active" id="account-section">
+            <h2><i class="fas fa-user-cog"></i> Account Settings</h2>
+            <form id="account-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first_name" value="Admin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last_name" value="User" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="admin@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="+254712345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-level">Admin Level</label>
+                        <select id="admin-level" name="admin_level" required>
+                            <option value="super" selected>Super Admin</option>
+                            <option value="regional">Regional Admin</option>
+                            <option value="content">Content Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailed-location">Detailed Location</label>
+                        <input type="text" id="detailed-location" name="detailed_location" value="Headquarters"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="access-level">Access Level</label>
+                        <select id="access-level" name="access_level" required>
+                            <option value="full" selected>Full Access</option>
+                            <option value="limited">Limited Access</option>
+                            <option value="readonly">Read Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" value="1980-01-15" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Update Account
+                </button>
+            </form>
+        </div>
+
+        <!-- Region Management Section -->
+        <div class="profile-section" id="region-management-section">
+            <h2><i class="fas fa-globe-africa"></i> Region Management</h2>
+
+            <div class="regions-list" id="regions-list">
+                <!-- Regions will be populated by JavaScript -->
+            </div>
+
+            <button type="button" class="btn btn-primary" id="add-region-btn">
+                <i class="fas fa-plus"></i> Add New Region
+            </button>
+
+            <div class="section-divider"></div>
+
+            <h3><i class="fas fa-chart-bar"></i> Region Statistics</h3>
+            <div class="region-stats-grid">
+                <div class="region-stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Total Regions</div>
+                </div>
+                <div class="region-stat-card">
+                    <div class="stat-value">1,970</div>
+                    <div class="stat-label">Total Members</div>
+                </div>
+                <div class="region-stat-card">
+                    <div class="stat-value">76</div>
+                    <div class="stat-label">Total Teams</div>
+                </div>
+                <div class="region-stat-card">
+                    <div class="stat-value">83%</div>
+                    <div class="stat-label">Avg Engagement</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leader Management Section -->
+        <div class="profile-section" id="leader-management-section">
+            <h2><i class="fas fa-user-shield"></i> Leader Management</h2>
+
+            <div class="leaders-list" id="leaders-list">
+                <!-- Leaders will be populated by JavaScript -->
+            </div>
+
+            <button type="button" class="btn btn-primary" id="add-leader-btn">
+                <i class="fas fa-user-plus"></i> Add New Leader
+            </button>
+
+            <div class="section-divider"></div>
+
+            <h3><i class="fas fa-exchange-alt"></i> Leader Assignments</h3>
+            <div class="form-group">
+                <label for="leader-select">Select Leader</label>
+                <select id="leader-select" class="form-control">
+                    <option value="">-- Select a leader --</option>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="region-select">Assign to Region</label>
+                <select id="region-select" class="form-control">
+                    <option value="">-- Select a region --</option>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <button type="button" class="btn btn-secondary" id="assign-leader-btn">
+                <i class="fas fa-link"></i> Assign Leader
+            </button>
+        </div>
+
+        <!-- Permissions & Roles Section -->
+        <div class="profile-section" id="permissions-section">
+            <h2><i class="fas fa-user-shield"></i> Permissions & Roles</h2>
+
+            <div class="permissions-card">
+                <h3><i class="fas fa-key"></i> My Permissions</h3>
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Can manage all regions and leaders</span>
+                    </div>
+                    <div class="permission-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Can assign leaders to regions</span>
+                    </div>
+                    <div class="permission-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Can view all system reports</span>
+                    </div>
+                    <div class="permission-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Can manage all content and teachings</span>
+                    </div>
+                    <div class="permission-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Can create and delete user accounts</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3><i class="fas fa-users-cog"></i> Manage User Roles</h3>
+            <div class="form-group">
+                <label for="user-select">Select User</label>
+                <select id="user-select" class="form-control">
+                    <option value="">-- Select a user --</option>
+                    <option value="1">John Doe (Leader)</option>
+                    <option value="2">Mary Smith (Content Manager)</option>
+                    <option value="3">Peter Johnson (Prayer Leader)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="user-role-select">Select Role</label>
+                <select id="user-role-select" class="form-control">
+                    <option value="member">Regular Member</option>
+                    <option value="leader">Leader</option>
+                    <option value="admin">Admin</option>
+                    <option value="content-manager">Content Manager</option>
+                </select>
+            </div>
+
+            <div class="permissions-checklist">
+                <h4>Specific Permissions:</h4>
+                <div class="form-check">
+                    <input type="checkbox" id="perm-regions" class="form-check-input" checked>
+                    <label for="perm-regions" class="form-check-label">Can manage regions</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="perm-leaders" class="form-check-input" checked>
+                    <label for="perm-leaders" class="form-check-label">Can manage leaders</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="perm-content" class="form-check-input" checked>
+                    <label for="perm-content" class="form-check-label">Can manage all content</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="perm-reports" class="form-check-input" checked>
+                    <label for="perm-reports" class="form-check-label">Can view all reports</label>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="save-permissions-btn">
+                <i class="fas fa-save"></i> Save Permissions
+            </button>
+        </div>
+
+        <!-- Communication Preferences Section -->
+        <div class="profile-section" id="communication-section">
+            <h2><i class="fas fa-comment-alt"></i> Communication Preferences</h2>
+
+            <div class="notification-settings">
+                <h3><i class="fas fa-bell"></i> Notification Preferences</h3>
+                <div class="form-check">
+                    <input type="checkbox" id="notify-region" class="form-check-input" checked>
+                    <label for="notify-region" class="form-check-label">Notify me of region activity</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="notify-leader" class="form-check-input" checked>
+                    <label for="notify-leader" class="form-check-label">Notify me of leader changes</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="notify-system" class="form-check-input" checked>
+                    <label for="notify-system" class="form-check-label">Notify me of system alerts</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="notify-weekly" class="form-check-input" checked>
+                    <label for="notify-weekly" class="form-check-label">Receive weekly summary emails</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="notify-urgent" class="form-check-input" checked>
+                    <label for="notify-urgent" class="form-check-label">Receive urgent notifications via SMS</label>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3><i class="fas fa-paper-plane"></i> Preferred Communication Method</h3>
+            <div class="form-group">
+                <div class="communication-methods">
+                    <div class="method-option">
+                        <input type="radio" id="method-email" name="communication-method" value="email" checked>
+                        <label for="method-email">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                    </div>
+                    <div class="method-option">
+                        <input type="radio" id="method-inapp" name="communication-method" value="inapp">
+                        <label for="method-inapp">
+                            <i class="fas fa-mobile-alt"></i> In-App
+                        </label>
+                    </div>
+                    <div class="method-option">
+                        <input type="radio" id="method-sms" name="communication-method" value="sms">
+                        <label for="method-sms">
+                            <i class="fas fa-sms"></i> SMS
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="save-communication-btn">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+        </div>
+
+        <!-- Password Settings Section -->
+        <div class="profile-section" id="password-section">
+            <h2><i class="fas fa-lock"></i> Password Settings</h2>
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="current-email">Email</label>
+                    <input type="email" id="current-email" name="email" value="admin@example.com" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <div class="password-input-container">
+                        <input type="password" id="new-password" name="new_password" required>
+                        <i class="fas fa-eye-slash toggle-password" data-target="new-password"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-meter">
+                            <div class="strength-bar" id="strength-bar"></div>
+                        </div>
+                        <span class="strength-text" id="strength-text">Weak</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-new-password">Confirm New Password</label>
+                    <div class="password-input-container">
+                        <input type="password" id="confirm-new-password" name="confirm_new_password" required>
+                        <i class="fas fa-eye-slash toggle-password" data-target="confirm-new-password"></i>
+                    </div>
+                    <div class="password-match" id="password-match"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-key"></i> Reset Password
+                </button>
+            </form>
+        </div>
+
+        <!-- Danger Zone Section -->
+        <div class="profile-section" id="danger-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Danger Zone</h2>
+            <div class="danger-item">
+                <div class="danger-info">
+                    <h3>Deactivate Admin Account</h3>
+                    <p>This will remove your admin permissions but keep your account active. You'll need super admin
+                        approval to regain admin status.</p>
+                </div>
+                <button class="btn btn-danger" id="deactivate-admin-btn">
+                    <i class="fas fa-user-minus"></i> Deactivate Admin
+                </button>
+            </div>
+            <div class="danger-item">
+                <div class="danger-info">
+                    <h3>Delete Account</h3>
+                    <p>This will permanently delete your account and all associated data. This action cannot be
+                        undone.</p>
+                </div>
+                <button class="btn btn-danger" id="delete-account-btn">
+                    <i class="fas fa-trash"></i> Delete Account
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="crosspoint-footer">
+        <div class="footer-content">
+            <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+            <span class="footer-text">Powered by Elyashib</span>
+        </div>
+    </footer>
+</div>
+
+<!-- Region Management Modal -->
+<div class="modal" id="region-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="region-modal-title">Add New Region</h2>
+            <button class="modal-close" id="close-region-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="region-name">Region Name</label>
+                <input type="text" id="region-name">
+            </div>
+            <div class="form-group">
+                <label for="region-description">Description</label>
+                <textarea id="region-description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="region-leader">Assign Leader</label>
+                <select id="region-leader">
+                    <option value="">-- Select a leader --</option>
+                    <option value="1">Pastor Jonathan Williams</option>
+                    <option value="2">Elder Sarah Johnson</option>
+                    <option value="3">Minister David Thompson</option>
+                    <option value="4">Prophetess Mary Anderson</option>
+                    <option value="5">Bishop Thomas Clark</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="region-photo">Region Photo</label>
+                <input type="file" id="region-photo" accept="image/*">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="save-region-btn">
+                <i class="fas fa-save"></i> Save Region
+            </button>
+            <button type="button" class="btn btn-cancel" id="cancel-region-btn">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Leader Management Modal -->
+<div class="modal" id="leader-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="leader-modal-title">Add New Leader</h2>
+            <button class="modal-close" id="close-leader-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="leader-first-name">First Name</label>
+                <input type="text" id="leader-first-name">
+            </div>
+            <div class="form-group">
+                <label for="leader-last-name">Last Name</label>
+                <input type="text" id="leader-last-name">
+            </div>
+            <div class="form-group">
+                <label for="leader-email">Email</label>
+                <input type="email" id="leader-email">
+            </div>
+            <div class="form-group">
+                <label for="leader-phone">Phone Number</label>
+                <input type="tel" id="leader-phone">
+            </div>
+            <div class="form-group">
+                <label for="leader-title">Title</label>
+                <input type="text" id="leader-title" placeholder="Pastor, Elder, etc.">
+            </div>
+            <div class="form-group">
+                <label for="leader-region">Assign to Region</label>
+                <select id="leader-region">
+                    <option value="">-- Select a region --</option>
+                    <option value="1">Northern Territories</option>
+                    <option value="2">Eastern Provinces</option>
+                    <option value="3">Southern Districts</option>
+                    <option value="4">Western Zones</option>
+                    <option value="5">Central Valleys</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="save-leader-btn">
+                <i class="fas fa-save"></i> Save Leader
+            </button>
+            <button type="button" class="btn btn-cancel" id="cancel-leader-btn">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal" id="confirm-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="confirm-modal-title">Confirm Action</h2>
+            <button class="modal-close" id="close-confirm-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="confirm-modal-message">Are you sure you want to perform this action?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="confirm-action-btn">
+                <i class="fas fa-check"></i> Confirm
+            </button>
+            <button type="button" class="btn btn-cancel" id="cancel-action-btn">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/crosspoint.js"></script>
+<script src="../js/admin_profile.js"></script>
+</body>
+</html>

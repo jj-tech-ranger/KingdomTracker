@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Admin Lobby</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/lobby.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../templates/admin_content.html"><i class="fas fa-box-open"></i> Content</a></li>
+                <li><a href="../templates/admin_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/admin_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/admin_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+                <li class="active"><a href="../templates/admin_lobby.html"><i class="fas fa-door-open"></i> Lobby</a></li>
+                <li><a href="../templates/admin_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/admin_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/admin_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Administrator</span>
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main class="crosspoint-main">
+            <div class="lobby-header">
+                <h1><i class="fas fa-door-open"></i> Admin Lobby Dashboard</h1>
+                <div class="lobby-actions">
+                    <button class="btn btn-primary" id="quick-assign">
+                        <i class="fas fa-user-plus"></i> Quick Assign
+                    </button>
+                    <button class="btn btn-secondary" id="batch-message">
+                        <i class="fas fa-envelope"></i> Batch Message
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="lobby-filters">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="lobby-search" placeholder="Search members...">
+                </div>
+                <select id="filter-region" class="filter-select">
+                    <option value="all">All Regions</option>
+                </select>
+                <select id="filter-status" class="filter-select">
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="unassigned">Unassigned</option>
+                </select>
+                <button class="btn btn-clear" id="clear-filters">
+                    <i class="fas fa-times"></i> Clear
+                </button>
+            </div>
+
+            <!-- Members Table -->
+            <div class="lobby-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Members</h2>
+                    <div class="section-actions">
+                        <span id="member-count">0 members</span>
+                        <div class="pagination">
+                            <button class="btn btn-sm" id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span id="current-page">1</span>
+                            <button class="btn btn-sm" id="next-page"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="members-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="select-all-members"></th>
+                                <th>Member</th>
+                                <th>Team</th>
+                                <th>Region</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="members-table-body">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Unassigned Members -->
+            <div class="lobby-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-clock"></i> Unassigned Members</h2>
+                    <button class="btn btn-sm btn-primary" id="assign-selected">
+                        <i class="fas fa-user-plus"></i> Assign Selected
+                    </button>
+                </div>
+                <div class="unassigned-members" id="unassigned-members">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+
+            <!-- Regions Section -->
+            <div class="lobby-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-globe-americas"></i> Regions</h2>
+                    <button class="btn btn-export" id="export-regions">
+                        <i class="fas fa-file-export"></i> Export Data
+                    </button>
+                </div>
+                <div class="regions-grid" id="regions-grid">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Message Leader Modal -->
+    <div class="modal" id="message-leader-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Message Regional Leader</h2>
+                <button class="modal-close" id="close-message-leader">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="message-leader-form">
+                    <div class="form-group">
+                        <label>To: <span id="message-leader-recipient">Loading...</span></label>
+                        <input type="hidden" id="message-leader-id">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-leader-subject">Subject</label>
+                        <input type="text" id="message-leader-subject" placeholder="Enter message subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-leader-content">Message</label>
+                        <textarea id="message-leader-content" rows="6" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="message-leader-copy-teams">
+                            <span>Send copy to all team leaders in this region</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-send" id="send-message-leader">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <button class="btn btn-cancel" id="cancel-message-leader">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Teams Modal -->
+    <div class="modal" id="view-teams-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Teams in <span id="view-teams-region-name">Region</span></h2>
+                <button class="modal-close" id="close-view-teams">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="teams-list" id="teams-list">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="close-view-teams-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Assign Modal -->
+    <div class="modal" id="quick-assign-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Quick Assign Wizard</h2>
+                <button class="modal-close" id="close-quick-assign">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="assign-steps">
+                    <div class="step active" data-step="1">
+                        <h4>Step 1: Select Members</h4>
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="assign-search" placeholder="Search members...">
+                        </div>
+                        <div class="assign-members-list" id="assign-members-list"></div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Step 2: Choose Destination</h4>
+                        <div class="assign-options">
+                            <div class="assign-option active" data-type="existing">
+                                <i class="fas fa-user-friends"></i>
+                                <span>Existing Team</span>
+                            </div>
+                            <div class="assign-option" data-type="new">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>New Team</span>
+                            </div>
+                        </div>
+                        <div class="assign-destination" id="existing-team-select">
+                            <select class="filter-select" id="assign-team-select"></select>
+                        </div>
+                        <div class="assign-destination" id="new-team-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="new-team-name">Team Name</label>
+                                <input type="text" id="new-team-name" placeholder="Enter team name">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-team-region">Region</label>
+                                <select id="new-team-region" class="filter-select"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <h4>Step 3: Review and Confirm</h4>
+                        <div class="assign-summary">
+                            <div class="summary-section">
+                                <h5>Members to Assign</h5>
+                                <div class="summary-members" id="summary-members"></div>
+                            </div>
+                            <div class="summary-section">
+                                <h5>Destination Team</h5>
+                                <div class="summary-team" id="summary-team"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="prev-step" disabled>Previous</button>
+                <button class="btn btn-primary" id="next-step">Next</button>
+                <button class="btn btn-success" id="confirm-assign" style="display: none;">Confirm Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Batch Message Modal -->
+    <div class="modal" id="batch-message-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Batch Message</h2>
+                <button class="modal-close" id="close-batch-message">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="batch-message-form">
+                    <div class="form-group">
+                        <label for="batch-recipients">Recipients</label>
+                        <div class="recipients-tags" id="recipients-tags"></div>
+                        <div class="recipient-options">
+                            <button type="button" class="btn btn-sm" id="add-members">Add Members</button>
+                            <button type="button" class="btn btn-sm" id="add-regions">Add Regions</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="batch-subject">Subject</label>
+                        <input type="text" id="batch-subject" placeholder="Enter message subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="batch-content">Message</label>
+                        <textarea id="batch-content" rows="6" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="batch-send-copy">
+                            <span>Send me a copy</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-send" id="send-batch-message">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <button class="btn btn-cancel" id="cancel-batch-message">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/lobby.js"></script>
+</body>
+</html>

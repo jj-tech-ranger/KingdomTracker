@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Tracker - Admin Notifications</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/crosspoint.css">
+    <link rel="stylesheet" href="../css/admin_notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+    <div class="crosspoint-container">
+        <!-- Top Navigation Bar -->
+        <nav class="crosspoint-nav">
+            <div class="nav-logo">
+                <img src="../img/CP%20Logo.jpg" alt="CrossPoint Logo">
+                <span>CrossPoint</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="active"><a href="../templates/admin_content.html"><i class="fas fa-box-open"></i> Content</a>
+                </li>
+                <li><a href="../templates/admin_teachings.html"><i class="fas fa-book"></i> Teachings</a></li>
+                <li><a href="../templates/admin_prayer.html"><i class="fas fa-hands-praying"></i> Prayer</a></li>
+                <li><a href="../templates/admin_bank.html"><i class="fas fa-bank"></i> Food Bank</a></li>
+                <li><a href="../templates/admin_lobby.html"><i class="fas fa-door-open"></i>Lobby</a></li>
+                <li><a href="../templates/admin_reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="../templates/admin_notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="../templates/admin_profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <div class="user-dropdown">
+                    <img src="../img/user.png" alt="User" class="user-avatar">
+                    <span>Administrator</span>
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="../templates/index.html" class="dropdown-item">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="#" class="dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="crosspoint-main">
+            <!-- Admin Dashboard Section -->
+            <div class="admin-dashboard">
+                <div class="dashboard-header">
+                    <h3><i class="fas fa-bell"></i> System Notifications Overview</h3>
+                    <button class="btn btn-export" id="export-notifications">
+                        <i class="fas fa-file-export"></i> Export Logs
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-sent">0</div>
+                            <div class="stat-label">Total Sent</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="unread-count">0</div>
+                            <div class="stat-label">Unread</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="critical-count">0</div>
+                            <div class="stat-label">Critical</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="failed-count">0</div>
+                            <div class="stat-label">Failed</div>
+                        </div>
+                    </div>
+
+                    <div class="pending-actions">
+                        <h4>System Alerts</h4>
+                        <ul class="action-list" id="system-alerts">
+                            <!-- System alerts will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notifications-header">
+                <h1><i class="fas fa-bell"></i> System Notifications</h1>
+                <div class="notifications-actions">
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="toggle-notifications" checked>
+                        <label for="toggle-notifications">Show Notifications</label>
+                    </div>
+                    <button class="btn btn-mark-all" id="mark-all-read">
+                        <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                    <button class="btn btn-send-notification" id="send-notification-btn">
+                        <i class="fas fa-paper-plane"></i> Send Notification
+                    </button>
+                    <button class="btn btn-templates" id="manage-templates">
+                        <i class="fas fa-file-alt"></i> Templates
+                    </button>
+                    <div class="notifications-filter">
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="system">System Alerts</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="security">Security</option>
+                            <option value="updates">Updates</option>
+                            <option value="broadcast">Broadcasts</option>
+                            <option value="approvals">Approvals</option>
+                        </select>
+                        <select id="sort-by" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="notification-search" placeholder="Search notifications...">
+                <button class="btn btn-advanced-filter" id="advanced-filter-btn">
+                    <i class="fas fa-filter"></i> Advanced Filters
+                </button>
+            </div>
+
+            <div class="notification-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="unread">Unread</button>
+                <button class="tab-btn" data-filter="system">System</button>
+                <button class="tab-btn" data-filter="critical">Critical</button>
+                <button class="tab-btn" data-filter="failed">Failed</button>
+                <button class="tab-btn" data-filter="pending">Pending</button>
+            </div>
+
+            <div class="notifications-container">
+                <div class="notification-list" id="notification-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="empty-state">
+                    <img src="../img/notifications_empty.png" alt="No notifications">
+                    <h3>No notifications to display</h3>
+                    <p>When you have new notifications, they'll appear here.</p>
+                </div>
+            </div>
+
+            <div class="notification-preferences">
+                <h3><i class="fas fa-cog"></i> System Notification Settings</h3>
+                <p>Configure system-wide notification preferences</p>
+                <button class="btn btn-preferences" id="open-preferences">
+                    <i class="fas fa-sliders-h"></i> System Preferences
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="crosspoint-footer">
+            <div class="footer-content">
+                <img src="../img/ELYASHIB.png" alt="Elyashib Logo" class="footer-logo">
+                <span class="footer-text">Powered by Elyashib</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Preferences Modal -->
+    <div class="modal" id="preferences-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>System Notification Preferences</h2>
+                <button class="modal-close" id="close-preferences">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preference-category">
+                    <h3><i class="fas fa-broadcast-tower"></i> System Broadcasts</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Enable system-wide broadcasts</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Require approval for critical broadcasts</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox">
+                            <span>Archive all sent notifications</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="preference-category">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Alert Thresholds</h3>
+                    <div class="form-group">
+                        <label for="critical-threshold">Critical Alert Threshold (minutes)</label>
+                        <input type="number" id="critical-threshold" class="form-control" value="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="response-timeout">Response Timeout (hours)</label>
+                        <input type="number" id="response-timeout" class="form-control" value="24">
+                    </div>
+                </div>
+
+                <div class="preference-category">
+                    <h3><i class="fas fa-shield-alt"></i> Security Notifications</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Login attempts</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Permission changes</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Data export requests</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox">
+                            <span>Content modifications</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="preference-category">
+                    <h3><i class="fas fa-sync-alt"></i> System Updates</h3>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Maintenance schedules</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Version updates</span>
+                        </label>
+                    </div>
+                    <div class="preference-option">
+                        <label>
+                            <input type="checkbox">
+                            <span>Backup notifications</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="save-preferences">Save Preferences</button>
+                <button class="btn btn-cancel" id="cancel-preferences">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Notification Modal -->
+    <div class="modal" id="send-notification-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send System Notification</h2>
+                <button class="modal-close" id="close-send-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-type">Recipient Type</label>
+                    <select id="recipient-type" class="form-control">
+                        <option value="all">All Users</option>
+                        <option value="region">Specific Region</option>
+                        <option value="role">By Role</option>
+                        <option value="individual">Specific Individuals</option>
+                        <option value="leaders">All Leaders</option>
+                        <option value="admins">Administrators Only</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="region-select" style="display: none;">
+                    <label for="notification-region">Select Region</label>
+                    <select id="notification-region" class="form-control">
+                        <option value="north">North Region</option>
+                        <option value="south">South Region</option>
+                        <option value="east">East Region</option>
+                        <option value="west">West Region</option>
+                        <option value="central">Central Region</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="role-select" style="display: none;">
+                    <label for="notification-role">Select Role</label>
+                    <select id="notification-role" class="form-control" multiple>
+                        <option value="member">Members</option>
+                        <option value="leader">Team Leaders</option>
+                        <option value="rleader">Regional Leaders</option>
+                        <option value="admin">Administrators</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="individual-select" style="display: none;">
+                    <label for="notification-individuals">Select Individuals</label>
+                    <select id="notification-individuals" class="form-control" multiple>
+                        <option value="101">Pastor John</option>
+                        <option value="102">Sister Mary</option>
+                        <option value="103">Brother David</option>
+                        <option value="104">Pastor Sarah</option>
+                        <option value="105">Elder Michael</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-type">Notification Type</label>
+                    <select id="notification-type" class="form-control">
+                        <option value="system">System Alert</option>
+                        <option value="maintenance">Maintenance Notice</option>
+                        <option value="security">Security Alert</option>
+                        <option value="update">System Update</option>
+                        <option value="broadcast">General Broadcast</option>
+                        <option value="approval">Approval Request</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-subject">Subject</label>
+                    <input type="text" id="notification-subject" class="form-control" placeholder="Enter subject">
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-message">Message</label>
+                    <textarea id="notification-message" class="form-control" rows="5" placeholder="Enter your message"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-priority">Priority Level</label>
+                    <select id="notification-priority" class="form-control">
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-pin">
+                        <input type="checkbox" id="notification-pin">
+                        Pin to all dashboards
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="notification-expiry">Expiry Date (Optional)</label>
+                    <input type="text" id="notification-expiry" class="form-control" placeholder="Select date">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save-template" id="save-template">
+                    <i class="fas fa-save"></i> Save as Template
+                </button>
+                <button class="btn btn-save" id="send-notification">
+                    <i class="fas fa-paper-plane"></i> Send Notification
+                </button>
+                <button class="btn btn-cancel" id="cancel-send-notification">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates Modal -->
+    <div class="modal" id="templates-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Notification Templates</h2>
+                <button class="modal-close" id="close-templates">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="template-search" placeholder="Search templates...">
+                    <button class="btn btn-new-template" id="new-template">
+                        <i class="fas fa-plus"></i> New Template
+                    </button>
+                </div>
+
+                <div class="templates-list" id="templates-list">
+                    <!-- Templates will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="close-templates-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Filters Modal -->
+    <div class="modal" id="advanced-filters-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Advanced Filters</h2>
+                <button class="modal-close" id="close-advanced-filters">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="filter-sender">Sender</label>
+                    <select id="filter-sender" class="form-control">
+                        <option value="all">All Senders</option>
+                        <option value="me">Sent by Me</option>
+                        <option value="system">System</option>
+                        <option value="admins">Other Admins</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-status">Delivery Status</label>
+                    <select id="filter-status" class="form-control">
+                        <option value="all">All Statuses</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="read">Read</option>
+                        <option value="unread">Unread</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-date-range">Date Range</label>
+                    <input type="text" id="filter-date-range" class="form-control" placeholder="Select date range">
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-priority">Priority Level</label>
+                    <select id="filter-priority" class="form-control">
+                        <option value="all">All Priorities</option>
+                        <option value="critical">Critical</option>
+                        <option value="high">High</option>
+                        <option value="normal">Normal</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-type">Notification Type</label>
+                    <select id="filter-type" class="form-control">
+                        <option value="all">All Types</option>
+                        <option value="system">System</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="security">Security</option>
+                        <option value="update">Update</option>
+                        <option value="broadcast">Broadcast</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-save" id="apply-filters">Apply Filters</button>
+                <button class="btn btn-cancel" id="reset-filters">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cdn.jsdelivr.net/npm/flatpickr.js"></script>
+    <script src="../js/crosspoint.js"></script>
+    <script src="../js/admin_notifications.js"></script>
+</body>
+</html>
